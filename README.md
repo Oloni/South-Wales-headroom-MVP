@@ -4,11 +4,6 @@
 
 A prototype screening tool that shows, for every major substation in the South Wales 33kV/66kV/132kV network: the transformer capacity, actual measured power flows, the connection queue (connected, accepted, offered, enquired generation), and the resulting headroom — how much room is left for new connections.
 
-## Who it's for
-
-- **Infrastructure investors** (Greencoat, Foresight) — M&A due diligence on project connections, portfolio curtailment risk
-- **Developers** (Orsted) — greenfield site screening, connection point selection
-- **Consultants** (Roadnight Taylor, Blake Clough) — augmenting manual assessments
 
 ## What it shows
 
@@ -37,8 +32,6 @@ For each of 35 substations in South Wales:
 
 **What it is:** Official transformer ratings published by NGED as part of the Long Term Development Statement. Every two-winding transformer in the NGED network with nominal and emergency MVA ratings, impedance, tap range, and vector group.
 
-**Where to get it:** https://connecteddata.nationalgrid.co.uk → search "LTDS Tabular Model" → download "LTDS Table 2a Two-winding Transformer" CSV.
-
 **File in this repo:** `data/ltds-table-2a-two-winding-transformer.csv`
 
 **How we use it:** Filter to Licence = 'SWALES', Operating Voltage 1 = 132, Operating Voltage 2 in [33, 66]. Extract the 4-letter CIM code from the Node 1 column (e.g. AMMA1_#110 → AMMA = Ammanford). Sum the Nominal Rating per CIM code to get total substation capacity. This gives us the real transformer rating that the CIM file doesn't have (the CIM uses 100 MVA placeholders for everything).
@@ -57,8 +50,6 @@ For each of 35 substations in South Wales:
 ### 2. BSP Transformer Flow CSVs
 
 **What it is:** Half-hourly measurements from every Bulk Supply Point (BSP) transformer in South Wales. Real sensor data: MW (active power), MVAr (reactive power), and kV (voltage) recorded every 30 minutes.
-
-**Where to get it:** https://connecteddata.nationalgrid.co.uk → search "Super Grid Transformer Flows - South Wales" → download CSV. This gives one CSV per substation.
 
 **Files in this repo:** Referenced from external directory (too large for the repo). Located at: `/Users/leonie/Documents/grid-model-experiments/BSP_transformer_flows_south_wales/`
 
@@ -112,13 +103,11 @@ For each of 35 substations in South Wales:
 
 **What it is:** NGED's Common Information Model file for South Wales — the complete engineering model of the network in XML format. Contains every line, transformer, busbar, breaker, and switch.
 
-**Where to get it:** https://connecteddata.nationalgrid.co.uk → search "LTDS Common Information Model" → download the South Wales ZIP.
-
 **File:** `data/LTDS_SWALES_2025-02_EQ_2025-09-19_v1_0.xml`
 
-**How we use it in this MVP:** Only for cross-referencing substation names and verifying transformer counts. We do NOT use the CIM's transformer ratings (they are all 100 MVA placeholders). We do NOT run power flow in this MVP. The CIM becomes important in Phase 3 (post-offer studies with Bayesian calibration).
+**How we use it in this MVP:** Only for cross-referencing substation names and verifying transformer counts. We do NOT use the CIM's transformer ratings (they are all 100 MVA placeholders). We do NOT run power flow in this MVP.
 
-**Note:** Parsing the CIM for network topology is complex — see `README_buildSouthWales_network.md` in the grid-model-experiments repo for the full account of how we built the pandapower network from this file.
+**Note:** Parsing the CIM for network topology is complex.
 
 ### 5. Embedded Capacity Register (ECR) — supplementary
 
@@ -169,58 +158,11 @@ Where:
 - **Diversity** — not all generators run at full output simultaneously (solar generates nothing at night, wind is intermittent)
 - **Demand** — substations also serve load, which offsets generation
 - **Curtailment** — many connections have curtailment arrangements allowing the DNO to reduce output when the network is congested
-- **Queue attrition** — Patrick at Orsted estimates 40-60% of accepted battery projects and 20-30% of solar projects will never actually connect
+- **Queue attrition** — An estimated 40-60% of accepted battery projects and 20-30% of solar projects will never actually connect
 - **Planned reinforcements** — NGED may be upgrading transformers or building new circuits
 - **ANM zones** — some substations have Active Network Management that dynamically manages generation output
 
 The headroom number should be read as "how oversubscribed is this substation on paper" — a screening signal, not a definitive answer. Substations with large negative headroom have high connection risk. Substations with positive headroom are more likely to have capacity available.
-
-
----
-
-## What's NOT in this MVP (and where it goes next)
-
-### Phase 2 additions (weeks 2-4):
-- **Substation Loading data** from NGED (Phil Moseley's suggestion) — NGED's own loading calculations under different scenarios, more accurate than our peak flow proxy
-- **Sensitivity Factors** from NGED — how much adding 1 MW at node X affects every branch in the network. This turns headroom from "is the transformer full?" into "which specific branches would be overloaded?"
-- **Curtailment estimation** — combining Generic Generator Profiles + Substation Loading + Asset Limits to estimate what percentage of the time a new connection would be curtailed
-- **Queue attrition modelling** — probabilistic estimates of how many accepted projects will actually connect, using historical dropout rates by technology
-
-### Phase 3 (months 3-6, with Deepanshu):
-- **Bayesian model calibration** — using the BSP flow data to calibrate the CIM network model's impedances, tap positions, and topology against real measurements
-- **Probabilistic power flow** — running power flow with uncertainty quantification to give confidence bounds on voltage and thermal impacts
-- **Post-offer studies** — the £10-20k product tier, replacing deterministic consultant studies with probabilistic assessments
-
-### Phase 4 (year 2+):
-- **Dynamic studies** — IBR identifiability and stability assessment using ANDES
-- **Operational monitoring** — continuous tracking of curtailment and network conditions
-- **National coverage** — extending beyond South Wales to all six DNO regions
-
-
----
-
-## How to run
-
-### Locally:
-```bash
-cd South_Wales_headroom_MVP
-pip install -r requirements.txt
-cd app
-streamlit run app.py
-```
-
-### Rebuild the data table:
-```bash
-cd South_Wales_headroom_MVP
-python notebooks/01_build_substation_table.py
-```
-This reads from the BSP flow files directory and the data/ folder, joins everything, and outputs `data/south_wales_substations.csv`.
-
-### Deploy to Streamlit Cloud:
-1. Push repo to GitHub (private)
-2. Go to share.streamlit.io
-3. Connect repo, set main file path to `app/app.py`
-4. Deploy
 
 ---
 
