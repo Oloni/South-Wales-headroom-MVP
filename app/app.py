@@ -25,14 +25,23 @@ def check_password():
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
     if not st.session_state.authenticated:
+        try:
+            correct_pwd = st.secrets["passwords"]["password"]
+        except Exception:
+            return  # No secrets file = local dev, skip password
         st.markdown("## ⚡ Loom Light")
-        st.markdown("Please enter the password to access the Grid Connection Screener.")
+        st.markdown("Please enter your details to access the Grid Connection Screener.")
+        name = st.text_input("Name")
+        email = st.text_input("Email")
         pwd = st.text_input("Password", type="password")
-        if pwd == st.secrets["passwords"]["password"]:
-            st.session_state.authenticated = True
-            st.rerun()
-        elif pwd:
-            st.error("Incorrect password")
+        if pwd and name and email:
+            if pwd == correct_pwd:
+                st.session_state.authenticated = True
+                st.session_state.user_name = name
+                st.session_state.user_email = email
+                st.rerun()
+            else:
+                st.error("Incorrect password")
         st.stop()
 
 check_password()
