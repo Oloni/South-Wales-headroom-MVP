@@ -18,6 +18,25 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ============================================================
+# PASSWORD PROTECTION
+# ============================================================
+def check_password():
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+    if not st.session_state.authenticated:
+        st.markdown("## ⚡ Loom Light")
+        st.markdown("Please enter the password to access the Grid Connection Screener.")
+        pwd = st.text_input("Password", type="password")
+        if pwd == st.secrets["passwords"]["password"]:
+            st.session_state.authenticated = True
+            st.rerun()
+        elif pwd:
+            st.error("Incorrect password")
+        st.stop()
+
+check_password()
+
 # Force light theme
 st.markdown("""
 <style>

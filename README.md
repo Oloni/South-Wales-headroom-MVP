@@ -4,8 +4,6 @@
 
 A prototype screening tool that shows, for every major substation in the South Wales 33kV/66kV/132kV network: the transformer capacity, actual measured power flows, the connection queue (connected, accepted, offered, enquired generation), and the resulting headroom — how much room is left for new connections.
 
-This is the product Louis Cerrill (Schroders Greencoat) described wanting: "click on a map and see probability of getting a connection for given tech and MW."
-
 ## Who it's for
 
 - **Infrastructure investors** (Greencoat, Foresight) — M&A due diligence on project connections, portfolio curtailment risk
@@ -265,8 +263,3 @@ The flow data is the oldest — it covers 2022-2023. If NGED publishes updated f
 
 
 ---
-
-## Pilot customers
-
-- **Schroders Greencoat** (Louis Cerrill, James Samworth) — infrastructure fund, interested in M&A due diligence, curtailment risk, and portfolio monitoring. Offered to be pilot customer. Price validation: £500 screening → £1-2k G99 → £10-20k post-offer → £100-120k dynamic studies.
-- **Orsted** (Patrick, Kwaku) — developer, 2-person UK grid team doing this assessment manually. Want higher voltage version (132kV+). Interested in probabilistic curtailment.
