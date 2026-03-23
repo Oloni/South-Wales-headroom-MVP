@@ -1,8 +1,7 @@
 """
 South Wales Grid Connection Screener
 =====================================
-Streamlit app that displays substation-level headroom, queue data,
-and measured flows for the South Wales 33kV/132kV network.
+Streamlit app with headroom analysis AND curtailment estimates.
 
 Run with: streamlit run app.py
 """
@@ -10,6 +9,7 @@ Run with: streamlit run app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 
 st.set_page_config(
     page_title="Loom Light — Grid Connection Screener",
@@ -19,57 +19,19 @@ st.set_page_config(
 )
 
 # ============================================================
-# PASSWORD PROTECTION
-# ============================================================
-def check_password():
-    if "authenticated" not in st.session_state:
-        st.session_state.authenticated = False
-    if not st.session_state.authenticated:
-        try:
-            correct_pwd = st.secrets["passwords"]["password"]
-        except Exception:
-            return  # No secrets file = local dev, skip password
-        st.markdown("## ⚡ Loom Light")
-        st.markdown("Please enter your details to access the Grid Connection Screener.")
-        name = st.text_input("Name")
-        email = st.text_input("Email")
-        pwd = st.text_input("Password", type="password")
-        if pwd and name and email:
-            if pwd == correct_pwd:
-                st.session_state.authenticated = True
-                st.session_state.user_name = name
-                st.session_state.user_email = email
-                st.rerun()
-            else:
-                st.error("Incorrect password")
-        st.stop()
-
-check_password()
-
-# Force light theme
-st.markdown("""
-<style>
-    [data-testid="stAppViewContainer"] { background-color: #ffffff; }
-    [data-testid="stSidebar"] { background-color: #f8f9fa; }
-</style>
-""", unsafe_allow_html=True)
-
-# ============================================================
 # LOAD DATA
 # ============================================================
 DATA_PATH = '../data/south_wales_substations.csv'
+CURTAILMENT_PATH = '../data/swansea_north_curtailment.csv'
 
-# Also try project root path if running from there
-import os
 if not os.path.exists(DATA_PATH):
     DATA_PATH = 'data/south_wales_substations.csv'
+    CURTAILMENT_PATH = 'data/swansea_north_curtailment.csv'
 
 @st.cache_data
 def load_data():
     df = pd.read_csv(DATA_PATH)
     
-    # Add coordinates (from ECR project locations — average per BSP)
-    # These are approximate: centroid of projects connected at each BSP
     coords = {
         'Abergavenny':    (51.82, -3.02),
         'Ammanford':      (51.80, -3.92),
@@ -111,40 +73,45 @@ def load_data():
     df['lat'] = df['display_name'].map(lambda x: coords.get(x, (None, None))[0])
     df['lon'] = df['display_name'].map(lambda x: coords.get(x, (None, None))[1])
     
-    # Fix: substations with no GCR match should show as 'No data' not 'Available'
-    # They appear to have full headroom but really we just don't have queue info
+    # Fix: substations with no GCR match should show as 'No data'
     no_gcr = df['connected_mva'].isna() & df['accepted_mva'].isna()
     df.loc[no_gcr, 'headroom_flag'] = 'No data'
     df.loc[no_gcr, 'headroom_mva'] = np.nan
     
     return df
 
+@st.cache_data
+def load_curtailment():
+    if os.path.exists(CURTAILMENT_PATH):
+        return pd.read_csv(CURTAILMENT_PATH)
+    return None
+
 df = load_data()
+curtailment_df = load_curtailment()
 
 
 # ============================================================
-# SIDEBAR — FILTERS
+# SIDEBAR
 # ============================================================
 st.sidebar.markdown("## ⚡ Loom Light")
 st.sidebar.markdown("**Grid Connection Screener**")
 st.sidebar.markdown("South Wales · 132/33kV & 132/66kV BSPs")
 st.sidebar.divider()
 
-# Technology filter
 tech_options = ['All'] + sorted([t for t in df['technology'].dropna().unique()])
 selected_tech = st.sidebar.selectbox("Filter by technology", tech_options)
 
-# Headroom filter
 headroom_options = ['All', 'Overcommitted', 'Tight', 'Moderate', 'Available']
 selected_headroom = st.sidebar.selectbox("Filter by headroom", headroom_options)
 
-# MW input for "can I connect X MW here?"
 st.sidebar.divider()
 st.sidebar.markdown("### Test a connection")
 test_mw = st.sidebar.number_input("Proposed capacity (MW)", min_value=0, max_value=500, value=0, step=5)
 test_tech = st.sidebar.selectbox("Technology", ["Solar", "Onshore Wind", "Battery", "Other"])
 
-# Apply filters
+# Map sidebar tech names to curtailment CSV tech names
+tech_map = {"Solar": "PV", "Onshore Wind": "Wind", "Battery": "BESS", "Other": "Other"}
+
 filtered = df.copy()
 if selected_tech != 'All':
     filtered = filtered[filtered['technology'] == selected_tech]
@@ -153,25 +120,21 @@ if selected_headroom != 'All':
 
 
 # ============================================================
-# MAIN CONTENT
+# HEADER
 # ============================================================
 st.markdown("# South Wales Grid Connection Screener")
-st.markdown("Transformer ratings · measured flows · connection queue · headroom analysis")
-st.caption("📅 Flows: Mar 2022 – Apr 2023 · Transformer ratings: Dec 2025 · Queue data: Jan 2026")
+st.markdown("Transformer ratings · measured flows · connection queue · headroom · curtailment estimates")
+st.caption("📅 Flows: Mar 2022 – Apr 2023 · Ratings: Dec 2025 · Queue: Jan 2026 · Curtailment: Mar 2026 (Swansea North zone)")
 
-# Summary metrics
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric("Substations", len(filtered))
 with col2:
-    n_over = (filtered['headroom_flag'] == 'Overcommitted').sum()
-    st.metric("Overcommitted", n_over, delta=None)
+    st.metric("Overcommitted", (filtered['headroom_flag'] == 'Overcommitted').sum())
 with col3:
-    n_tight = (filtered['headroom_flag'] == 'Tight').sum()
-    st.metric("Tight", n_tight)
+    st.metric("Tight", (filtered['headroom_flag'] == 'Tight').sum())
 with col4:
-    n_avail = (filtered['headroom_flag'].isin(['Moderate', 'Available'])).sum()
-    st.metric("Available / Moderate", n_avail)
+    st.metric("Available / Moderate", filtered['headroom_flag'].isin(['Moderate', 'Available']).sum())
 
 
 # ============================================================
@@ -181,31 +144,19 @@ st.markdown("---")
 
 map_df = filtered.dropna(subset=['lat', 'lon']).copy()
 
-# Colour by headroom flag
-def flag_to_color(flag):
-    return {
-        'Overcommitted': [220, 50, 50, 180],
-        'Tight':         [240, 160, 30, 180],
-        'Moderate':      [80, 160, 220, 180],
-        'Available':     [50, 180, 80, 180],
-        'No data':       [150, 150, 150, 150],
-    }.get(flag, [150, 150, 150, 150])
-
-map_df['color'] = map_df['headroom_flag'].apply(flag_to_color)
-
-# Size by total committed capacity
-map_df['size'] = np.clip(map_df['total_committed_mva'].fillna(10) * 3, 300, 8000)
-
-# If testing a connection, recompute headroom with the proposed MW
-if test_mw > 0:
-    map_df['headroom_with_test'] = map_df['headroom_mva'] - test_mw
-    def test_color(h):
-        if pd.isna(h): return [150, 150, 150, 150]
-        if h < 0: return [220, 50, 50, 180]
-        if h < 20: return [240, 160, 30, 180]
-        if h < 50: return [80, 160, 220, 180]
-        return [50, 180, 80, 180]
-    map_df['color'] = map_df['headroom_with_test'].apply(test_color)
+# If testing a connection and curtailment data available, add curtailment to tooltip
+if test_mw > 0 and curtailment_df is not None:
+    curt_tech = tech_map.get(test_tech, 'PV')
+    # Find closest MW in curtailment data
+    available_mws = sorted(curtailment_df['capacity_mw'].unique())
+    closest_mw = min(available_mws, key=lambda x: abs(x - test_mw))
+    
+    curt_slice = curtailment_df[
+        (curtailment_df['technology'] == curt_tech) &
+        (curtailment_df['capacity_mw'] == closest_mw)
+    ][['substation', 'curtailment_pct', 'binding_branch']].copy()
+    curt_slice = curt_slice.rename(columns={'substation': 'display_name'})
+    map_df = map_df.merge(curt_slice, on='display_name', how='left')
 
 try:
     import folium
@@ -223,11 +174,8 @@ try:
     
     for _, row in map_df.iterrows():
         color = flag_colors.get(row['headroom_flag'], '#999999')
-        
-        # Size by committed capacity
         radius = max(5, min(20, (row.get('total_committed_mva') or 10) / 10))
         
-        # Build popup text
         headroom_str = f"{row['headroom_mva']:.0f}" if pd.notna(row.get('headroom_mva')) else '?'
         rating_str = f"{row['total_nominal_mva']:.0f}" if pd.notna(row.get('total_nominal_mva')) else '?'
         connected_str = f"{row['connected_mva']:.1f}" if pd.notna(row.get('connected_mva')) else '?'
@@ -235,19 +183,30 @@ try:
         peak_str = f"{row['peak_import_mw']:.1f}" if pd.notna(row.get('peak_import_mw')) else '?'
         tech_str = row.get('technology') or '?'
         
+        # Add curtailment to popup if available
+        curt_html = ""
+        if 'curtailment_pct' in row.index and pd.notna(row.get('curtailment_pct')):
+            curt_pct = row['curtailment_pct']
+            binding = row.get('binding_branch', '?')
+            curt_html = f"""
+            <hr style="margin: 4px 0;">
+            <b style="color: {'#dc3545' if curt_pct > 5 else '#f0a028' if curt_pct > 1 else '#32b450'}">
+            Curtailment ({test_mw}MW {test_tech}): {curt_pct:.1f}%</b><br/>
+            Binding: {binding}
+            """
+        
         popup_html = f"""
         <div style="font-family: sans-serif; font-size: 13px; min-width: 220px;">
             <b>{row['display_name']}</b> ({row['voltage_kv']}kV)<br/>
             <hr style="margin: 4px 0;">
-            Rating: {rating_str} MVA<br/>
-            Peak import: {peak_str} MW<br/>
+            Rating: {rating_str} MVA | Peak: {peak_str} MW<br/>
             <hr style="margin: 4px 0;">
             Connected: {connected_str} MVA<br/>
             Accepted: {accepted_str} MVA<br/>
             <b>Headroom: {headroom_str} MVA</b><br/>
-            <hr style="margin: 4px 0;">
             Status: <b>{row['headroom_flag']}</b><br/>
             Technology: {tech_str}
+            {curt_html}
         </div>
         """
         
@@ -269,7 +228,6 @@ except ImportError:
     st.warning("Install folium and streamlit-folium for the map: `pip install folium streamlit-folium`")
     st.map(map_df, latitude='lat', longitude='lon')
 
-# Legend
 leg1, leg2, leg3, leg4 = st.columns(4)
 with leg1:
     st.markdown("🔴 **Overcommitted** — committed > rating")
@@ -281,47 +239,36 @@ with leg4:
     st.markdown("🟢 **Available** — >50 MVA headroom")
 
 if test_mw > 0:
-    st.info(f"Map shows headroom **after** adding {test_mw} MW of {test_tech}. Colours updated accordingly.")
+    st.info(f"Popups show curtailment estimate for **{test_mw} MW {test_tech}** (Swansea North zone only). Click a substation to see details.")
 
 
 # ============================================================
-# SUBSTATION DETAIL TABLE
+# SUBSTATION DETAIL
 # ============================================================
 st.markdown("---")
 st.markdown("## Substation Details")
 
-# Let user select a substation
 selected_sub = st.selectbox(
     "Select a substation for detail view",
     options=['(Overview table)'] + sorted(filtered['display_name'].tolist()),
 )
 
 if selected_sub == '(Overview table)':
-    # Show summary table
     display_cols = [
         'display_name', 'voltage_kv', 'total_nominal_mva', 'peak_import_mw',
         'utilisation_pct', 'connected_mva', 'accepted_mva', 'offered_mva',
         'headroom_mva', 'headroom_flag', 'technology', 'net_exporter',
     ]
-    
     rename = {
-        'display_name': 'Substation',
-        'voltage_kv': 'kV',
-        'total_nominal_mva': 'Rating (MVA)',
-        'peak_import_mw': 'Peak Import (MW)',
-        'utilisation_pct': 'Utilisation %',
-        'connected_mva': 'Connected (MVA)',
-        'accepted_mva': 'Accepted (MVA)',
-        'offered_mva': 'Offered (MVA)',
-        'headroom_mva': 'Headroom (MVA)',
-        'headroom_flag': 'Status',
-        'technology': 'Dominant Tech',
-        'net_exporter': 'Net Exporter',
+        'display_name': 'Substation', 'voltage_kv': 'kV',
+        'total_nominal_mva': 'Rating (MVA)', 'peak_import_mw': 'Peak Import (MW)',
+        'utilisation_pct': 'Utilisation %', 'connected_mva': 'Connected (MVA)',
+        'accepted_mva': 'Accepted (MVA)', 'offered_mva': 'Offered (MVA)',
+        'headroom_mva': 'Headroom (MVA)', 'headroom_flag': 'Status',
+        'technology': 'Dominant Tech', 'net_exporter': 'Net Exporter',
     }
-    
     table_df = filtered[display_cols].rename(columns=rename).sort_values('Headroom (MVA)')
     
-    # Style: highlight overcommitted rows
     def color_headroom(val):
         if pd.isna(val): return ''
         if val < 0: return 'background-color: #ffcccc'
@@ -332,12 +279,10 @@ if selected_sub == '(Overview table)':
     st.dataframe(styled, use_container_width=True, height=600)
 
 else:
-    # Detail view for selected substation
     row = filtered[filtered['display_name'] == selected_sub].iloc[0]
     
     st.markdown(f"### {row['display_name']} ({row['voltage_kv']}kV)")
     
-    # Key metrics in columns
     c1, c2, c3 = st.columns(3)
     
     with c1:
@@ -346,7 +291,6 @@ else:
         emergency = row.get('total_emergency_mva')
         n_tx = row.get('n_transformers_ltds')
         ratings_detail = row.get('ratings_detail', '')
-        
         st.metric("Nominal Rating", f"{rating:.0f} MVA" if pd.notna(rating) else "Unknown")
         if pd.notna(emergency):
             st.metric("Emergency Rating", f"{emergency:.0f} MVA")
@@ -356,11 +300,10 @@ else:
     with c2:
         st.markdown("#### Measured Flows")
         peak = row.get('peak_import_mw')
-        mean = row.get('mean_import_mw')
+        mean_imp = row.get('mean_import_mw')
         util = row.get('utilisation_pct')
-        
         st.metric("Peak Import", f"{peak:.1f} MW" if pd.notna(peak) else "?")
-        st.metric("Mean Import", f"{mean:.1f} MW" if pd.notna(mean) else "?")
+        st.metric("Mean Import", f"{mean_imp:.1f} MW" if pd.notna(mean_imp) else "?")
         if pd.notna(util):
             st.caption(f"Utilisation: {util:.0f}% of nominal rating")
         if row.get('net_exporter'):
@@ -390,24 +333,78 @@ else:
     elif flag in ['Moderate', 'Available']:
         st.success(f"**{flag}**: {headroom:.0f} MVA of headroom available")
     
-    # Test connection
-    if test_mw > 0:
-        st.markdown("---")
-        st.markdown(f"#### What if: {test_mw} MW {test_tech} connects here?")
-        new_headroom = headroom - test_mw if pd.notna(headroom) else None
-        if new_headroom is not None:
-            if new_headroom < 0:
-                st.error(f"Would push headroom to **{new_headroom:.0f} MVA** — overcommitted")
-            elif new_headroom < 20:
-                st.warning(f"Would leave **{new_headroom:.0f} MVA** headroom — tight")
-            else:
-                st.success(f"Would leave **{new_headroom:.0f} MVA** headroom — feasible")
+    # ============================================================
+    # CURTAILMENT SECTION (new)
+    # ============================================================
+    if curtailment_df is not None:
+        sub_curt = curtailment_df[curtailment_df['substation'] == selected_sub]
+        
+        if len(sub_curt) > 0 and sub_curt['curtailment_pct'].notna().any():
+            st.markdown("---")
+            st.markdown("#### Curtailment Estimates")
+            st.caption("Estimated annual curtailment for a new generator at this substation, assuming all accepted projects in the queue are built. Based on NGED sensitivity factors, branch loading, and pre-event limits.")
+            
+            # Show curtailment table by tech and size
+            pivot = sub_curt.pivot_table(
+                index='technology', columns='capacity_mw',
+                values='curtailment_pct', aggfunc='first'
+            )
+            
+            # Rename for display
+            pivot.index = pivot.index.map({'PV': 'Solar', 'Wind': 'Wind', 'BESS': 'Battery'})
+            pivot.columns = [f"{int(c)} MW" for c in pivot.columns]
+            
+            # Format as percentages
+            styled_curt = pivot.style.format("{:.1f}%", na_rep="—").background_gradient(
+                cmap='RdYlGn_r', vmin=0, vmax=20
+            )
+            st.dataframe(styled_curt, use_container_width=True)
+            
+            # Show binding constraint
+            binding_info = sub_curt[sub_curt['capacity_mw'] == 20].groupby('technology')['binding_branch'].first()
+            if len(binding_info) > 0:
+                bindings = [f"{tech}: {branch}" for tech, branch in binding_info.items() if branch != 'None']
+                if bindings:
+                    st.caption(f"Binding constraints (20MW): {' · '.join(bindings)}")
+            
+            # If test MW entered, show specific estimate
+            if test_mw > 0:
+                curt_tech = tech_map.get(test_tech, 'PV')
+                available_mws = sorted(sub_curt['capacity_mw'].unique())
+                closest_mw = min(available_mws, key=lambda x: abs(x - test_mw))
+                
+                estimate = sub_curt[
+                    (sub_curt['technology'] == curt_tech) &
+                    (sub_curt['capacity_mw'] == closest_mw)
+                ]
+                
+                if len(estimate) > 0:
+                    e = estimate.iloc[0]
+                    if pd.notna(e['curtailment_pct']):
+                        curt_pct = e['curtailment_pct']
+                        if curt_pct > 5:
+                            st.error(f"**{test_mw} MW {test_tech}**: estimated {curt_pct:.1f}% curtailment ({e['curtailed_mwh']:.0f} MWh/year lost)")
+                        elif curt_pct > 1:
+                            st.warning(f"**{test_mw} MW {test_tech}**: estimated {curt_pct:.1f}% curtailment ({e['curtailed_mwh']:.0f} MWh/year lost)")
+                        elif curt_pct > 0:
+                            st.info(f"**{test_mw} MW {test_tech}**: estimated {curt_pct:.1f}% curtailment ({e['curtailed_mwh']:.0f} MWh/year lost)")
+                        else:
+                            st.success(f"**{test_mw} MW {test_tech}**: no curtailment estimated")
+                        
+                        if e['binding_branch'] != 'None':
+                            st.caption(f"Binding constraint: {e['binding_branch']}")
+                        
+                        if closest_mw != test_mw:
+                            st.caption(f"Note: estimate shown for {closest_mw} MW (closest available).")
+        else:
+            st.markdown("---")
+            st.info("Curtailment data not available for this substation. Currently computed for Swansea North GSP group only.")
     
     # Data quality note
     st.markdown("---")
     st.caption(f"Flow data: {row.get('date_from', '?')} to {row.get('date_to', '?')} | {row.get('n_timestamps', '?')} timestamps")
     st.caption("Headroom = nominal transformer rating − (connected + accepted generation). Negative means overcommitted on paper.")
-    st.caption("This does not account for diversity, curtailment arrangements, or queue attrition.")
+    st.caption("Curtailment estimates use NGED's published sensitivity factors, 2024 branch loading, seasonal PELs, and generic generator profiles. Queue projected using all accepted projects.")
 
 
 # ============================================================
@@ -415,5 +412,5 @@ else:
 # ============================================================
 st.markdown("---")
 st.caption("**Loom Light** — Grid Connection Intelligence")
-st.caption("Data sources: NGED LTDS Table 2a (transformer ratings), NGED BSP transformer flows (Mar 2022–Apr 2023), NGED Generation Connection Register (Jan 2026)")
-st.caption("⚠️ Prototype — not for investment decisions. Headroom calculations do not account for diversity, curtailment, demand, or planned reinforcements.")
+st.caption("Data: NGED LTDS Table 2a (ratings), BSP transformer flows (2022-23), Generation Connection Register (Jan 2026), Curtailment analysis data (Mar 2026)")
+st.caption("⚠️ Prototype — not for investment decisions. Estimates do not account for LIFO queue position detail, abnormal running, ANM interactions, or demand growth.")
