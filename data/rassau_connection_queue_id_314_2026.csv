@@ -1,0 +1,8 @@
+Licence Area,GSP,TANM,DANM,Status,Bus Number,Bus Name,Site ID,Application ID,Site Export Capacity (MW),Site Import Capacity (MW),Machine Export Capacity (MW),Machine Import Capacity (MW),Fuel type,Machine ID,Position
+South Wales,Rassau G.S.P.,False,False,Accepted not yet Connected,527301,LLDR6_MAIN2,290,1,12.5,0.18,14.0,,Wind,WA,3
+South Wales,Rassau G.S.P.,True,False,Accepted not yet Connected,528800,EBBW3_MAIN1,408,1,21.5,0.2,10.0,,Wind,WA,31
+South Wales,Rassau G.S.P.,True,False,Accepted not yet Connected,2522,J78W,267,1,49.9,0.499,51.0,,Solar,PA,98
+South Wales,Rassau G.S.P.,True,False,Accepted not yet Connected,1152,LHIL6,434,1,28.6,0.042,33.6,,Wind,WA,113
+South Wales,Rassau G.S.P.,True,False,Accepted not yet Connected,527901,CRUM3_MAIN2,432,1,28.7,0.918,36.0,,Wind,WA,146
+South Wales,Rassau G.S.P.,True,False,Accepted not yet Connected,585100,WELP1_MAIN1,431,1,54.6,0.2,54.6,,Wind,WA,305
+South Wales,Rassau G.S.P.,True,False,Accepted not yet Connected,527901,CRUM3_MAIN2,508,1,4.5,0.0,4.5,,Wind,WA,553

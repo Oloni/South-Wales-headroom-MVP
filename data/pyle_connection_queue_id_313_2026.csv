@@ -1,0 +1,11 @@
+Licence Area,GSP,TANM,DANM,Status,Bus Number,Bus Name,Site ID,Application ID,Site Export Capacity (MW),Site Import Capacity (MW),Machine Export Capacity (MW),Machine Import Capacity (MW),Fuel type,Machine ID,Position
+South Wales,Pyle Grid,False,False,Accepted not yet Connected,517101,PYLE1_MAIN2,239,1,35.0,0.5,45.0,,Wind,WA,5
+South Wales,Pyle Grid,False,False,Accepted not yet Connected,517101,PYLE1_MAIN2,617,1,23.8,0.1,23.8,,Wind,WA,14
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,517101,PYLE1_MAIN2,178,1,49.9,0.75,49.9,,Wind,WA,219
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,3789,PYLE5,590,1,29.6,0.1,29.6,,Solar,PA,258
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,549000,BREN3_MAIN1,177,1,17.5,17.7,17.5,,BESS,BA,377
+South Wales,Pyle Grid,True,True,Accepted not yet Connected,517100,PYLE1_MAIN1,197,1,16.4,0.24,16.4,,Wind,WA,447
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,2255,WIND5,599,1,7.6,0.1,9.2,,Solar,PA,1035
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,517101,PYLE1_MAIN2,616,1,7.0,7.0,7.0,,BESS,BA,1682
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,547400,PYLE3_MAIN1,107,1,9.9,0.3,9.9,,Solar,PA,1791
+South Wales,Pyle Grid,True,False,Accepted not yet Connected,517100,PYLE1_MAIN1,437,1,65.0,1.5,65.0,,Wind,WA,1793
