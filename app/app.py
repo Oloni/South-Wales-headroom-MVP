@@ -22,11 +22,11 @@ st.set_page_config(
 # LOAD DATA
 # ============================================================
 DATA_PATH = '../data/south_wales_substations.csv'
-CURTAILMENT_PATH = '../data/swansea_north_curtailment.csv'
+CURTAILMENT_PATH = '../data/south_wales_curtailment.csv'
 
 if not os.path.exists(DATA_PATH):
     DATA_PATH = 'data/south_wales_substations.csv'
-    CURTAILMENT_PATH = 'data/swansea_north_curtailment.csv'
+    CURTAILMENT_PATH = 'data/south_wales_curtailment.csv'
 
 @st.cache_data
 def load_data():
