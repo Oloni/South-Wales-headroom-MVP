@@ -98,9 +98,6 @@ st.sidebar.markdown("**Grid Connection Screener**")
 st.sidebar.markdown("South Wales · 132/33kV & 132/66kV BSPs")
 st.sidebar.divider()
 
-tech_options = ['All'] + sorted([t for t in df['technology'].dropna().unique()])
-selected_tech = st.sidebar.selectbox("Filter by technology", tech_options)
-
 headroom_options = ['All', 'Overcommitted', 'Tight', 'Moderate', 'Available']
 selected_headroom = st.sidebar.selectbox("Filter by headroom", headroom_options)
 
@@ -108,13 +105,15 @@ st.sidebar.divider()
 st.sidebar.markdown("### Test a connection")
 test_mw = st.sidebar.number_input("Proposed capacity (MW)", min_value=0, max_value=500, value=0, step=5)
 test_tech = st.sidebar.selectbox("Technology", ["Solar", "Onshore Wind", "Battery", "Other"])
+if test_mw > 0:
+    if st.sidebar.button("Clear test"):
+        st.query_params.clear()
+        st.rerun()
 
 # Map sidebar tech names to curtailment CSV tech names
 tech_map = {"Solar": "PV", "Onshore Wind": "Wind", "Battery": "BESS", "Other": "Other"}
 
 filtered = df.copy()
-if selected_tech != 'All':
-    filtered = filtered[filtered['technology'] == selected_tech]
 if selected_headroom != 'All':
     filtered = filtered[filtered['headroom_flag'] == selected_headroom]
 
@@ -174,25 +173,28 @@ try:
     
     for _, row in map_df.iterrows():
         color = flag_colors.get(row['headroom_flag'], '#999999')
-        radius = max(5, min(20, (row.get('total_committed_mva') or 10) / 10))
+        radius = 8
         
         headroom_str = f"{row['headroom_mva']:.0f}" if pd.notna(row.get('headroom_mva')) else '?'
         rating_str = f"{row['total_nominal_mva']:.0f}" if pd.notna(row.get('total_nominal_mva')) else '?'
         connected_str = f"{row['connected_mva']:.1f}" if pd.notna(row.get('connected_mva')) else '?'
         accepted_str = f"{row['accepted_mva']:.1f}" if pd.notna(row.get('accepted_mva')) else '?'
         peak_str = f"{row['peak_import_mw']:.1f}" if pd.notna(row.get('peak_import_mw')) else '?'
-        tech_str = row.get('technology') or '?'
         
         # Add curtailment to popup if available
         curt_html = ""
         if 'curtailment_pct' in row.index and pd.notna(row.get('curtailment_pct')):
             curt_pct = row['curtailment_pct']
-            binding = row.get('binding_branch', '?')
+            binding = row.get('binding_branch', '')
+            if binding and binding != 'None' and str(binding) != 'nan':
+                binding_html = f"<br/>Binding: {binding}"
+            else:
+                binding_html = ""
             curt_html = f"""
             <hr style="margin: 4px 0;">
             <b style="color: {'#dc3545' if curt_pct > 5 else '#f0a028' if curt_pct > 1 else '#32b450'}">
-            Curtailment ({test_mw}MW {test_tech}): {curt_pct:.1f}%</b><br/>
-            Binding: {binding}
+            Curtailment ({test_mw}MW {test_tech}): {curt_pct:.1f}%</b>
+            {binding_html}
             """
         
         popup_html = f"""
@@ -204,8 +206,7 @@ try:
             Connected: {connected_str} MVA<br/>
             Accepted: {accepted_str} MVA<br/>
             <b>Headroom: {headroom_str} MVA</b><br/>
-            Status: <b>{row['headroom_flag']}</b><br/>
-            Technology: {tech_str}
+            Status: <b>{row['headroom_flag']}</b>
             {curt_html}
         </div>
         """
