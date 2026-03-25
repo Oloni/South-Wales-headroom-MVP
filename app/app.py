@@ -10,6 +10,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import requests
 
 st.set_page_config(
     page_title="Loom Light — Grid Connection Screener",
@@ -17,6 +18,48 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# ============================================================
+# AUTHENTICATION
+# ============================================================
+SIGNIN_WEBHOOK = "https://script.google.com/macros/s/AKfycbzOew22u9fHbF727BeuuCi1cH1bgJzb3QvG92u15P-eGHy1pCfYxicuuZql3YeJB8gL/exec"
+APP_PASSWORD = "LoomLight2026"
+
+if 'authenticated' not in st.session_state:
+    st.session_state.authenticated = False
+
+if not st.session_state.authenticated:
+    st.markdown("## ⚡ Loom Light")
+    st.markdown("### South Wales Grid Connection Screener")
+    st.markdown("---")
+    
+    with st.form("login_form"):
+        name = st.text_input("Name")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        submitted = st.form_submit_button("Sign in")
+    
+    if submitted:
+        if password == APP_PASSWORD and name.strip() and email.strip():
+            # Log sign-in to Google Sheet
+            try:
+                requests.post(SIGNIN_WEBHOOK, json={
+                    "name": name.strip(),
+                    "email": email.strip(),
+                }, timeout=5)
+            except Exception:
+                pass  # Don't block login if webhook fails
+            
+            st.session_state.authenticated = True
+            st.session_state.user_name = name.strip()
+            st.session_state.user_email = email.strip()
+            st.rerun()
+        elif password != APP_PASSWORD:
+            st.error("Incorrect password.")
+        else:
+            st.warning("Please enter your name and email.")
+    
+    st.stop()
 
 # ============================================================
 # LOAD DATA
