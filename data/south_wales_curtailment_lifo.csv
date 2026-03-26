@@ -1,43 +1,1135 @@
-substation,position_threshold,queue_mw,PV_curtailment_pct,PV_binding,Wind_curtailment_pct,Wind_binding,BESS_curtailment_pct,BESS_binding
-Swansea West,0,52,0.0,None,0.0,SWAW3_#2T0->SWAW1_213,0.12,SWAW3_#2T0->SWAW1_213
-Swansea West,50,117,0.0,None,0.0,SWAW3_#2T0->SWAW1_213,0.12,SWAW3_#2T0->SWAW1_213
-Swansea West,100,147,0.0,None,0.0,SWAW3_#2T0->SWAW1_213,0.12,SWAW3_#2T0->SWAW1_213
-Swansea West,200,180,0.0,None,0.0,SWAW3_#2T0->SWAW1_213,0.12,SWAW3_#2T0->SWAW1_213
-Swansea West,500,336,0.55,SWAW3_#2T0->SWAW1_213,13.27,SWAW3_#2T0->SWAW1_213,20.99,SWAW3_#2T0->SWAW1_213
-Swansea West,1000,337,0.55,SWAW3_#2T0->SWAW1_213,13.27,SWAW3_#2T0->SWAW1_213,20.99,SWAW3_#2T0->SWAW1_213
-Swansea West,9999,413,0.55,SWAW3_#2T0->SWAW1_213,13.27,SWAW3_#2T0->SWAW1_213,20.99,SWAW3_#2T0->SWAW1_213
-Hirwaun,0,52,0.2,HIRW3_2L5->HNDR3T,0.01,HIRW3_2L5->HNDR3T,0.01,HIRW3_2L5->HNDR3T
-Hirwaun,50,117,4.1,HIRW3_2L5->HNDR3T,0.34,HIRW3_2L5->HNDR3T,0.39,HIRW3_2L5->HNDR3T
-Hirwaun,100,147,4.1,HIRW3_2L5->HNDR3T,0.34,HIRW3_2L5->HNDR3T,0.39,HIRW3_2L5->HNDR3T
-Hirwaun,200,180,4.1,HIRW3_2L5->HNDR3T,0.34,HIRW3_2L5->HNDR3T,0.39,HIRW3_2L5->HNDR3T
-Hirwaun,500,336,1.69,HIRW3_2L5->HNDR3T,0.15,HIRW3_2L5->HNDR3T,0.15,HIRW3_2L5->HNDR3T
-Hirwaun,1000,337,1.69,HIRW3_2L5->HNDR3T,0.15,HIRW3_2L5->HNDR3T,0.15,HIRW3_2L5->HNDR3T
-Hirwaun,9999,413,1.69,HIRW3_2L5->HNDR3T,0.15,HIRW3_2L5->HNDR3T,0.15,HIRW3_2L5->HNDR3T
-Llanarth,0,52,1.34,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.11,LLAN3_1L5->BLAP3_3L5
-Llanarth,50,117,1.34,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.11,LLAN3_1L5->BLAP3_3L5
-Llanarth,100,147,1.34,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.11,LLAN3_1L5->BLAP3_3L5
-Llanarth,200,180,1.34,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.11,LLAN3_1L5->BLAP3_3L5
-Llanarth,500,336,1.34,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.11,LLAN3_1L5->BLAP3_3L5
-Llanarth,1000,337,1.39,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.12,LLAN3_1L5->BLAP3_3L5
-Llanarth,9999,413,1.39,LLAN3_1L5->BLAP3_3L5,0.01,LLAN3_1L5->BLAP3_3L5,0.12,LLAN3_1L5->BLAP3_3L5
-Swansea North,0,52,0.0,None,0.0,None,0.0,None
-Swansea North,50,117,0.0,None,0.0,None,0.0,None
-Swansea North,100,147,0.0,None,0.0,None,0.0,None
-Swansea North,200,180,0.0,None,0.0,None,0.0,None
-Swansea North,500,336,0.0,None,0.0,None,0.0,None
-Swansea North,1000,337,0.0,None,0.0,None,0.0,None
-Swansea North,9999,413,0.0,None,0.0,None,0.0,None
-Rhos,0,52,0.0,None,0.0,None,0.0,LAMP3_2L5->LWNI3_2L3
-Rhos,50,117,0.0,None,0.0,None,0.0,LAMP3_2L5->LWNI3_2L3
-Rhos,100,147,0.0,None,0.0,None,0.0,LAMP3_2L5->LWNI3_2L3
-Rhos,200,180,0.0,None,0.0,None,0.0,LAMP3_2L5->LWNI3_2L3
-Rhos,500,336,0.0,None,0.0,None,0.0,None
-Rhos,1000,337,0.0,None,0.0,None,0.0,None
-Rhos,9999,413,0.0,None,0.0,None,0.0,None
-Lampeter,0,52,0.0,None,0.0,None,0.0,None
-Lampeter,50,117,0.0,None,0.0,None,0.0,None
-Lampeter,100,147,0.0,None,0.0,None,0.0,None
-Lampeter,200,180,0.0,None,0.0,None,0.0,None
-Lampeter,500,336,0.0,None,0.0,LAMP3_GT1->LAMP1_#110,0.02,LAMP3_GT1->LAMP1_#110
-Lampeter,1000,337,0.0,None,0.0,LAMP3_GT1->LAMP1_#110,0.02,LAMP3_GT1->LAMP1_#110
-Lampeter,9999,413,0.0,None,0.0,LAMP3_GT1->LAMP1_#110,0.02,LAMP3_GT1->LAMP1_#110
+substation,zone,position_threshold,queue_mw,PV_curtailment_pct,Wind_curtailment_pct,BESS_curtailment_pct
+ASHG,aberthaw-and-cardiff-east,0,0,29.18,29.02,41.37
+ASHG,aberthaw-and-cardiff-east,50,0,29.18,29.02,41.37
+ASHG,aberthaw-and-cardiff-east,100,20,29.18,29.02,41.37
+ASHG,aberthaw-and-cardiff-east,200,127,29.18,29.02,41.37
+ASHG,aberthaw-and-cardiff-east,500,227,29.18,29.02,41.37
+ASHG,aberthaw-and-cardiff-east,1000,227,29.18,29.02,41.37
+ASHG,aberthaw-and-cardiff-east,9999,331,29.18,29.02,41.37
+BARY,aberthaw-and-cardiff-east,0,0,36.75,39.35,44.9
+BARY,aberthaw-and-cardiff-east,50,0,36.75,39.35,44.9
+BARY,aberthaw-and-cardiff-east,100,20,36.75,39.35,44.9
+BARY,aberthaw-and-cardiff-east,200,127,80.41,48.54,54.14
+BARY,aberthaw-and-cardiff-east,500,227,80.41,48.54,54.14
+BARY,aberthaw-and-cardiff-east,1000,227,80.41,48.54,54.14
+BARY,aberthaw-and-cardiff-east,9999,331,80.41,48.54,54.14
+BOVE,aberthaw-and-cardiff-east,0,0,48.99,54.87,59.51
+BOVE,aberthaw-and-cardiff-east,50,0,48.99,54.87,59.51
+BOVE,aberthaw-and-cardiff-east,100,20,48.99,54.87,59.51
+BOVE,aberthaw-and-cardiff-east,200,127,48.99,54.87,59.51
+BOVE,aberthaw-and-cardiff-east,500,227,48.99,54.87,59.51
+BOVE,aberthaw-and-cardiff-east,1000,227,48.99,54.87,59.51
+BOVE,aberthaw-and-cardiff-east,9999,331,48.99,54.87,59.51
+BRHI,aberthaw-and-cardiff-east,0,0,3.73,0.5,0.71
+BRHI,aberthaw-and-cardiff-east,50,0,3.73,0.5,0.71
+BRHI,aberthaw-and-cardiff-east,100,20,1.99,0.16,0.28
+BRHI,aberthaw-and-cardiff-east,200,127,1.99,0.16,0.28
+BRHI,aberthaw-and-cardiff-east,500,227,1.99,0.16,0.28
+BRHI,aberthaw-and-cardiff-east,1000,227,1.99,0.16,0.28
+BRHI,aberthaw-and-cardiff-east,9999,331,1.99,0.16,0.28
+BROA,aberthaw-and-cardiff-east,0,0,4.28,1.31,12.63
+BROA,aberthaw-and-cardiff-east,50,0,4.28,1.31,12.63
+BROA,aberthaw-and-cardiff-east,100,20,2.55,0.97,12.25
+BROA,aberthaw-and-cardiff-east,200,127,2.55,0.97,12.25
+BROA,aberthaw-and-cardiff-east,500,227,2.55,0.97,12.25
+BROA,aberthaw-and-cardiff-east,1000,227,2.55,0.97,12.25
+BROA,aberthaw-and-cardiff-east,9999,331,2.55,0.97,12.25
+COWB,aberthaw-and-cardiff-east,0,0,0.0,0.0,0.0
+COWB,aberthaw-and-cardiff-east,50,0,0.0,0.0,0.0
+COWB,aberthaw-and-cardiff-east,100,20,0.0,0.0,0.0
+COWB,aberthaw-and-cardiff-east,200,127,0.0,0.0,0.0
+COWB,aberthaw-and-cardiff-east,500,227,0.0,0.0,0.0
+COWB,aberthaw-and-cardiff-east,1000,227,0.0,0.0,0.0
+COWB,aberthaw-and-cardiff-east,9999,331,0.0,0.0,0.0
+CYNC,aberthaw-and-cardiff-east,0,0,6.87,12.65,28.08
+CYNC,aberthaw-and-cardiff-east,50,0,6.87,12.65,28.08
+CYNC,aberthaw-and-cardiff-east,100,20,6.87,12.65,28.08
+CYNC,aberthaw-and-cardiff-east,200,127,6.87,12.65,28.08
+CYNC,aberthaw-and-cardiff-east,500,227,6.87,12.65,28.08
+CYNC,aberthaw-and-cardiff-east,1000,227,6.87,12.65,28.08
+CYNC,aberthaw-and-cardiff-east,9999,331,6.87,12.65,28.08
+Cardiff Central,aberthaw-and-cardiff-east,0,0,20.38,34.49,37.61
+Cardiff Central,aberthaw-and-cardiff-east,50,0,20.38,34.49,37.61
+Cardiff Central,aberthaw-and-cardiff-east,100,20,20.38,34.49,37.61
+Cardiff Central,aberthaw-and-cardiff-east,200,127,56.43,40.55,44.34
+Cardiff Central,aberthaw-and-cardiff-east,500,227,56.43,40.55,44.34
+Cardiff Central,aberthaw-and-cardiff-east,1000,227,56.43,40.55,44.34
+Cardiff Central,aberthaw-and-cardiff-east,9999,331,56.43,40.55,44.34
+Cardiff East,aberthaw-and-cardiff-east,0,0,0.0,0.19,1.07
+Cardiff East,aberthaw-and-cardiff-east,50,0,0.0,0.19,1.07
+Cardiff East,aberthaw-and-cardiff-east,100,20,0.0,0.19,1.07
+Cardiff East,aberthaw-and-cardiff-east,200,127,0.0,0.19,1.07
+Cardiff East,aberthaw-and-cardiff-east,500,227,0.0,0.19,1.07
+Cardiff East,aberthaw-and-cardiff-east,1000,227,0.0,0.19,1.07
+Cardiff East,aberthaw-and-cardiff-east,9999,331,0.0,0.19,1.07
+Cardiff North,aberthaw-and-cardiff-east,0,0,0.0,0.0,0.19
+Cardiff North,aberthaw-and-cardiff-east,50,0,0.0,0.0,0.19
+Cardiff North,aberthaw-and-cardiff-east,100,20,0.0,0.0,0.19
+Cardiff North,aberthaw-and-cardiff-east,200,127,0.0,0.0,0.19
+Cardiff North,aberthaw-and-cardiff-east,500,227,0.0,0.0,0.19
+Cardiff North,aberthaw-and-cardiff-east,1000,227,0.0,0.0,0.19
+Cardiff North,aberthaw-and-cardiff-east,9999,331,0.0,0.0,0.19
+Cardiff West,aberthaw-and-cardiff-east,0,0,37.72,39.67,45.33
+Cardiff West,aberthaw-and-cardiff-east,50,0,37.72,39.67,45.33
+Cardiff West,aberthaw-and-cardiff-east,100,20,37.72,39.67,45.33
+Cardiff West,aberthaw-and-cardiff-east,200,127,80.67,48.77,54.5
+Cardiff West,aberthaw-and-cardiff-east,500,227,80.67,48.77,54.5
+Cardiff West,aberthaw-and-cardiff-east,1000,227,80.67,48.77,54.5
+Cardiff West,aberthaw-and-cardiff-east,9999,331,80.67,48.77,54.5
+East Aberthaw,aberthaw-and-cardiff-east,0,0,0.0,0.0,0.0
+East Aberthaw,aberthaw-and-cardiff-east,50,0,0.0,0.0,0.0
+East Aberthaw,aberthaw-and-cardiff-east,100,20,0.05,0.0,0.02
+East Aberthaw,aberthaw-and-cardiff-east,200,127,0.05,0.0,0.02
+East Aberthaw,aberthaw-and-cardiff-east,500,227,0.05,0.0,0.02
+East Aberthaw,aberthaw-and-cardiff-east,1000,227,0.05,0.0,0.02
+East Aberthaw,aberthaw-and-cardiff-east,9999,331,0.05,0.0,0.02
+FAIR,aberthaw-and-cardiff-east,0,0,37.76,39.79,47.22
+FAIR,aberthaw-and-cardiff-east,50,0,37.76,39.79,47.22
+FAIR,aberthaw-and-cardiff-east,100,20,37.76,39.79,47.22
+FAIR,aberthaw-and-cardiff-east,200,127,81.53,49.06,56.53
+FAIR,aberthaw-and-cardiff-east,500,227,81.53,49.06,56.53
+FAIR,aberthaw-and-cardiff-east,1000,227,81.53,49.06,56.53
+FAIR,aberthaw-and-cardiff-east,9999,331,81.53,49.06,56.53
+HEAT,aberthaw-and-cardiff-east,0,0,3.52,8.63,23.54
+HEAT,aberthaw-and-cardiff-east,50,0,3.52,8.63,23.54
+HEAT,aberthaw-and-cardiff-east,100,20,3.52,8.63,23.54
+HEAT,aberthaw-and-cardiff-east,200,127,3.52,8.63,23.54
+HEAT,aberthaw-and-cardiff-east,500,227,3.52,8.63,23.54
+HEAT,aberthaw-and-cardiff-east,1000,227,3.52,8.63,23.54
+HEAT,aberthaw-and-cardiff-east,9999,331,3.52,8.63,23.54
+HIGH,aberthaw-and-cardiff-east,0,0,39.2,45.27,54.14
+HIGH,aberthaw-and-cardiff-east,50,0,39.2,45.27,54.14
+HIGH,aberthaw-and-cardiff-east,100,20,39.2,45.27,54.14
+HIGH,aberthaw-and-cardiff-east,200,127,84.05,54.99,63.9
+HIGH,aberthaw-and-cardiff-east,500,227,84.05,54.99,63.9
+HIGH,aberthaw-and-cardiff-east,1000,227,84.05,54.99,63.9
+HIGH,aberthaw-and-cardiff-east,9999,331,84.05,54.99,63.9
+LLDO,aberthaw-and-cardiff-east,0,0,37.54,39.63,45.33
+LLDO,aberthaw-and-cardiff-east,50,0,37.54,39.63,45.33
+LLDO,aberthaw-and-cardiff-east,100,20,37.54,39.63,45.33
+LLDO,aberthaw-and-cardiff-east,200,127,80.62,48.74,54.5
+LLDO,aberthaw-and-cardiff-east,500,227,80.62,48.74,54.5
+LLDO,aberthaw-and-cardiff-east,1000,227,80.62,48.74,54.5
+LLDO,aberthaw-and-cardiff-east,9999,331,80.62,48.74,54.5
+PENA,aberthaw-and-cardiff-east,0,0,37.36,39.58,45.26
+PENA,aberthaw-and-cardiff-east,50,0,37.36,39.58,45.26
+PENA,aberthaw-and-cardiff-east,100,20,37.36,39.58,45.26
+PENA,aberthaw-and-cardiff-east,200,127,80.57,48.7,54.46
+PENA,aberthaw-and-cardiff-east,500,227,80.57,48.7,54.46
+PENA,aberthaw-and-cardiff-east,1000,227,80.57,48.7,54.46
+PENA,aberthaw-and-cardiff-east,9999,331,80.57,48.7,54.46
+SMOR,aberthaw-and-cardiff-east,0,0,3.71,0.5,1.5
+SMOR,aberthaw-and-cardiff-east,50,0,3.71,0.5,1.5
+SMOR,aberthaw-and-cardiff-east,100,20,1.97,0.16,1.07
+SMOR,aberthaw-and-cardiff-east,200,127,1.97,0.16,1.07
+SMOR,aberthaw-and-cardiff-east,500,227,1.97,0.16,1.07
+SMOR,aberthaw-and-cardiff-east,1000,227,1.97,0.16,1.07
+SMOR,aberthaw-and-cardiff-east,9999,331,1.97,0.16,1.07
+TRGF,aberthaw-and-cardiff-east,0,0,0.6,0.03,0.93
+TRGF,aberthaw-and-cardiff-east,50,0,0.6,0.03,0.93
+TRGF,aberthaw-and-cardiff-east,100,20,1.71,0.14,1.12
+TRGF,aberthaw-and-cardiff-east,200,127,1.71,0.14,1.12
+TRGF,aberthaw-and-cardiff-east,500,227,1.71,0.14,1.12
+TRGF,aberthaw-and-cardiff-east,1000,227,1.71,0.14,1.12
+TRGF,aberthaw-and-cardiff-east,9999,331,1.71,0.14,1.12
+TRPK,aberthaw-and-cardiff-east,0,0,0.0,0.0,0.0
+TRPK,aberthaw-and-cardiff-east,50,0,0.0,0.0,0.0
+TRPK,aberthaw-and-cardiff-east,100,20,0.0,0.0,0.0
+TRPK,aberthaw-and-cardiff-east,200,127,0.0,0.0,0.0
+TRPK,aberthaw-and-cardiff-east,500,227,0.0,0.0,0.0
+TRPK,aberthaw-and-cardiff-east,1000,227,0.0,0.0,0.0
+TRPK,aberthaw-and-cardiff-east,9999,331,0.0,0.0,0.0
+WHTN,aberthaw-and-cardiff-east,0,0,4.91,0.82,2.37
+WHTN,aberthaw-and-cardiff-east,50,0,4.91,0.82,2.37
+WHTN,aberthaw-and-cardiff-east,100,20,3.34,0.49,1.99
+WHTN,aberthaw-and-cardiff-east,200,127,3.34,0.49,1.99
+WHTN,aberthaw-and-cardiff-east,500,227,3.34,0.49,1.99
+WHTN,aberthaw-and-cardiff-east,1000,227,3.34,0.49,1.99
+WHTN,aberthaw-and-cardiff-east,9999,331,3.34,0.49,1.99
+WOOD,aberthaw-and-cardiff-east,0,0,64.5,52.31,60.59
+WOOD,aberthaw-and-cardiff-east,50,0,64.5,52.31,60.59
+WOOD,aberthaw-and-cardiff-east,100,20,64.5,52.31,60.59
+WOOD,aberthaw-and-cardiff-east,200,127,87.25,58.54,67.0
+WOOD,aberthaw-and-cardiff-east,500,227,87.25,58.54,67.0
+WOOD,aberthaw-and-cardiff-east,1000,227,87.25,58.54,67.0
+WOOD,aberthaw-and-cardiff-east,9999,331,87.25,58.54,67.0
+BRAW,pembroke,0,0,65.3,77.7,81.58
+BRAW,pembroke,50,10,65.3,77.7,81.58
+BRAW,pembroke,100,10,65.3,77.7,81.58
+BRAW,pembroke,200,90,65.3,77.7,81.58
+BRAW,pembroke,500,95,65.3,77.7,81.58
+BRAW,pembroke,1000,126,65.3,77.7,81.58
+BRAW,pembroke,9999,241,65.3,77.7,81.58
+BROF,pembroke,0,0,22.86,41.5,52.51
+BROF,pembroke,50,10,24.82,41.44,52.44
+BROF,pembroke,100,10,24.82,41.44,52.44
+BROF,pembroke,200,90,24.82,41.44,52.44
+BROF,pembroke,500,95,26.32,41.48,52.45
+BROF,pembroke,1000,126,26.24,41.75,52.57
+BROF,pembroke,9999,241,26.24,41.75,52.57
+FENT,pembroke,0,0,0.16,2.48,7.38
+FENT,pembroke,50,10,0.14,2.45,7.27
+FENT,pembroke,100,10,0.14,2.45,7.27
+FENT,pembroke,200,90,0.14,2.45,7.27
+FENT,pembroke,500,95,0.13,2.44,7.22
+FENT,pembroke,1000,126,0.14,2.56,7.35
+FENT,pembroke,9999,241,0.14,2.56,7.35
+FISH,pembroke,0,0,43.24,66.42,70.98
+FISH,pembroke,50,10,43.24,66.42,70.98
+FISH,pembroke,100,10,43.24,66.42,70.98
+FISH,pembroke,200,90,43.24,66.42,70.98
+FISH,pembroke,500,95,43.24,66.42,70.98
+FISH,pembroke,1000,126,43.24,66.42,70.98
+FISH,pembroke,9999,241,43.24,66.42,70.98
+Golden Hill,pembroke,0,0,0.02,0.02,0.01
+Golden Hill,pembroke,50,10,0.06,0.02,0.03
+Golden Hill,pembroke,100,10,0.06,0.02,0.03
+Golden Hill,pembroke,200,90,0.06,0.02,0.03
+Golden Hill,pembroke,500,95,0.12,0.02,0.05
+Golden Hill,pembroke,1000,126,0.12,0.02,0.04
+Golden Hill,pembroke,9999,241,0.12,0.02,0.04
+Haverfordwest,pembroke,0,0,0.16,2.51,7.48
+Haverfordwest,pembroke,50,10,0.14,2.48,7.37
+Haverfordwest,pembroke,100,10,0.14,2.48,7.37
+Haverfordwest,pembroke,200,90,0.14,2.48,7.37
+Haverfordwest,pembroke,500,95,0.13,2.47,7.31
+Haverfordwest,pembroke,1000,126,0.14,2.6,7.44
+Haverfordwest,pembroke,9999,241,0.14,2.6,7.44
+NEYL,pembroke,0,0,3.07,0.03,4.53
+NEYL,pembroke,50,10,0.39,0.0,3.38
+NEYL,pembroke,100,10,0.39,0.0,3.38
+NEYL,pembroke,200,90,0.39,0.0,3.38
+NEYL,pembroke,500,95,0.07,0.0,2.88
+NEYL,pembroke,1000,126,0.07,0.0,2.91
+NEYL,pembroke,9999,241,0.07,0.0,2.91
+PEBL,pembroke,0,0,0.59,9.11,27.24
+PEBL,pembroke,50,10,0.57,9.09,27.21
+PEBL,pembroke,100,10,0.57,9.09,27.21
+PEBL,pembroke,200,90,0.57,9.09,27.21
+PEBL,pembroke,500,95,0.56,9.07,27.19
+PEBL,pembroke,1000,126,0.58,11.01,28.08
+PEBL,pembroke,9999,241,0.58,11.01,28.08
+STEY,pembroke,0,0,0.81,0.0,0.58
+STEY,pembroke,50,10,0.17,0.0,0.25
+STEY,pembroke,100,10,0.17,0.0,0.25
+STEY,pembroke,200,90,0.17,0.0,0.25
+STEY,pembroke,500,95,0.22,0.0,0.2
+STEY,pembroke,1000,126,0.21,0.0,0.21
+STEY,pembroke,9999,241,0.21,0.0,0.21
+STFL,pembroke,0,0,25.96,49.41,57.44
+STFL,pembroke,50,10,23.86,49.0,57.09
+STFL,pembroke,100,10,23.86,49.0,57.09
+STFL,pembroke,200,90,23.86,49.0,57.09
+STFL,pembroke,500,95,23.08,48.79,56.92
+STFL,pembroke,1000,126,23.17,49.08,57.06
+STFL,pembroke,9999,241,23.17,49.08,57.06
+South Hook,pembroke,0,0,0.0,0.0,0.0
+South Hook,pembroke,50,10,0.0,0.0,0.0
+South Hook,pembroke,100,10,0.0,0.0,0.0
+South Hook,pembroke,200,90,0.0,0.0,0.0
+South Hook,pembroke,500,95,0.0,0.0,0.0
+South Hook,pembroke,1000,126,0.0,0.0,0.0
+South Hook,pembroke,9999,241,0.0,0.0,0.0
+WLND,pembroke,0,0,0.34,5.99,23.16
+WLND,pembroke,50,10,0.34,5.99,23.16
+WLND,pembroke,100,10,0.34,5.99,23.16
+WLND,pembroke,200,90,0.34,5.99,23.16
+WLND,pembroke,500,95,0.34,5.99,23.16
+WLND,pembroke,1000,126,0.36,7.82,24.09
+WLND,pembroke,9999,241,0.36,7.82,24.09
+Bridgend,pyle,0,0,3.53,27.67,35.45
+Bridgend,pyle,50,59,3.53,27.67,35.45
+Bridgend,pyle,100,59,3.53,27.67,35.45
+Bridgend,pyle,200,59,3.53,27.67,35.45
+Bridgend,pyle,500,172,31.99,55.69,67.7
+Bridgend,pyle,1000,172,31.99,55.69,67.7
+Bridgend,pyle,9999,262,31.99,55.69,67.7
+LLAG,pyle,0,0,4.09,27.73,37.28
+LLAG,pyle,50,59,4.09,27.73,37.28
+LLAG,pyle,100,59,4.09,27.73,37.28
+LLAG,pyle,200,59,4.09,27.73,37.28
+LLAG,pyle,500,172,32.44,55.73,67.71
+LLAG,pyle,1000,172,32.44,55.73,67.71
+LLAG,pyle,9999,262,32.44,55.73,67.71
+NOTT,pyle,0,0,29.48,41.44,46.03
+NOTT,pyle,50,59,29.48,41.44,46.03
+NOTT,pyle,100,59,29.48,41.44,46.03
+NOTT,pyle,200,59,29.48,41.44,46.03
+NOTT,pyle,500,172,29.48,41.44,46.03
+NOTT,pyle,1000,172,29.48,41.44,46.03
+NOTT,pyle,9999,262,29.48,41.44,46.03
+NTDN,pyle,0,0,1.14,2.45,9.65
+NTDN,pyle,50,59,1.14,2.45,9.65
+NTDN,pyle,100,59,1.14,2.45,9.65
+NTDN,pyle,200,59,1.14,2.45,9.65
+NTDN,pyle,500,172,1.14,2.45,9.65
+NTDN,pyle,1000,172,1.14,2.45,9.65
+NTDN,pyle,9999,262,1.14,2.45,9.65
+Pyle,pyle,0,0,0.0,0.0,0.0
+Pyle,pyle,50,59,0.0,0.0,0.0
+Pyle,pyle,100,59,0.0,0.0,0.0
+Pyle,pyle,200,59,0.0,0.0,0.0
+Pyle,pyle,500,172,0.0,0.0,0.0
+Pyle,pyle,1000,172,0.0,0.0,0.0
+Pyle,pyle,9999,262,0.0,0.0,0.0
+SCHW,pyle,0,0,9.89,29.84,40.83
+SCHW,pyle,50,59,9.89,29.84,40.83
+SCHW,pyle,100,59,9.89,29.84,40.83
+SCHW,pyle,200,59,9.89,29.84,40.83
+SCHW,pyle,500,172,36.85,56.38,67.73
+SCHW,pyle,1000,172,36.85,56.38,67.73
+SCHW,pyle,9999,262,36.85,56.38,67.73
+STMD,pyle,0,0,0.85,2.03,7.85
+STMD,pyle,50,59,0.85,2.03,7.85
+STMD,pyle,100,59,0.85,2.03,7.85
+STMD,pyle,200,59,0.85,2.03,7.85
+STMD,pyle,500,172,0.85,2.03,7.85
+STMD,pyle,1000,172,0.85,2.03,7.85
+STMD,pyle,9999,262,0.85,2.03,7.85
+BEAU,rassau,0,0,0.0,0.0,0.0
+BEAU,rassau,50,34,0.0,0.0,0.0
+BEAU,rassau,100,84,0.0,0.0,0.0
+BEAU,rassau,200,141,0.0,0.0,0.0
+BEAU,rassau,500,196,0.0,0.0,0.0
+BEAU,rassau,1000,200,0.0,0.0,0.0
+BEAU,rassau,9999,200,0.0,0.0,0.0
+BRMA,rassau,0,0,26.1,29.36,39.83
+BRMA,rassau,50,34,26.1,29.36,39.83
+BRMA,rassau,100,84,26.1,29.36,39.83
+BRMA,rassau,200,141,26.1,29.36,39.83
+BRMA,rassau,500,196,26.1,29.36,39.83
+BRMA,rassau,1000,200,26.1,29.36,39.83
+BRMA,rassau,9999,200,26.1,29.36,39.83
+CWMF,rassau,0,0,37.46,19.83,36.46
+CWMF,rassau,50,34,37.46,19.83,36.46
+CWMF,rassau,100,84,37.46,19.83,36.46
+CWMF,rassau,200,141,37.46,19.83,36.46
+CWMF,rassau,500,196,37.46,19.83,36.46
+CWMF,rassau,1000,200,37.46,19.83,36.46
+CWMF,rassau,9999,200,37.46,19.83,36.46
+Crumlin,rassau,0,0,0.0,0.0,0.0
+Crumlin,rassau,50,34,0.0,0.0,0.0
+Crumlin,rassau,100,84,0.0,0.0,0.0
+Crumlin,rassau,200,141,0.0,0.0,0.0
+Crumlin,rassau,500,196,0.0,0.0,0.0
+Crumlin,rassau,1000,200,0.0,0.0,0.0
+Crumlin,rassau,9999,200,0.0,0.0,0.0
+Ebbw Vale,rassau,0,0,0.0,0.0,0.0
+Ebbw Vale,rassau,50,34,0.0,0.0,0.0
+Ebbw Vale,rassau,100,84,0.0,0.0,0.0
+Ebbw Vale,rassau,200,141,0.0,0.0,0.0
+Ebbw Vale,rassau,500,196,0.0,0.0,0.0
+Ebbw Vale,rassau,1000,200,0.0,0.0,0.0
+Ebbw Vale,rassau,9999,200,0.0,0.0,0.0
+HILL,rassau,0,0,16.34,19.89,35.82
+HILL,rassau,50,34,16.34,19.89,35.82
+HILL,rassau,100,84,16.34,19.89,35.82
+HILL,rassau,200,141,16.34,19.89,35.82
+HILL,rassau,500,196,16.34,19.89,35.82
+HILL,rassau,1000,200,16.34,19.89,35.82
+HILL,rassau,9999,200,16.34,19.89,35.82
+POLL,rassau,0,0,8.37,12.32,29.7
+POLL,rassau,50,34,8.37,12.32,29.7
+POLL,rassau,100,84,8.37,12.32,29.7
+POLL,rassau,200,141,8.37,12.32,29.7
+POLL,rassau,500,196,8.37,12.32,29.7
+POLL,rassau,1000,200,8.37,12.32,29.7
+POLL,rassau,9999,200,8.37,12.32,29.7
+TRED,rassau,0,0,0.0,0.0,0.0
+TRED,rassau,50,34,0.0,0.0,0.0
+TRED,rassau,100,84,0.0,0.0,0.0
+TRED,rassau,200,141,0.0,0.0,0.0
+TRED,rassau,500,196,0.0,0.0,0.0
+TRED,rassau,1000,200,0.0,0.0,0.0
+TRED,rassau,9999,200,0.0,0.0,0.0
+WNYP,rassau,0,0,0.0,0.0,0.0
+WNYP,rassau,50,34,0.0,0.0,0.0
+WNYP,rassau,100,84,0.0,0.0,0.0
+WNYP,rassau,200,141,0.0,0.0,0.0
+WNYP,rassau,500,196,0.0,0.0,0.0
+WNYP,rassau,1000,200,0.0,0.0,0.0
+WNYP,rassau,9999,200,0.0,0.0,0.0
+ABAE,swansea-north,0,52,15.45,18.3,33.87
+ABAE,swansea-north,50,117,15.45,18.3,33.87
+ABAE,swansea-north,100,147,15.45,18.3,33.87
+ABAE,swansea-north,200,180,15.45,18.3,33.87
+ABAE,swansea-north,500,336,15.45,18.3,33.87
+ABAE,swansea-north,1000,337,15.46,18.3,33.87
+ABAE,swansea-north,9999,413,15.46,18.3,33.87
+ABDA,swansea-north,0,52,5.59,8.23,24.63
+ABDA,swansea-north,50,117,8.11,8.54,24.81
+ABDA,swansea-north,100,147,8.11,8.54,24.81
+ABDA,swansea-north,200,180,8.11,8.54,24.81
+ABDA,swansea-north,500,336,6.54,8.37,24.7
+ABDA,swansea-north,1000,337,6.54,8.37,24.7
+ABDA,swansea-north,9999,413,6.54,8.37,24.7
+ABEC,swansea-north,0,52,0.0,0.0,0.01
+ABEC,swansea-north,50,117,0.0,0.0,0.0
+ABEC,swansea-north,100,147,0.0,0.0,0.0
+ABEC,swansea-north,200,180,0.0,0.0,0.0
+ABEC,swansea-north,500,336,0.0,0.0,0.0
+ABEC,swansea-north,1000,337,0.0,0.0,0.0
+ABEC,swansea-north,9999,413,0.0,0.0,0.0
+ABYS,swansea-north,0,52,0.0,0.0,0.0
+ABYS,swansea-north,50,117,0.0,0.0,0.0
+ABYS,swansea-north,100,147,0.0,0.0,0.0
+ABYS,swansea-north,200,180,0.0,0.0,0.0
+ABYS,swansea-north,500,336,0.0,0.0,0.0
+ABYS,swansea-north,1000,337,0.0,0.0,0.0
+ABYS,swansea-north,9999,413,0.0,0.0,0.0
+ADVY,swansea-north,0,52,0.0,0.0,0.0
+ADVY,swansea-north,50,117,0.0,0.0,0.0
+ADVY,swansea-north,100,147,0.0,0.0,0.0
+ADVY,swansea-north,200,180,0.0,0.0,0.0
+ADVY,swansea-north,500,336,0.0,0.0,0.0
+ADVY,swansea-north,1000,337,0.0,0.0,0.0
+ADVY,swansea-north,9999,413,0.0,0.0,0.0
+ALCO,swansea-north,0,52,0.0,0.0,0.0
+ALCO,swansea-north,50,117,0.0,0.0,0.0
+ALCO,swansea-north,100,147,0.0,0.0,0.0
+ALCO,swansea-north,200,180,0.0,0.0,0.0
+ALCO,swansea-north,500,336,0.0,0.0,0.0
+ALCO,swansea-north,1000,337,0.0,0.0,0.0
+ALCO,swansea-north,9999,413,0.0,0.0,0.0
+Ammanford,swansea-north,0,52,0.0,0.0,0.0
+Ammanford,swansea-north,50,117,0.0,0.0,0.0
+Ammanford,swansea-north,100,147,0.0,0.0,0.0
+Ammanford,swansea-north,200,180,0.0,0.0,0.0
+Ammanford,swansea-north,500,336,0.0,0.0,0.0
+Ammanford,swansea-north,1000,337,0.0,0.0,0.0
+Ammanford,swansea-north,9999,413,0.0,0.0,0.0
+BISH,swansea-north,0,52,13.78,18.79,34.06
+BISH,swansea-north,50,117,13.78,18.79,34.06
+BISH,swansea-north,100,147,13.78,18.79,34.06
+BISH,swansea-north,200,180,13.78,18.79,34.06
+BISH,swansea-north,500,336,14.28,24.27,38.21
+BISH,swansea-north,1000,337,14.28,24.27,38.21
+BISH,swansea-north,9999,413,14.28,24.27,38.21
+BLAP,swansea-north,0,52,0.08,0.0,0.01
+BLAP,swansea-north,50,117,0.08,0.0,0.01
+BLAP,swansea-north,100,147,0.08,0.0,0.01
+BLAP,swansea-north,200,180,0.08,0.0,0.01
+BLAP,swansea-north,500,336,0.08,0.0,0.01
+BLAP,swansea-north,1000,337,0.08,0.0,0.01
+BLAP,swansea-north,9999,413,0.08,0.0,0.01
+BRID,swansea-north,0,52,25.51,17.23,33.84
+BRID,swansea-north,50,117,25.51,17.23,33.84
+BRID,swansea-north,100,147,25.51,17.23,33.84
+BRID,swansea-north,200,180,25.51,17.23,33.84
+BRID,swansea-north,500,336,25.51,17.23,33.84
+BRID,swansea-north,1000,337,25.4,16.95,33.75
+BRID,swansea-north,9999,413,25.4,16.95,33.75
+BWST,swansea-north,0,52,0.0,0.0,0.0
+BWST,swansea-north,50,117,0.0,0.0,0.0
+BWST,swansea-north,100,147,0.0,0.0,0.0
+BWST,swansea-north,200,180,0.0,0.0,0.0
+BWST,swansea-north,500,336,0.0,0.0,0.0
+BWST,swansea-north,1000,337,0.0,0.0,0.0
+BWST,swansea-north,9999,413,0.0,0.0,0.0
+Briton Ferry,swansea-north,0,52,0.0,0.0,0.0
+Briton Ferry,swansea-north,50,117,0.0,0.0,0.0
+Briton Ferry,swansea-north,100,147,0.0,0.0,0.0
+Briton Ferry,swansea-north,200,180,0.0,0.0,0.0
+Briton Ferry,swansea-north,500,336,0.0,0.0,0.0
+Briton Ferry,swansea-north,1000,337,0.0,0.0,0.0
+Briton Ferry,swansea-north,9999,413,0.0,0.0,0.0
+CARG,swansea-north,0,52,32.4,24.74,38.55
+CARG,swansea-north,50,117,32.4,24.74,38.55
+CARG,swansea-north,100,147,32.4,24.74,38.55
+CARG,swansea-north,200,180,32.4,24.74,38.55
+CARG,swansea-north,500,336,32.4,24.74,38.55
+CARG,swansea-north,1000,337,32.28,24.46,38.47
+CARG,swansea-north,9999,413,32.28,24.46,38.47
+CLAS,swansea-north,0,52,31.71,37.65,47.88
+CLAS,swansea-north,50,117,31.71,37.65,47.88
+CLAS,swansea-north,100,147,31.71,37.65,47.88
+CLAS,swansea-north,200,180,89.16,54.9,63.56
+CLAS,swansea-north,500,336,89.16,54.9,63.56
+CLAS,swansea-north,1000,337,89.16,54.9,63.56
+CLAS,swansea-north,9999,413,89.16,54.9,63.56
+COMS,swansea-north,0,52,19.61,21.97,36.32
+COMS,swansea-north,50,117,19.61,21.97,36.32
+COMS,swansea-north,100,147,19.61,21.97,36.32
+COMS,swansea-north,200,180,19.61,21.97,36.32
+COMS,swansea-north,500,336,19.61,21.97,36.32
+COMS,swansea-north,1000,337,19.61,21.97,36.32
+COMS,swansea-north,9999,413,19.61,21.97,36.32
+CRHA,swansea-north,0,52,27.45,37.02,44.96
+CRHA,swansea-north,50,117,27.45,37.02,44.96
+CRHA,swansea-north,100,147,27.45,37.02,44.96
+CRHA,swansea-north,200,180,27.45,37.02,44.96
+CRHA,swansea-north,500,336,27.45,37.02,44.96
+CRHA,swansea-north,1000,337,27.45,37.02,44.96
+CRHA,swansea-north,9999,413,27.45,37.02,44.96
+CWFR,swansea-north,0,52,0.02,0.05,3.12
+CWFR,swansea-north,50,117,0.02,0.05,3.12
+CWFR,swansea-north,100,147,0.02,0.05,3.12
+CWFR,swansea-north,200,180,0.02,0.05,3.12
+CWFR,swansea-north,500,336,0.02,0.05,3.12
+CWFR,swansea-north,1000,337,0.02,0.05,3.12
+CWFR,swansea-north,9999,413,0.02,0.05,3.12
+Carmarthen,swansea-north,0,52,0.0,0.0,0.0
+Carmarthen,swansea-north,50,117,0.0,0.0,0.0
+Carmarthen,swansea-north,100,147,0.0,0.0,0.0
+Carmarthen,swansea-north,200,180,0.0,0.0,0.0
+Carmarthen,swansea-north,500,336,0.0,0.0,0.0
+Carmarthen,swansea-north,1000,337,0.0,0.0,0.0
+Carmarthen,swansea-north,9999,413,0.0,0.0,0.0
+FOSL,swansea-north,0,52,15.91,11.97,29.27
+FOSL,swansea-north,50,117,15.91,11.97,29.27
+FOSL,swansea-north,100,147,15.91,11.97,29.27
+FOSL,swansea-north,200,180,15.91,11.97,29.27
+FOSL,swansea-north,500,336,15.91,11.97,29.27
+FOSL,swansea-north,1000,337,15.91,11.97,29.27
+FOSL,swansea-north,9999,413,15.91,11.97,29.27
+FRBN,swansea-north,0,52,0.0,0.0,0.0
+FRBN,swansea-north,50,117,0.0,0.0,0.0
+FRBN,swansea-north,100,147,0.0,0.0,0.0
+FRBN,swansea-north,200,180,0.0,0.0,0.0
+FRBN,swansea-north,500,336,0.0,0.0,0.0
+FRBN,swansea-north,1000,337,0.0,0.0,0.0
+FRBN,swansea-north,9999,413,0.0,0.0,0.0
+GARN,swansea-north,0,52,53.7,59.18,64.91
+GARN,swansea-north,50,117,53.7,59.18,64.91
+GARN,swansea-north,100,147,53.7,59.18,64.91
+GARN,swansea-north,200,180,95.58,69.46,75.23
+GARN,swansea-north,500,336,95.58,69.46,75.23
+GARN,swansea-north,1000,337,95.58,69.46,75.23
+GARN,swansea-north,9999,413,95.58,69.46,75.23
+GWAU,swansea-north,0,52,33.94,38.28,44.41
+GWAU,swansea-north,50,117,32.41,37.99,44.29
+GWAU,swansea-north,100,147,32.41,37.99,44.29
+GWAU,swansea-north,200,180,32.41,37.99,44.29
+GWAU,swansea-north,500,336,32.41,37.99,44.29
+GWAU,swansea-north,1000,337,32.41,37.99,44.29
+GWAU,swansea-north,9999,413,32.41,37.99,44.29
+Gowerton East,swansea-north,0,52,0.0,0.0,0.0
+Gowerton East,swansea-north,50,117,0.0,0.0,0.0
+Gowerton East,swansea-north,100,147,0.0,0.0,0.0
+Gowerton East,swansea-north,200,180,0.0,0.0,0.0
+Gowerton East,swansea-north,500,336,0.0,0.0,0.0
+Gowerton East,swansea-north,1000,337,0.0,0.0,0.0
+Gowerton East,swansea-north,9999,413,0.0,0.0,0.0
+HEND,swansea-north,0,52,11.59,13.74,30.61
+HEND,swansea-north,50,117,11.59,13.74,30.61
+HEND,swansea-north,100,147,11.59,13.74,30.61
+HEND,swansea-north,200,180,11.59,13.74,30.61
+HEND,swansea-north,500,336,11.59,13.74,30.61
+HEND,swansea-north,1000,337,11.59,13.74,30.61
+HEND,swansea-north,9999,413,11.59,13.74,30.61
+HOPK,swansea-north,0,52,0.0,0.0,0.0
+HOPK,swansea-north,50,117,0.0,0.0,0.0
+HOPK,swansea-north,100,147,0.0,0.0,0.0
+HOPK,swansea-north,200,180,0.0,0.0,0.0
+HOPK,swansea-north,500,336,0.0,0.0,0.0
+HOPK,swansea-north,1000,337,0.0,0.0,0.0
+HOPK,swansea-north,9999,413,0.0,0.0,0.0
+Hirwaun,swansea-north,0,52,0.2,0.01,0.01
+Hirwaun,swansea-north,50,117,4.1,0.34,0.39
+Hirwaun,swansea-north,100,147,4.1,0.34,0.39
+Hirwaun,swansea-north,200,180,4.1,0.34,0.39
+Hirwaun,swansea-north,500,336,1.69,0.15,0.15
+Hirwaun,swansea-north,1000,337,1.69,0.15,0.15
+Hirwaun,swansea-north,9999,413,1.69,0.15,0.15
+INCS,swansea-north,0,52,54.4,57.93,63.72
+INCS,swansea-north,50,117,54.4,57.93,63.72
+INCS,swansea-north,100,147,54.4,57.93,63.72
+INCS,swansea-north,200,180,84.7,66.99,72.25
+INCS,swansea-north,500,336,84.7,66.99,72.25
+INCS,swansea-north,1000,337,84.7,66.99,72.25
+INCS,swansea-north,9999,413,84.7,66.99,72.25
+JERM,swansea-north,0,52,24.4,26.19,38.4
+JERM,swansea-north,50,117,24.4,26.19,38.4
+JERM,swansea-north,100,147,24.4,26.19,38.4
+JERM,swansea-north,200,180,24.4,26.19,38.4
+JERM,swansea-north,500,336,24.4,26.19,38.4
+JERM,swansea-north,1000,337,24.4,26.19,38.4
+JERM,swansea-north,9999,413,24.4,26.19,38.4
+KIDW,swansea-north,0,52,25.1,21.53,36.22
+KIDW,swansea-north,50,117,25.1,21.53,36.22
+KIDW,swansea-north,100,147,25.1,21.53,36.22
+KIDW,swansea-north,200,180,25.1,21.53,36.22
+KIDW,swansea-north,500,336,25.1,21.53,36.22
+KIDW,swansea-north,1000,337,25.1,21.53,36.22
+KIDW,swansea-north,9999,413,25.1,21.53,36.22
+LBRI,swansea-north,0,52,40.83,31.07,42.91
+LBRI,swansea-north,50,117,40.83,31.07,42.91
+LBRI,swansea-north,100,147,40.83,31.07,42.91
+LBRI,swansea-north,200,180,40.83,31.07,42.91
+LBRI,swansea-north,500,336,40.83,31.07,42.91
+LBRI,swansea-north,1000,337,40.83,31.07,42.91
+LBRI,swansea-north,9999,413,40.83,31.07,42.91
+LDEI,swansea-north,0,52,51.6,43.83,53.65
+LDEI,swansea-north,50,117,51.6,43.83,53.65
+LDEI,swansea-north,100,147,51.6,43.83,53.65
+LDEI,swansea-north,200,180,51.6,43.83,53.65
+LDEI,swansea-north,500,336,51.6,43.83,53.65
+LDEI,swansea-north,1000,337,51.6,43.83,53.65
+LDEI,swansea-north,9999,413,51.6,43.83,53.65
+LDOV,swansea-north,0,52,39.97,30.46,38.78
+LDOV,swansea-north,50,117,39.97,30.46,38.78
+LDOV,swansea-north,100,147,39.97,30.46,38.78
+LDOV,swansea-north,200,180,39.97,30.46,38.78
+LDOV,swansea-north,500,336,39.97,30.46,38.78
+LDOV,swansea-north,1000,337,39.97,30.46,38.78
+LDOV,swansea-north,9999,413,39.97,30.46,38.78
+LFYR,swansea-north,0,52,5.05,1.83,19.44
+LFYR,swansea-north,50,117,5.05,1.83,19.44
+LFYR,swansea-north,100,147,5.05,1.83,19.44
+LFYR,swansea-north,200,180,5.05,1.83,19.44
+LFYR,swansea-north,500,336,5.05,1.83,19.44
+LFYR,swansea-north,1000,337,5.05,1.83,19.44
+LFYR,swansea-north,9999,413,5.05,1.83,19.44
+LGAD,swansea-north,0,52,46.37,37.68,47.6
+LGAD,swansea-north,50,117,46.37,37.68,47.6
+LGAD,swansea-north,100,147,46.37,37.68,47.6
+LGAD,swansea-north,200,180,46.37,37.68,47.6
+LGAD,swansea-north,500,336,46.37,37.68,47.6
+LGAD,swansea-north,1000,337,46.37,37.68,47.6
+LGAD,swansea-north,9999,413,46.37,37.68,47.6
+LILA,swansea-north,0,52,0.0,0.0,0.0
+LILA,swansea-north,50,117,0.0,0.0,0.0
+LILA,swansea-north,100,147,0.0,0.0,0.0
+LILA,swansea-north,200,180,0.0,0.0,0.0
+LILA,swansea-north,500,336,0.0,0.0,0.0
+LILA,swansea-north,1000,337,0.0,0.0,0.0
+LILA,swansea-north,9999,413,0.0,0.0,0.0
+LLAY,swansea-north,0,52,0.91,0.83,12.81
+LLAY,swansea-north,50,117,0.81,0.25,11.56
+LLAY,swansea-north,100,147,0.81,0.25,11.56
+LLAY,swansea-north,200,180,0.81,0.25,11.56
+LLAY,swansea-north,500,336,0.58,0.0,6.7
+LLAY,swansea-north,1000,337,0.59,0.0,6.84
+LLAY,swansea-north,9999,413,0.59,0.0,6.84
+LLCY,swansea-north,0,52,0.0,0.15,1.16
+LLCY,swansea-north,50,117,0.0,0.15,1.16
+LLCY,swansea-north,100,147,0.0,0.15,1.16
+LLCY,swansea-north,200,180,0.0,0.15,1.16
+LLCY,swansea-north,500,336,0.0,0.15,1.16
+LLCY,swansea-north,1000,337,0.0,0.15,1.16
+LLCY,swansea-north,9999,413,0.0,0.15,1.16
+LLNT,swansea-north,0,52,0.0,0.0,0.0
+LLNT,swansea-north,50,117,0.0,0.0,0.0
+LLNT,swansea-north,100,147,0.0,0.0,0.0
+LLNT,swansea-north,200,180,0.0,0.0,0.0
+LLNT,swansea-north,500,336,0.0,0.0,0.0
+LLNT,swansea-north,1000,337,0.0,0.0,0.0
+LLNT,swansea-north,9999,413,0.0,0.0,0.0
+LRHI,swansea-north,0,52,99.58,99.84,99.88
+LRHI,swansea-north,50,117,99.58,99.84,99.88
+LRHI,swansea-north,100,147,99.58,99.84,99.88
+LRHI,swansea-north,200,180,99.58,99.84,99.88
+LRHI,swansea-north,500,336,99.71,99.89,99.91
+LRHI,swansea-north,1000,337,99.71,99.89,99.91
+LRHI,swansea-north,9999,413,99.71,99.89,99.91
+LWNI,swansea-north,0,52,0.8,0.57,0.44
+LWNI,swansea-north,50,117,0.75,0.43,0.42
+LWNI,swansea-north,100,147,0.75,0.43,0.42
+LWNI,swansea-north,200,180,0.75,0.43,0.42
+LWNI,swansea-north,500,336,0.78,0.27,0.38
+LWNI,swansea-north,1000,337,0.78,0.27,0.38
+LWNI,swansea-north,9999,413,0.78,0.27,0.38
+Lampeter,swansea-north,0,52,0.0,0.0,0.0
+Lampeter,swansea-north,50,117,0.0,0.0,0.0
+Lampeter,swansea-north,100,147,0.0,0.0,0.0
+Lampeter,swansea-north,200,180,0.0,0.0,0.0
+Lampeter,swansea-north,500,336,0.0,0.0,0.02
+Lampeter,swansea-north,1000,337,0.0,0.0,0.02
+Lampeter,swansea-north,9999,413,0.0,0.0,0.02
+Llanarth,swansea-north,0,52,1.34,0.01,0.11
+Llanarth,swansea-north,50,117,1.34,0.01,0.11
+Llanarth,swansea-north,100,147,1.34,0.01,0.11
+Llanarth,swansea-north,200,180,1.34,0.01,0.11
+Llanarth,swansea-north,500,336,1.34,0.01,0.11
+Llanarth,swansea-north,1000,337,1.39,0.01,0.12
+Llanarth,swansea-north,9999,413,1.39,0.01,0.12
+MACH,swansea-north,0,52,0.0,0.0,0.0
+MACH,swansea-north,50,117,0.0,0.0,0.0
+MACH,swansea-north,100,147,0.0,0.0,0.0
+MACH,swansea-north,200,180,0.0,0.0,0.0
+MACH,swansea-north,500,336,0.0,0.0,0.0
+MACH,swansea-north,1000,337,0.0,0.0,0.0
+MACH,swansea-north,9999,413,0.0,0.0,0.0
+MAER,swansea-north,0,52,0.16,0.01,0.01
+MAER,swansea-north,50,117,3.75,0.32,0.34
+MAER,swansea-north,100,147,3.75,0.32,0.34
+MAER,swansea-north,200,180,3.75,0.32,0.34
+MAER,swansea-north,500,336,1.5,0.14,0.13
+MAER,swansea-north,1000,337,1.5,0.14,0.13
+MAER,swansea-north,9999,413,1.5,0.14,0.13
+MAES,swansea-north,0,52,11.58,14.12,30.73
+MAES,swansea-north,50,117,11.58,14.12,30.73
+MAES,swansea-north,100,147,11.58,14.12,30.73
+MAES,swansea-north,200,180,11.58,14.12,30.73
+MAES,swansea-north,500,336,11.58,14.12,30.73
+MAES,swansea-north,1000,337,11.58,14.12,30.73
+MAES,swansea-north,9999,413,11.58,14.12,30.73
+MYND,swansea-north,0,52,0.0,0.0,0.0
+MYND,swansea-north,50,117,0.0,0.0,0.0
+MYND,swansea-north,100,147,0.0,0.0,0.0
+MYND,swansea-north,200,180,0.0,0.0,0.0
+MYND,swansea-north,500,336,0.0,0.0,0.0
+MYND,swansea-north,1000,337,0.0,0.0,0.0
+MYND,swansea-north,9999,413,0.0,0.0,0.0
+NANG,swansea-north,0,52,70.2,66.44,71.3
+NANG,swansea-north,50,117,70.2,66.44,71.3
+NANG,swansea-north,100,147,70.2,66.44,71.3
+NANG,swansea-north,200,180,70.2,66.44,71.3
+NANG,swansea-north,500,336,70.2,66.44,71.3
+NANG,swansea-north,1000,337,70.2,66.44,71.3
+NANG,swansea-north,9999,413,70.2,66.44,71.3
+NEVE,swansea-north,0,52,25.51,17.23,33.84
+NEVE,swansea-north,50,117,25.51,17.23,33.84
+NEVE,swansea-north,100,147,25.51,17.23,33.84
+NEVE,swansea-north,200,180,25.51,17.23,33.84
+NEVE,swansea-north,500,336,25.51,17.23,33.84
+NEVE,swansea-north,1000,337,25.4,16.95,33.75
+NEVE,swansea-north,9999,413,25.4,16.95,33.75
+NEWL,swansea-north,0,52,2.15,0.38,7.02
+NEWL,swansea-north,50,117,2.15,0.38,7.02
+NEWL,swansea-north,100,147,2.15,0.38,7.02
+NEWL,swansea-north,200,180,2.15,0.38,7.02
+NEWL,swansea-north,500,336,2.15,0.38,7.02
+NEWL,swansea-north,1000,337,2.15,0.38,7.02
+NEWL,swansea-north,9999,413,2.15,0.38,7.02
+PCYL,swansea-north,0,52,0.0,0.0,0.0
+PCYL,swansea-north,50,117,0.0,0.0,0.0
+PCYL,swansea-north,100,147,0.0,0.0,0.0
+PCYL,swansea-north,200,180,0.0,0.0,0.0
+PCYL,swansea-north,500,336,0.0,0.0,0.0
+PCYL,swansea-north,1000,337,0.0,0.0,0.0
+PCYL,swansea-north,9999,413,0.0,0.0,0.0
+PEND,swansea-north,0,52,0.04,1.46,8.24
+PEND,swansea-north,50,117,0.04,1.46,8.24
+PEND,swansea-north,100,147,0.04,1.46,8.24
+PEND,swansea-north,200,180,0.04,1.46,8.24
+PEND,swansea-north,500,336,0.04,1.46,8.24
+PEND,swansea-north,1000,337,0.04,1.46,8.24
+PEND,swansea-north,9999,413,0.04,1.46,8.24
+PGTN,swansea-north,0,52,28.08,44.2,52.55
+PGTN,swansea-north,50,117,26.04,42.79,51.54
+PGTN,swansea-north,100,147,26.04,42.79,51.54
+PGTN,swansea-north,200,180,26.04,42.79,51.54
+PGTN,swansea-north,500,336,26.04,42.79,51.54
+PGTN,swansea-north,1000,337,26.04,42.79,51.54
+PGTN,swansea-north,9999,413,26.04,42.79,51.54
+PNTA,swansea-north,0,52,0.03,1.56,15.36
+PNTA,swansea-north,50,117,0.03,1.56,15.36
+PNTA,swansea-north,100,147,0.03,1.56,15.36
+PNTA,swansea-north,200,180,0.03,1.56,15.36
+PNTA,swansea-north,500,336,0.03,1.56,15.36
+PNTA,swansea-north,1000,337,0.03,1.56,15.36
+PNTA,swansea-north,9999,413,0.03,1.56,15.36
+PONA,swansea-north,0,52,29.28,20.55,31.26
+PONA,swansea-north,50,117,29.23,20.36,30.96
+PONA,swansea-north,100,147,29.23,20.36,30.96
+PONA,swansea-north,200,180,29.23,20.36,30.96
+PONA,swansea-north,500,336,29.05,22.32,31.13
+PONA,swansea-north,1000,337,29.05,22.39,31.15
+PONA,swansea-north,9999,413,29.05,22.39,31.15
+POND,swansea-north,0,52,39.76,43.19,49.23
+POND,swansea-north,50,117,40.78,43.39,49.44
+POND,swansea-north,100,147,40.78,43.39,49.44
+POND,swansea-north,200,180,40.78,43.39,49.44
+POND,swansea-north,500,336,40.78,43.39,49.44
+POND,swansea-north,1000,337,40.78,43.39,49.44
+POND,swansea-north,9999,413,40.78,43.39,49.44
+PONY,swansea-north,0,52,37.72,35.2,43.41
+PONY,swansea-north,50,117,37.72,35.2,43.41
+PONY,swansea-north,100,147,37.72,35.2,43.41
+PONY,swansea-north,200,180,37.72,35.2,43.41
+PONY,swansea-north,500,336,37.72,35.2,43.41
+PONY,swansea-north,1000,337,37.72,35.2,43.41
+PONY,swansea-north,9999,413,37.72,35.2,43.41
+RAVE,swansea-north,0,52,23.56,27.22,39.03
+RAVE,swansea-north,50,117,23.56,27.22,39.03
+RAVE,swansea-north,100,147,23.56,27.22,39.03
+RAVE,swansea-north,200,180,23.56,27.22,39.03
+RAVE,swansea-north,500,336,24.0,30.77,41.91
+RAVE,swansea-north,1000,337,24.0,30.77,41.91
+RAVE,swansea-north,9999,413,24.0,30.77,41.91
+REDC,swansea-north,0,52,0.0,0.0,0.0
+REDC,swansea-north,50,117,0.0,0.0,0.0
+REDC,swansea-north,100,147,0.0,0.0,0.0
+REDC,swansea-north,200,180,0.0,0.0,0.0
+REDC,swansea-north,500,336,0.0,0.0,0.0
+REDC,swansea-north,1000,337,0.0,0.0,0.0
+REDC,swansea-north,9999,413,0.0,0.0,0.0
+RGOS,swansea-north,0,52,0.2,0.01,0.01
+RGOS,swansea-north,50,117,4.1,0.34,0.39
+RGOS,swansea-north,100,147,4.1,0.34,0.39
+RGOS,swansea-north,200,180,4.1,0.34,0.39
+RGOS,swansea-north,500,336,1.69,0.15,0.15
+RGOS,swansea-north,1000,337,1.69,0.15,0.15
+RGOS,swansea-north,9999,413,1.69,0.15,0.15
+RHYD,swansea-north,0,52,0.0,0.0,0.0
+RHYD,swansea-north,50,117,0.0,0.0,0.0
+RHYD,swansea-north,100,147,0.0,0.0,0.0
+RHYD,swansea-north,200,180,0.0,0.0,0.0
+RHYD,swansea-north,500,336,0.0,0.0,0.0
+RHYD,swansea-north,1000,337,0.0,0.0,0.0
+RHYD,swansea-north,9999,413,0.0,0.0,0.0
+Rhos,swansea-north,0,52,0.0,0.0,0.0
+Rhos,swansea-north,50,117,0.0,0.0,0.0
+Rhos,swansea-north,100,147,0.0,0.0,0.0
+Rhos,swansea-north,200,180,0.0,0.0,0.0
+Rhos,swansea-north,500,336,0.0,0.0,0.0
+Rhos,swansea-north,1000,337,0.0,0.0,0.0
+Rhos,swansea-north,9999,413,0.0,0.0,0.0
+SOFI,swansea-north,0,52,1.68,2.38,16.16
+SOFI,swansea-north,50,117,1.68,2.38,16.16
+SOFI,swansea-north,100,147,1.68,2.38,16.16
+SOFI,swansea-north,200,180,1.68,2.38,16.16
+SOFI,swansea-north,500,336,1.68,2.38,16.16
+SOFI,swansea-north,1000,337,1.68,2.38,16.16
+SOFI,swansea-north,9999,413,1.68,2.38,16.16
+STCL,swansea-north,0,52,44.96,46.66,54.65
+STCL,swansea-north,50,117,44.96,46.66,54.65
+STCL,swansea-north,100,147,44.96,46.66,54.65
+STCL,swansea-north,200,180,44.96,46.66,54.65
+STCL,swansea-north,500,336,44.96,46.66,54.65
+STCL,swansea-north,1000,337,44.96,46.66,54.65
+STCL,swansea-north,9999,413,44.96,46.66,54.65
+SWAU,swansea-north,0,52,45.78,50.05,54.21
+SWAU,swansea-north,50,117,45.78,50.05,54.21
+SWAU,swansea-north,100,147,45.78,50.05,54.21
+SWAU,swansea-north,200,180,45.78,50.05,54.21
+SWAU,swansea-north,500,336,46.0,51.33,55.23
+SWAU,swansea-north,1000,337,46.0,51.33,55.23
+SWAU,swansea-north,9999,413,46.0,51.33,55.23
+Swansea North,swansea-north,0,52,0.0,0.0,0.0
+Swansea North,swansea-north,50,117,0.0,0.0,0.0
+Swansea North,swansea-north,100,147,0.0,0.0,0.0
+Swansea North,swansea-north,200,180,0.0,0.0,0.0
+Swansea North,swansea-north,500,336,0.0,0.0,0.0
+Swansea North,swansea-north,1000,337,0.0,0.0,0.0
+Swansea North,swansea-north,9999,413,0.0,0.0,0.0
+Swansea West,swansea-north,0,52,0.0,0.0,0.12
+Swansea West,swansea-north,50,117,0.0,0.0,0.12
+Swansea West,swansea-north,100,147,0.0,0.0,0.12
+Swansea West,swansea-north,200,180,0.0,0.0,0.12
+Swansea West,swansea-north,500,336,0.55,13.27,20.99
+Swansea West,swansea-north,1000,337,0.55,13.27,20.99
+Swansea West,swansea-north,9999,413,0.55,13.27,20.99
+TIMT,swansea-north,0,52,0.0,0.0,0.0
+TIMT,swansea-north,50,117,0.0,0.0,0.0
+TIMT,swansea-north,100,147,0.0,0.0,0.0
+TIMT,swansea-north,200,180,0.0,0.0,0.0
+TIMT,swansea-north,500,336,0.0,0.0,0.0
+TIMT,swansea-north,1000,337,0.0,0.0,0.0
+TIMT,swansea-north,9999,413,0.0,0.0,0.0
+TREG,swansea-north,0,52,0.2,0.19,9.51
+TREG,swansea-north,50,117,0.2,0.19,9.51
+TREG,swansea-north,100,147,0.2,0.19,9.51
+TREG,swansea-north,200,180,0.2,0.19,9.51
+TREG,swansea-north,500,336,0.2,0.19,9.51
+TREG,swansea-north,1000,337,0.2,0.19,9.51
+TREG,swansea-north,9999,413,0.2,0.19,9.51
+TREV,swansea-north,0,52,18.29,20.8,35.54
+TREV,swansea-north,50,117,18.29,20.8,35.54
+TREV,swansea-north,100,147,18.29,20.8,35.54
+TREV,swansea-north,200,180,18.29,20.8,35.54
+TREV,swansea-north,500,336,18.29,20.8,35.54
+TREV,swansea-north,1000,337,18.29,20.8,35.54
+TREV,swansea-north,9999,413,18.29,20.8,35.54
+TSKT,swansea-north,0,52,46.09,50.34,54.53
+TSKT,swansea-north,50,117,46.09,50.34,54.53
+TSKT,swansea-north,100,147,46.09,50.34,54.53
+TSKT,swansea-north,200,180,46.09,50.34,54.53
+TSKT,swansea-north,500,336,46.31,51.6,55.54
+TSKT,swansea-north,1000,337,46.31,51.6,55.54
+TSKT,swansea-north,9999,413,46.31,51.6,55.54
+TUMB,swansea-north,0,52,24.59,31.15,41.26
+TUMB,swansea-north,50,117,24.59,31.15,41.26
+TUMB,swansea-north,100,147,24.59,31.15,41.26
+TUMB,swansea-north,200,180,24.59,31.15,41.26
+TUMB,swansea-north,500,336,24.59,31.15,41.26
+TUMB,swansea-north,1000,337,24.59,31.15,41.26
+TUMB,swansea-north,9999,413,24.59,31.15,41.26
+TWYN,swansea-north,0,52,0.0,0.0,0.0
+TWYN,swansea-north,50,117,0.0,0.0,0.0
+TWYN,swansea-north,100,147,0.0,0.0,0.0
+TWYN,swansea-north,200,180,0.0,0.0,0.0
+TWYN,swansea-north,500,336,0.0,0.0,0.0
+TWYN,swansea-north,1000,337,0.0,0.0,0.0
+TWYN,swansea-north,9999,413,0.0,0.0,0.0
+Tir John,swansea-north,0,52,0.0,0.0,0.0
+Tir John,swansea-north,50,117,0.0,0.0,0.0
+Tir John,swansea-north,100,147,0.0,0.0,0.0
+Tir John,swansea-north,200,180,0.0,0.0,0.0
+Tir John,swansea-north,500,336,0.0,0.0,0.0
+Tir John,swansea-north,1000,337,0.0,0.0,0.0
+Tir John,swansea-north,9999,413,0.0,0.0,0.0
+Trostre,swansea-north,0,52,0.0,0.0,0.0
+Trostre,swansea-north,50,117,0.0,0.0,0.0
+Trostre,swansea-north,100,147,0.0,0.0,0.0
+Trostre,swansea-north,200,180,0.0,0.0,0.0
+Trostre,swansea-north,500,336,0.0,0.0,0.0
+Trostre,swansea-north,1000,337,0.0,0.0,0.0
+Trostre,swansea-north,9999,413,0.0,0.0,0.0
+WAUN,swansea-north,0,52,32.2,48.34,56.61
+WAUN,swansea-north,50,117,32.2,48.34,56.61
+WAUN,swansea-north,100,147,32.2,48.34,56.61
+WAUN,swansea-north,200,180,92.9,61.9,69.86
+WAUN,swansea-north,500,336,92.9,61.9,69.86
+WAUN,swansea-north,1000,337,92.9,61.9,69.86
+WAUN,swansea-north,9999,413,92.9,61.9,69.86
+WESX,swansea-north,0,52,31.21,35.8,43.27
+WESX,swansea-north,50,117,31.21,35.8,43.27
+WESX,swansea-north,100,147,31.21,35.8,43.27
+WESX,swansea-north,200,180,31.21,35.8,43.27
+WESX,swansea-north,500,336,31.58,38.25,45.37
+WESX,swansea-north,1000,337,31.58,38.25,45.37
+WESX,swansea-north,9999,413,31.58,38.25,45.37
+WGWB,swansea-north,0,52,70.72,67.08,71.85
+WGWB,swansea-north,50,117,70.72,67.08,71.85
+WGWB,swansea-north,100,147,70.72,67.08,71.85
+WGWB,swansea-north,200,180,70.72,67.08,71.85
+WGWB,swansea-north,500,336,70.72,67.08,71.85
+WGWB,swansea-north,1000,337,70.72,67.08,71.85
+WGWB,swansea-north,9999,413,70.72,67.08,71.85
+WHIT,swansea-north,0,52,14.88,20.74,35.4
+WHIT,swansea-north,50,117,14.88,20.74,35.4
+WHIT,swansea-north,100,147,14.88,20.74,35.4
+WHIT,swansea-north,200,180,14.88,20.74,35.4
+WHIT,swansea-north,500,336,14.88,20.74,35.4
+WHIT,swansea-north,1000,337,14.88,20.74,35.4
+WHIT,swansea-north,9999,413,14.88,20.74,35.4
+WSTC,swansea-north,0,52,4.8,3.21,16.98
+WSTC,swansea-north,50,117,1.63,0.03,6.19
+WSTC,swansea-north,100,147,1.63,0.03,6.19
+WSTC,swansea-north,200,180,1.63,0.03,6.19
+WSTC,swansea-north,500,336,2.68,0.05,6.6
+WSTC,swansea-north,1000,337,2.68,0.05,6.6
+WSTC,swansea-north,9999,413,2.68,0.05,6.6
+YNST,swansea-north,0,52,99.97,99.45,99.56
+YNST,swansea-north,50,117,99.97,99.45,99.56
+YNST,swansea-north,100,147,99.97,99.45,99.56
+YNST,swansea-north,200,180,99.97,99.45,99.56
+YNST,swansea-north,500,336,99.97,99.45,99.56
+YNST,swansea-north,1000,337,99.97,99.45,99.56
+YNST,swansea-north,9999,413,99.97,99.45,99.56
+YNYS,swansea-north,0,52,0.18,0.01,0.01
+YNYS,swansea-north,50,117,3.93,0.33,0.36
+YNYS,swansea-north,100,147,3.93,0.33,0.36
+YNYS,swansea-north,200,180,3.93,0.33,0.36
+YNYS,swansea-north,500,336,1.59,0.15,0.14
+YNYS,swansea-north,1000,337,1.59,0.15,0.14
+YNYS,swansea-north,9999,413,1.59,0.15,0.14
+YSTF,swansea-north,0,52,38.57,29.0,36.79
+YSTF,swansea-north,50,117,38.57,29.0,36.79
+YSTF,swansea-north,100,147,38.57,29.0,36.79
+YSTF,swansea-north,200,180,38.57,29.0,36.79
+YSTF,swansea-north,500,336,38.57,29.0,36.79
+YSTF,swansea-north,1000,337,38.57,29.0,36.79
+YSTF,swansea-north,9999,413,38.57,29.0,36.79
+Ystradgynlais,swansea-north,0,52,0.0,0.0,0.0
+Ystradgynlais,swansea-north,50,117,0.0,0.0,0.0
+Ystradgynlais,swansea-north,100,147,0.0,0.0,0.0
+Ystradgynlais,swansea-north,200,180,0.0,0.0,0.0
+Ystradgynlais,swansea-north,500,336,0.0,0.0,0.0
+Ystradgynlais,swansea-north,1000,337,0.0,0.0,0.0
+Ystradgynlais,swansea-north,9999,413,0.0,0.0,0.0
+ABTY,upper-boat,0,26,45.42,60.96,64.57
+ABTY,upper-boat,50,66,45.42,60.96,64.57
+ABTY,upper-boat,100,110,45.42,60.96,64.57
+ABTY,upper-boat,200,248,45.42,60.96,64.57
+ABTY,upper-boat,500,279,45.42,60.96,64.57
+ABTY,upper-boat,1000,279,45.42,60.96,64.57
+ABTY,upper-boat,9999,376,93.48,94.14,91.12
+BARG,upper-boat,0,26,1.46,19.21,27.04
+BARG,upper-boat,50,66,1.46,19.21,27.04
+BARG,upper-boat,100,110,1.46,19.21,27.04
+BARG,upper-boat,200,248,1.46,19.21,27.04
+BARG,upper-boat,500,279,1.46,19.21,27.04
+BARG,upper-boat,1000,279,1.46,19.21,27.04
+BARG,upper-boat,9999,376,82.05,90.4,77.5
+CAER,upper-boat,0,26,48.79,46.99,52.85
+CAER,upper-boat,50,66,48.44,46.72,52.52
+CAER,upper-boat,100,110,53.13,47.81,53.87
+CAER,upper-boat,200,248,53.24,47.77,53.87
+CAER,upper-boat,500,279,53.36,47.91,53.97
+CAER,upper-boat,1000,279,53.36,47.91,53.97
+CAER,upper-boat,9999,376,53.04,47.63,53.7
+CREI,upper-boat,0,26,60.29,62.37,67.68
+CREI,upper-boat,50,66,60.02,62.23,67.54
+CREI,upper-boat,100,110,60.1,62.28,67.58
+CREI,upper-boat,200,248,60.19,62.28,67.59
+CREI,upper-boat,500,279,60.31,62.37,67.65
+CREI,upper-boat,1000,279,60.31,62.37,67.65
+CREI,upper-boat,9999,376,60.03,62.21,67.52
+Dowlais,upper-boat,0,26,0.0,0.0,0.0
+Dowlais,upper-boat,50,66,0.0,0.0,0.0
+Dowlais,upper-boat,100,110,0.0,0.0,0.0
+Dowlais,upper-boat,200,248,0.0,0.0,0.0
+Dowlais,upper-boat,500,279,0.0,0.0,0.0
+Dowlais,upper-boat,1000,279,0.0,0.0,0.0
+Dowlais,upper-boat,9999,376,0.0,0.15,0.39
+ENER,upper-boat,0,26,39.92,39.23,46.75
+ENER,upper-boat,50,66,39.51,38.93,46.33
+ENER,upper-boat,100,110,39.61,39.07,46.44
+ENER,upper-boat,200,248,39.79,39.02,46.45
+ENER,upper-boat,500,279,39.98,39.22,46.59
+ENER,upper-boat,1000,279,39.98,39.22,46.59
+ENER,upper-boat,9999,376,39.52,38.87,46.23
+GASY,upper-boat,0,26,7.74,7.46,24.56
+GASY,upper-boat,50,66,7.74,7.46,24.56
+GASY,upper-boat,100,110,7.74,7.46,24.56
+GASY,upper-boat,200,248,7.74,7.46,24.56
+GASY,upper-boat,500,279,7.74,7.46,24.56
+GASY,upper-boat,1000,279,7.74,7.46,24.56
+GASY,upper-boat,9999,376,7.74,7.46,24.56
+IRON,upper-boat,0,26,20.49,27.29,41.38
+IRON,upper-boat,50,66,19.99,27.04,41.04
+IRON,upper-boat,100,110,20.14,27.18,41.15
+IRON,upper-boat,200,248,20.41,27.13,41.16
+IRON,upper-boat,500,279,20.73,27.37,41.31
+IRON,upper-boat,1000,279,20.73,27.37,41.31
+IRON,upper-boat,9999,376,20.07,26.99,40.95
+LADY,upper-boat,0,26,0.0,0.16,0.28
+LADY,upper-boat,50,66,0.02,0.36,0.43
+LADY,upper-boat,100,110,0.0,0.16,0.28
+LADY,upper-boat,200,248,0.01,0.27,0.32
+LADY,upper-boat,500,279,0.0,0.1,0.26
+LADY,upper-boat,1000,279,0.0,0.1,0.26
+LADY,upper-boat,9999,376,0.03,0.35,0.92
+MASH,upper-boat,0,26,42.63,43.99,49.1
+MASH,upper-boat,50,66,42.64,44.07,49.14
+MASH,upper-boat,100,110,42.63,44.0,49.11
+MASH,upper-boat,200,248,42.63,44.04,49.13
+MASH,upper-boat,500,279,42.63,43.99,49.1
+MASH,upper-boat,1000,279,42.63,43.99,49.1
+MASH,upper-boat,9999,376,42.66,44.06,49.17
+MILL,upper-boat,0,26,55.86,58.15,60.25
+MILL,upper-boat,50,66,55.52,57.85,59.79
+MILL,upper-boat,100,110,55.7,58.17,59.98
+MILL,upper-boat,200,248,58.35,58.33,60.48
+MILL,upper-boat,500,279,59.3,59.07,60.94
+MILL,upper-boat,1000,279,59.3,59.07,60.94
+MILL,upper-boat,9999,376,59.03,58.81,60.58
+MORL,upper-boat,0,26,47.47,51.22,57.43
+MORL,upper-boat,50,66,47.13,51.05,57.24
+MORL,upper-boat,100,110,47.21,51.12,57.29
+MORL,upper-boat,200,248,47.36,51.11,57.31
+MORL,upper-boat,500,279,47.53,51.24,57.4
+MORL,upper-boat,1000,279,47.53,51.24,57.4
+MORL,upper-boat,9999,376,47.15,51.02,57.2
+Mountain Ash,upper-boat,0,26,0.01,0.25,0.37
+Mountain Ash,upper-boat,50,66,0.03,1.26,1.7
+Mountain Ash,upper-boat,100,110,0.01,0.24,0.57
+Mountain Ash,upper-boat,200,248,0.01,0.57,1.0
+Mountain Ash,upper-boat,500,279,0.0,0.17,0.43
+Mountain Ash,upper-boat,1000,279,0.0,0.17,0.43
+Mountain Ash,upper-boat,9999,376,0.04,1.0,3.54
+NANW,upper-boat,0,26,7.11,34.7,44.61
+NANW,upper-boat,50,66,7.11,34.7,44.61
+NANW,upper-boat,100,110,7.11,34.7,44.61
+NANW,upper-boat,200,248,7.11,34.7,44.61
+NANW,upper-boat,500,279,7.11,34.7,44.61
+NANW,upper-boat,1000,279,7.11,34.7,44.61
+NANW,upper-boat,9999,376,87.82,91.75,83.6
+NELS,upper-boat,0,26,0.0,0.12,0.11
+NELS,upper-boat,50,66,0.02,0.31,0.24
+NELS,upper-boat,100,110,0.0,0.11,0.1
+NELS,upper-boat,200,248,0.0,0.22,0.15
+NELS,upper-boat,500,279,0.0,0.06,0.08
+NELS,upper-boat,1000,279,0.0,0.06,0.08
+NELS,upper-boat,9999,376,0.03,0.26,0.86
+PENR,upper-boat,0,26,6.36,18.06,14.24
+PENR,upper-boat,50,66,6.41,19.72,15.68
+PENR,upper-boat,100,110,6.36,17.92,14.43
+PENR,upper-boat,200,248,6.36,18.81,14.98
+PENR,upper-boat,500,279,6.35,17.74,14.18
+PENR,upper-boat,1000,279,6.35,17.74,14.18
+PENR,upper-boat,9999,376,6.4,19.07,19.26
+PENT,upper-boat,0,26,10.86,27.23,40.35
+PENT,upper-boat,50,66,10.86,27.23,40.35
+PENT,upper-boat,100,110,10.86,27.23,40.35
+PENT,upper-boat,200,248,10.86,27.23,40.35
+PENT,upper-boat,500,279,10.86,27.23,40.35
+PENT,upper-boat,1000,279,10.86,27.23,40.35
+PENT,upper-boat,9999,376,82.51,90.48,79.47
+SPTC,upper-boat,0,26,1.6,0.94,4.38
+SPTC,upper-boat,50,66,1.08,0.49,3.22
+SPTC,upper-boat,100,110,1.23,0.75,3.52
+SPTC,upper-boat,200,248,1.8,0.62,3.44
+SPTC,upper-boat,500,279,2.41,1.09,3.83
+SPTC,upper-boat,1000,279,2.41,1.09,3.83
+SPTC,upper-boat,9999,376,1.16,0.42,2.57
+SWRD,upper-boat,0,26,13.88,29.35,41.79
+SWRD,upper-boat,50,66,13.88,29.35,41.79
+SWRD,upper-boat,100,110,13.88,29.35,41.79
+SWRD,upper-boat,200,248,13.88,29.35,41.79
+SWRD,upper-boat,500,279,13.88,29.35,41.79
+SWRD,upper-boat,1000,279,13.88,29.35,41.79
+SWRD,upper-boat,9999,376,80.81,90.16,79.02
+TONY,upper-boat,0,26,41.13,43.73,49.12
+TONY,upper-boat,50,66,40.74,43.36,48.54
+TONY,upper-boat,100,110,44.41,45.6,49.67
+TONY,upper-boat,200,248,54.9,46.9,51.98
+TONY,upper-boat,500,279,57.17,49.92,53.53
+TONY,upper-boat,1000,279,57.17,49.92,53.53
+TONY,upper-boat,9999,376,56.94,49.63,53.06
+TRET,upper-boat,0,26,31.96,33.46,42.82
+TRET,upper-boat,50,66,31.5,33.12,42.3
+TRET,upper-boat,100,110,42.03,35.26,44.46
+TRET,upper-boat,200,248,42.2,35.2,44.46
+TRET,upper-boat,500,279,42.36,35.42,44.61
+TRET,upper-boat,1000,279,42.36,35.42,44.61
+TRET,upper-boat,9999,376,41.95,35.02,44.18
+UPPB,upper-boat,0,26,0.97,0.94,2.89
+UPPB,upper-boat,50,66,0.44,0.49,1.7
+UPPB,upper-boat,100,110,0.59,0.76,2.0
+UPPB,upper-boat,200,248,1.33,0.62,1.91
+UPPB,upper-boat,500,279,2.02,1.1,2.32
+UPPB,upper-boat,1000,279,2.02,1.1,2.32
+UPPB,upper-boat,9999,376,0.53,0.42,1.01
+WATT,upper-boat,0,26,31.64,31.32,40.91
+WATT,upper-boat,50,66,21.45,29.55,35.82
+WATT,upper-boat,100,110,27.31,31.18,37.47
+WATT,upper-boat,200,248,37.72,30.6,37.93
+WATT,upper-boat,500,279,41.01,33.4,39.73
+WATT,upper-boat,1000,279,41.01,33.4,39.73
+WATT,upper-boat,9999,376,29.39,30.09,33.05
+BRIE,uskmouth,0,44,0.0,0.0,0.0
+BRIE,uskmouth,50,155,0.0,0.0,0.0
+BRIE,uskmouth,100,359,0.0,0.0,0.0
+BRIE,uskmouth,200,378,0.0,0.0,0.0
+BRIE,uskmouth,500,528,0.0,0.0,0.0
+BRIE,uskmouth,1000,528,0.0,0.0,0.0
+BRIE,uskmouth,9999,586,0.0,0.0,0.0
+CHEP,uskmouth,0,44,0.47,5.1,21.08
+CHEP,uskmouth,50,155,0.47,5.1,21.08
+CHEP,uskmouth,100,359,0.47,5.1,21.08
+CHEP,uskmouth,200,378,0.47,5.1,21.08
+CHEP,uskmouth,500,528,0.47,5.1,21.08
+CHEP,uskmouth,1000,528,0.47,5.1,21.08
+CHEP,uskmouth,9999,586,0.47,5.1,21.08
+NEWH,uskmouth,0,44,28.56,32.42,41.49
+NEWH,uskmouth,50,155,28.56,32.42,41.49
+NEWH,uskmouth,100,359,28.56,32.42,41.49
+NEWH,uskmouth,200,378,28.56,32.42,41.49
+NEWH,uskmouth,500,528,28.56,32.42,41.49
+NEWH,uskmouth,1000,528,28.56,32.42,41.49
+NEWH,uskmouth,9999,586,28.56,32.42,41.49
+Newport South,uskmouth,0,44,0.0,0.0,0.0
+Newport South,uskmouth,50,155,0.0,0.0,0.0
+Newport South,uskmouth,100,359,0.0,0.0,0.0
+Newport South,uskmouth,200,378,0.0,0.0,0.0
+Newport South,uskmouth,500,528,0.0,0.0,0.0
+Newport South,uskmouth,1000,528,0.0,0.0,0.0
+Newport South,uskmouth,9999,586,0.0,0.0,0.0
+Sudbrook,uskmouth,0,44,0.0,0.0,0.0
+Sudbrook,uskmouth,50,155,0.0,0.0,0.0
+Sudbrook,uskmouth,100,359,0.0,0.0,0.0
+Sudbrook,uskmouth,200,378,0.0,0.0,0.0
+Sudbrook,uskmouth,500,528,0.0,0.0,0.0
+Sudbrook,uskmouth,1000,528,0.0,0.0,0.0
+Sudbrook,uskmouth,9999,586,0.0,0.0,0.0
+TBAT,uskmouth,0,44,0.0,0.0,0.0
+TBAT,uskmouth,50,155,0.0,0.0,0.0
+TBAT,uskmouth,100,359,0.0,0.0,0.0
+TBAT,uskmouth,200,378,0.0,0.0,0.0
+TBAT,uskmouth,500,528,0.0,0.0,0.0
+TBAT,uskmouth,1000,528,0.0,0.0,0.0
+TBAT,uskmouth,9999,586,0.0,0.0,0.0

@@ -1,8 +1,7 @@
 """
 South Wales Grid Connection Screener
 =====================================
-Streamlit app with headroom, curtailment, seasonal heatmaps,
-queue position sensitivity, and hybridisation analysis.
+Map click → substation detail → test connection → curtailment results
 """
 
 import streamlit as st
@@ -15,7 +14,7 @@ st.set_page_config(
     page_title="Loom Light — Grid Connection Screener",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # ============================================================
@@ -52,7 +51,7 @@ if not st.session_state.authenticated:
 
 
 # ============================================================
-# DATA PATHS
+# DATA
 # ============================================================
 def find_data_path(filename):
     for prefix in ['../data/', 'data/']:
@@ -60,16 +59,12 @@ def find_data_path(filename):
             return prefix + filename
     return None
 
-# ============================================================
-# LOAD DATA
-# ============================================================
 @st.cache_data
 def load_data():
     path = find_data_path('south_wales_substations.csv')
     if not path:
         return pd.DataFrame()
     df = pd.read_csv(path)
-
     coords = {
         'Abergavenny': (51.82, -3.02), 'Ammanford': (51.80, -3.92),
         'Bridgend': (51.51, -3.58), 'Briton Ferry': (51.63, -3.82),
@@ -110,10 +105,8 @@ seasonal_df = load_csv_or_none('south_wales_curtailment_seasonal.csv')
 lifo_df = load_csv_or_none('south_wales_curtailment_lifo.csv')
 colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 
-tech_map = {"Solar": "PV", "Onshore Wind": "Wind", "Battery": "BESS", "Other": "Other"}
+tech_map = {"Solar": "PV", "Onshore Wind": "Wind", "Battery": "BESS", "Other (gas, biomass, CHP)": "Other"}
 
-# Build reverse lookup: display_name -> possible CIM codes in curtailment data
-# The curtailment CSVs use a mix of display names and CIM codes
 NAME_TO_CIM = {
     'Ammanford': 'AMMA', 'Briton Ferry': 'BRIF', 'Carmarthen': 'CARM',
     'Gowerton East': 'GOWE', 'Hirwaun': 'HIRW', 'Lampeter': 'LAMP',
@@ -128,16 +121,14 @@ NAME_TO_CIM = {
     'Newport South': 'NEWS', 'Panteg': 'PANT', 'Pyle': 'PYLE',
     'South Hook': 'SHHK', 'Sudbrook': 'SUDB', 'Upper Boat': 'UPPB',
 }
+CIM_TO_NAME_FULL = {v: k for k, v in NAME_TO_CIM.items()}
 
 def match_substation(dataframe, display_name):
-    """Find rows matching a display name, trying the name itself then CIM code."""
     if dataframe is None:
         return pd.DataFrame()
-    # Try direct match first
     result = dataframe[dataframe['substation'] == display_name]
     if len(result) > 0:
         return result
-    # Try CIM code
     cim = NAME_TO_CIM.get(display_name)
     if cim:
         result = dataframe[dataframe['substation'] == cim]
@@ -145,7 +136,20 @@ def match_substation(dataframe, display_name):
 
 
 # ============================================================
-# SIDEBAR
+# SESSION STATE
+# ============================================================
+if 'selected_sub' not in st.session_state:
+    st.session_state.selected_sub = None
+if 'test_run' not in st.session_state:
+    st.session_state.test_run = False
+if 'test_mw' not in st.session_state:
+    st.session_state.test_mw = 20
+if 'test_tech' not in st.session_state:
+    st.session_state.test_tech = 'Solar'
+
+
+# ============================================================
+# SIDEBAR (minimal)
 # ============================================================
 st.sidebar.markdown("## ⚡ Loom Light")
 st.sidebar.markdown("**Grid Connection Screener**")
@@ -155,76 +159,39 @@ st.sidebar.divider()
 headroom_options = ['All', 'Overcommitted', 'Tight', 'Moderate', 'Available']
 selected_headroom = st.sidebar.selectbox("Filter by headroom", headroom_options)
 
-st.sidebar.divider()
-st.sidebar.markdown("### Test a connection")
-
-# Use session state for test MW so we can clear it
-if 'test_mw' not in st.session_state:
-    st.session_state.test_mw = 0
-
-test_mw = st.sidebar.number_input(
-    "Proposed capacity (MW)", min_value=0, max_value=500,
-    value=st.session_state.test_mw, step=5, key='test_mw_input'
-)
-st.session_state.test_mw = test_mw
-
-test_tech = st.sidebar.selectbox("Technology", ["Solar", "Onshore Wind", "Battery", "Other"])
-
-if test_mw > 0:
-    if st.sidebar.button("Clear test"):
-        st.session_state.test_mw = 0
-        st.rerun()
-
-# Apply filters
 filtered = df.copy()
 if selected_headroom != 'All':
     filtered = filtered[filtered['headroom_flag'] == selected_headroom]
+
+st.sidebar.divider()
+st.sidebar.caption("Data: NGED LTDS, BSP flows, GCR, Curtailment data (Mar 2026)")
+st.sidebar.caption("⚠️ Prototype — not for investment decisions.")
 
 
 # ============================================================
 # HEADER
 # ============================================================
 st.markdown("# South Wales Grid Connection Screener")
-st.markdown("Transformer ratings · measured flows · connection queue · headroom · curtailment estimates")
-st.caption("📅 Flows: Mar 2022 – Apr 2023 · Ratings: Dec 2025 · Queue: Jan 2026 · Curtailment: Mar 2026")
 
 col1, col2, col3, col4 = st.columns(4)
-with col1:
-    st.metric("Substations", len(filtered))
-with col2:
-    st.metric("Overcommitted", (filtered['headroom_flag'] == 'Overcommitted').sum())
-with col3:
-    st.metric("Tight", (filtered['headroom_flag'] == 'Tight').sum())
-with col4:
-    st.metric("Available / Moderate", filtered['headroom_flag'].isin(['Moderate', 'Available']).sum())
+with col1: st.metric("Substations", len(filtered))
+with col2: st.metric("Overcommitted", (filtered['headroom_flag'] == 'Overcommitted').sum())
+with col3: st.metric("Tight", (filtered['headroom_flag'] == 'Tight').sum())
+with col4: st.metric("Available / Moderate", filtered['headroom_flag'].isin(['Moderate', 'Available']).sum())
 
 
 # ============================================================
 # MAP
 # ============================================================
-st.markdown("---")
-
 map_df = filtered.dropna(subset=['lat', 'lon']).copy()
 
-# Add curtailment to map popups if testing
-if test_mw > 0 and curtailment_df is not None:
-    curt_tech = tech_map.get(test_tech, 'PV')
-    available_mws = sorted(curtailment_df['capacity_mw'].unique())
-    closest_mw = min(available_mws, key=lambda x: abs(x - test_mw))
-    curt_slice = curtailment_df[
-        (curtailment_df['technology'] == curt_tech) &
-        (curtailment_df['capacity_mw'] == closest_mw)
-    ][['substation', 'curtailment_pct', 'binding_branch']].copy()
-    
-    # Map CIM codes to display names so the merge works
-    CIM_TO_NAME_FULL = {v: k for k, v in NAME_TO_CIM.items()}
-    curt_slice['display_name'] = curt_slice['substation'].map(
-        lambda x: CIM_TO_NAME_FULL.get(x, x)
-    )
-    map_df = map_df.merge(
-        curt_slice[['display_name', 'curtailment_pct', 'binding_branch']],
-        on='display_name', how='left'
-    )
+# Overview button
+mapcol1, mapcol2 = st.columns([6, 1])
+with mapcol2:
+    if st.button("⬜ Overview", use_container_width=True):
+        st.session_state.selected_sub = None
+        st.session_state.test_run = False
+        st.rerun()
 
 try:
     import folium
@@ -239,37 +206,19 @@ try:
 
     for _, row in map_df.iterrows():
         color = flag_colors.get(row['headroom_flag'], '#999999')
-
         headroom_str = f"{row['headroom_mva']:.0f}" if pd.notna(row.get('headroom_mva')) else '?'
         rating_str = f"{row['total_nominal_mva']:.0f}" if pd.notna(row.get('total_nominal_mva')) else '?'
         connected_str = f"{row['connected_mva']:.1f}" if pd.notna(row.get('connected_mva')) else '?'
         accepted_str = f"{row['accepted_mva']:.1f}" if pd.notna(row.get('accepted_mva')) else '?'
         peak_str = f"{row['peak_import_mw']:.1f}" if pd.notna(row.get('peak_import_mw')) else '?'
 
-        curt_html = ""
-        if 'curtailment_pct' in row.index and pd.notna(row.get('curtailment_pct')):
-            curt_pct = row['curtailment_pct']
-            binding = row.get('binding_branch', '')
-            curt_color = '#dc3545' if curt_pct > 5 else '#f0a028' if curt_pct > 1 else '#32b450'
-            binding_html = f"<br/>Binding: {binding}" if binding and binding != 'None' and str(binding) != 'nan' else ""
-            curt_html = f"""
-            <hr style="margin: 4px 0;">
-            <b style="color: {curt_color}">
-            Curtailment ({test_mw}MW {test_tech}): {curt_pct:.1f}%</b>
-            {binding_html}
-            """
-
         popup_html = f"""
         <div style="font-family: sans-serif; font-size: 13px; min-width: 220px;">
             <b>{row['display_name']}</b> ({row['voltage_kv']}kV)<br/>
             <hr style="margin: 4px 0;">
             Rating: {rating_str} MVA | Peak: {peak_str} MW<br/>
-            <hr style="margin: 4px 0;">
-            Connected: {connected_str} MVA<br/>
-            Accepted: {accepted_str} MVA<br/>
-            <b>Headroom: {headroom_str} MVA</b><br/>
-            Status: <b>{row['headroom_flag']}</b>
-            {curt_html}
+            Connected: {connected_str} MVA | Accepted: {accepted_str} MVA<br/>
+            <b>Headroom: {headroom_str} MVA</b> · {row['headroom_flag']}
         </div>
         """
 
@@ -278,37 +227,60 @@ try:
             radius=8,
             color=color, fill=True, fill_color=color, fill_opacity=0.7, weight=2,
             popup=folium.Popup(popup_html, max_width=300),
-            tooltip=f"{row['display_name']}: {headroom_str} MVA headroom",
+            tooltip=row['display_name'],
         ).add_to(m)
 
-    st_folium(m, width=None, height=500, use_container_width=True)
+    map_result = st_folium(m, width=None, height=450, use_container_width=True)
+
+    # Capture map click → select substation
+    if map_result and map_result.get('last_object_clicked_tooltip'):
+        clicked_name = map_result['last_object_clicked_tooltip']
+        if clicked_name in filtered['display_name'].values:
+            if st.session_state.selected_sub != clicked_name:
+                st.session_state.selected_sub = clicked_name
+                st.session_state.test_run = False
+                st.rerun()
 
 except ImportError:
     st.warning("Install folium and streamlit-folium for the map.")
 
+# Legend
 leg1, leg2, leg3, leg4 = st.columns(4)
-with leg1: st.markdown("🔴 **Overcommitted** — committed > rating")
-with leg2: st.markdown("🟡 **Tight** — <20 MVA headroom")
-with leg3: st.markdown("🔵 **Moderate** — 20-50 MVA headroom")
-with leg4: st.markdown("🟢 **Available** — >50 MVA headroom")
-
-if test_mw > 0:
-    st.info(f"Popups show curtailment estimate for **{test_mw} MW {test_tech}**. Select a substation below for seasonal breakdown, queue sensitivity, and hybridisation analysis.")
+with leg1: st.markdown("🔴 **Overcommitted**")
+with leg2: st.markdown("🟡 **Tight** (<20 MVA)")
+with leg3: st.markdown("🔵 **Moderate** (20-50)")
+with leg4: st.markdown("🟢 **Available** (>50)")
 
 
 # ============================================================
-# SUBSTATION DETAIL
+# SUBSTATION SELECTOR
 # ============================================================
 st.markdown("---")
-st.markdown("## Substation Details")
+
+sub_options = ['(Overview table)'] + sorted(filtered['display_name'].tolist())
+current_idx = 0
+if st.session_state.selected_sub and st.session_state.selected_sub in sub_options:
+    current_idx = sub_options.index(st.session_state.selected_sub)
 
 selected_sub = st.selectbox(
     "Select a substation",
-    options=['(Overview table)'] + sorted(filtered['display_name'].tolist()),
-    key='substation_selector',
+    options=sub_options,
+    index=current_idx,
+    key='sub_selector',
 )
 
+# Sync selectbox with session state
 if selected_sub == '(Overview table)':
+    st.session_state.selected_sub = None
+elif selected_sub != st.session_state.selected_sub:
+    st.session_state.selected_sub = selected_sub
+    st.session_state.test_run = False
+
+
+# ============================================================
+# OVERVIEW TABLE
+# ============================================================
+if st.session_state.selected_sub is None:
     display_cols = [
         'display_name', 'voltage_kv', 'total_nominal_mva', 'peak_import_mw',
         'utilisation_pct', 'connected_mva', 'accepted_mva',
@@ -324,13 +296,17 @@ if selected_sub == '(Overview table)':
     table_df = filtered[[c for c in display_cols if c in filtered.columns]].rename(columns=rename).sort_values('Headroom (MVA)')
     st.dataframe(table_df, use_container_width=True, height=600, hide_index=True)
 
+
+# ============================================================
+# SUBSTATION DETAIL
+# ============================================================
 else:
-    row = filtered[filtered['display_name'] == selected_sub].iloc[0]
+    sub_name = st.session_state.selected_sub
+    row = filtered[filtered['display_name'] == sub_name].iloc[0]
 
     st.markdown(f"### {row['display_name']} ({row['voltage_kv']}kV)")
 
     c1, c2, c3 = st.columns(3)
-
     with c1:
         st.markdown("#### Transformer")
         rating = row.get('total_nominal_mva')
@@ -377,176 +353,182 @@ else:
     elif flag in ['Moderate', 'Available']:
         st.success(f"**{flag}**: {headroom:.0f} MVA of headroom available")
 
-    # ==================================================================
-    # CURTAILMENT TABLE
-    # ==================================================================
-    if curtailment_df is not None:
-        sub_curt = match_substation(curtailment_df, selected_sub)
+    # ==============================================================
+    # TEST A CONNECTION (below substation detail)
+    # ==============================================================
+    st.markdown("---")
+    st.markdown("#### Test a connection")
+
+    tc1, tc2, tc3, tc4 = st.columns([2, 2, 1, 1])
+    with tc1:
+        test_mw = st.number_input("Capacity (MW)", min_value=1, max_value=500, value=st.session_state.test_mw, step=5, key='test_mw_input')
+    with tc2:
+        test_tech = st.selectbox("Technology", ["Solar", "Onshore Wind", "Battery", "Other (gas, biomass, CHP)"], key='test_tech_input')
+    with tc3:
+        st.markdown("<br/>", unsafe_allow_html=True)
+        run_clicked = st.button("🔍 Run test", use_container_width=True, type="primary")
+    with tc4:
+        st.markdown("<br/>", unsafe_allow_html=True)
+        clear_clicked = st.button("✕ Clear", use_container_width=True)
+
+    if run_clicked:
+        st.session_state.test_run = True
+        st.session_state.test_mw = test_mw
+        st.session_state.test_tech = test_tech
+
+    if clear_clicked:
+        st.session_state.test_run = False
+        st.rerun()
+
+    # ==============================================================
+    # CURTAILMENT RESULTS (only after Run)
+    # ==============================================================
+    if st.session_state.test_run:
+        active_tech = st.session_state.test_tech
+        active_mw = st.session_state.test_mw
+        curt_tech_key = tech_map.get(active_tech, 'PV')
+        tech_display = {'PV': 'Solar', 'Wind': 'Wind', 'BESS': 'Battery', 'Other': 'Other'}
+
+        st.markdown("---")
+        st.markdown(f"### Results: {active_mw} MW {active_tech} at {sub_name}")
+
+        sub_curt = match_substation(curtailment_df, sub_name)
 
         if len(sub_curt) > 0 and sub_curt['curtailment_pct'].notna().any():
+
+            # --- HEADLINE RESULT ---
+            available_mws = sorted(sub_curt['capacity_mw'].unique())
+            closest_mw = min(available_mws, key=lambda x: abs(x - active_mw))
+            estimate = sub_curt[
+                (sub_curt['technology'] == curt_tech_key) &
+                (sub_curt['capacity_mw'] == closest_mw)
+            ]
+
+            if len(estimate) > 0:
+                e = estimate.iloc[0]
+                if pd.notna(e['curtailment_pct']):
+                    pct = e['curtailment_pct']
+                    lost = e['curtailed_mwh']
+                    total = e['total_mwh']
+                    delivered = total - lost
+
+                    r1, r2, r3 = st.columns(3)
+                    with r1:
+                        st.metric("Annual Curtailment", f"{pct:.1f}%")
+                    with r2:
+                        st.metric("Energy Lost", f"{lost:,.0f} MWh/yr")
+                    with r3:
+                        st.metric("Energy Delivered", f"{delivered:,.0f} MWh/yr")
+
+                    binding = e.get('binding_branch', '')
+                    if binding and binding != 'None' and str(binding) != 'nan':
+                        st.caption(f"Binding constraint: {binding}")
+                    if closest_mw != active_mw:
+                        st.caption(f"Estimate shown for {closest_mw} MW (closest available).")
+
+                    if pct == 0:
+                        st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out.")
+
+            # --- CURTAILMENT BY SIZE (single technology) ---
             st.markdown("---")
-            st.markdown("#### Curtailment Estimates")
-            st.caption("Estimated annual curtailment for a new generator, assuming all accepted projects are built.")
+            st.markdown(f"#### Curtailment by size — {active_tech}")
 
-            # Build pivot table as plain dataframe (no .style — avoids Streamlit Cloud errors)
-            pivot = sub_curt.pivot_table(
-                index='technology', columns='capacity_mw',
-                values='curtailment_pct', aggfunc='first'
-            )
-            pivot.index = pivot.index.map({'PV': 'Solar', 'Wind': 'Wind', 'BESS': 'Battery'})
-            pivot.columns = [f"{int(c)} MW" for c in pivot.columns]
-            # Format values as strings with %
-            pivot_display = pivot.map(lambda x: f"{x:.1f}%" if pd.notna(x) else "—")
-            st.dataframe(pivot_display, use_container_width=True)
+            tech_curt = sub_curt[sub_curt['technology'] == curt_tech_key].sort_values('capacity_mw')
+            if len(tech_curt) > 0:
+                size_display = tech_curt[['capacity_mw', 'curtailment_pct', 'curtailed_mwh', 'total_mwh']].copy()
+                size_display.columns = ['Capacity (MW)', 'Curtailment %', 'Curtailed (MWh)', 'Total (MWh)']
+                size_display['Curtailment %'] = size_display['Curtailment %'].apply(lambda x: f"{x:.1f}%" if pd.notna(x) else "—")
+                size_display['Curtailed (MWh)'] = size_display['Curtailed (MWh)'].apply(lambda x: f"{x:,.0f}" if pd.notna(x) else "—")
+                size_display['Total (MWh)'] = size_display['Total (MWh)'].apply(lambda x: f"{x:,.0f}" if pd.notna(x) else "—")
+                st.dataframe(size_display, use_container_width=True, hide_index=True)
 
-            # Binding constraint
-            binding_info = sub_curt[sub_curt['capacity_mw'] == 20].groupby('technology')['binding_branch'].first()
-            bindings = [f"{t}: {b}" for t, b in binding_info.items() if b != 'None' and str(b) != 'nan']
-            if bindings:
-                st.caption(f"Binding constraints (20MW): {' · '.join(bindings)}")
-
-            # Test connection result
-            if test_mw > 0:
-                curt_tech = tech_map.get(test_tech, 'PV')
-                available_mws = sorted(sub_curt['capacity_mw'].unique())
-                closest_mw = min(available_mws, key=lambda x: abs(x - test_mw))
-                estimate = sub_curt[
-                    (sub_curt['technology'] == curt_tech) &
-                    (sub_curt['capacity_mw'] == closest_mw)
-                ]
-                if len(estimate) > 0:
-                    e = estimate.iloc[0]
-                    if pd.notna(e['curtailment_pct']):
-                        pct = e['curtailment_pct']
-                        lost = e['curtailed_mwh']
-                        if pct > 5:
-                            st.error(f"**{test_mw} MW {test_tech}**: ~{pct:.1f}% curtailment ({lost:.0f} MWh/year lost)")
-                        elif pct > 1:
-                            st.warning(f"**{test_mw} MW {test_tech}**: ~{pct:.1f}% curtailment ({lost:.0f} MWh/year lost)")
-                        elif pct > 0:
-                            st.info(f"**{test_mw} MW {test_tech}**: ~{pct:.1f}% curtailment ({lost:.0f} MWh/year lost)")
-                        else:
-                            st.success(f"**{test_mw} MW {test_tech}**: no curtailment estimated")
-                        binding = e.get('binding_branch', '')
-                        if binding and binding != 'None' and str(binding) != 'nan':
-                            st.caption(f"Binding constraint: {binding}")
-                        if closest_mw != test_mw:
-                            st.caption(f"Note: estimate shown for {closest_mw} MW (closest available).")
-
-            # ==============================================================
-            # SEASONAL HEATMAP
-            # ==============================================================
-            if seasonal_df is not None:
-                sub_seasonal = match_substation(seasonal_df, selected_sub)
-                if len(sub_seasonal) > 0 and sub_seasonal['curtailed_mwh'].sum() > 0:
+            # --- SEASONAL HEATMAP (single technology) ---
+            sub_seasonal = match_substation(seasonal_df, sub_name)
+            if len(sub_seasonal) > 0:
+                tech_seasonal = sub_seasonal[sub_seasonal['technology'] == curt_tech_key]
+                if len(tech_seasonal) > 0 and tech_seasonal['curtailed_mwh'].sum() > 0:
                     st.markdown("---")
-                    st.markdown("#### When does curtailment happen?")
+                    st.markdown(f"#### When does curtailment happen? — {active_tech}")
 
-                    heatmap_tech = st.radio(
-                        "Technology", ['Solar', 'Wind', 'Battery'],
-                        horizontal=True, key='hm_tech'
+                    heatmap = tech_seasonal.pivot_table(
+                        index='hour', columns='month',
+                        values='curtailment_pct', aggfunc='first'
+                    ).fillna(0)
+                    month_names = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',
+                                  7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
+                    heatmap.columns = [month_names.get(c, c) for c in heatmap.columns]
+                    heatmap.index = [f"{h:02d}:00" for h in heatmap.index]
+                    heatmap_display = heatmap.map(lambda x: f"{x:.0f}%" if x > 0 else "")
+                    st.dataframe(heatmap_display, use_container_width=True, height=400)
+                    st.caption("Curtailment % by hour and month. Empty = no curtailment.")
+
+                    # Monthly summary
+                    monthly = tech_seasonal.groupby('month').agg(
+                        total=('total_mwh', 'sum'), curtailed=('curtailed_mwh', 'sum'),
+                    ).reset_index()
+                    monthly['Curtailment %'] = (100 * monthly['curtailed'] / monthly['total']).fillna(0).round(1)
+                    monthly['Month'] = monthly['month'].map(month_names)
+                    monthly['Generation (MWh)'] = monthly['total'].round(0).astype(int)
+                    monthly['Curtailed (MWh)'] = monthly['curtailed'].round(0).astype(int)
+                    st.dataframe(
+                        monthly[['Month', 'Generation (MWh)', 'Curtailed (MWh)', 'Curtailment %']],
+                        use_container_width=True, hide_index=True,
                     )
-                    tech_key = {'Solar': 'PV', 'Wind': 'Wind', 'Battery': 'BESS'}[heatmap_tech]
-                    tech_seasonal = sub_seasonal[sub_seasonal['technology'] == tech_key]
 
-                    if len(tech_seasonal) > 0 and tech_seasonal['curtailed_mwh'].sum() > 0:
-                        heatmap = tech_seasonal.pivot_table(
-                            index='hour', columns='month',
-                            values='curtailment_pct', aggfunc='first'
-                        ).fillna(0)
-
-                        month_names = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',
-                                      7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
-                        heatmap.columns = [month_names.get(c, c) for c in heatmap.columns]
-                        heatmap.index = [f"{h:02d}:00" for h in heatmap.index]
-
-                        # Display as plain dataframe with % formatting
-                        heatmap_display = heatmap.map(lambda x: f"{x:.0f}%" if x > 0 else "")
-                        st.dataframe(heatmap_display, use_container_width=True, height=400)
-                        st.caption(f"Curtailment % by hour and month for 20MW {heatmap_tech}. Empty cells = no curtailment.")
-
-                        # Monthly summary
-                        monthly = tech_seasonal.groupby('month').agg(
-                            total=('total_mwh', 'sum'), curtailed=('curtailed_mwh', 'sum'),
-                        ).reset_index()
-                        monthly['Curtailment %'] = (100 * monthly['curtailed'] / monthly['total']).fillna(0).round(1)
-                        monthly['Month'] = monthly['month'].map(month_names)
-                        monthly['Generation (MWh)'] = monthly['total'].round(0).astype(int)
-                        monthly['Curtailed (MWh)'] = monthly['curtailed'].round(0).astype(int)
-
-                        st.markdown(f"**Monthly summary — 20MW {heatmap_tech}:**")
-                        st.dataframe(
-                            monthly[['Month', 'Generation (MWh)', 'Curtailed (MWh)', 'Curtailment %']],
-                            use_container_width=True, hide_index=True,
-                        )
-                    else:
-                        st.caption(f"No curtailment for 20MW {heatmap_tech} at this substation.")
-
-            # ==============================================================
-            # LIFO POSITION SENSITIVITY
-            # ==============================================================
-            if lifo_df is not None:
-                sub_lifo = match_substation(lifo_df, selected_sub)
-                if len(sub_lifo) > 0:
-                    has_lifo_data = False
-                    for tech in ['PV', 'Wind', 'BESS']:
-                        col = f'{tech}_curtailment_pct'
-                        if col in sub_lifo.columns and sub_lifo[col].sum() > 0:
-                            has_lifo_data = True
-
-                    if has_lifo_data:
-                        st.markdown("---")
-                        st.markdown("#### Queue position sensitivity")
-                        st.caption("How curtailment changes depending on how many queued projects actually build.")
-
-                        lifo_display = pd.DataFrame()
-                        lifo_display['Position'] = sub_lifo['position_threshold'].apply(
-                            lambda x: f"≤{x}" if x < 9999 else "All"
-                        )
-                        lifo_display['Queue (MW)'] = sub_lifo['queue_mw'].values
-
-                        for tech, label in [('PV','Solar'), ('Wind','Wind'), ('BESS','Battery')]:
-                            col = f'{tech}_curtailment_pct'
-                            if col in sub_lifo.columns:
-                                lifo_display[label] = sub_lifo[col].apply(
-                                    lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
-                                ).values
-
-                        st.dataframe(lifo_display, use_container_width=True, hide_index=True)
-
-            # ==============================================================
-            # CO-LOCATION / HYBRIDISATION
-            # ==============================================================
-            if colocation_df is not None:
-                sub_coloc = match_substation(colocation_df, selected_sub)
-                if len(sub_coloc) > 0 and sub_coloc['curtailment_pct'].sum() > 0:
+            # --- LIFO POSITION (single technology) ---
+            sub_lifo = match_substation(lifo_df, sub_name)
+            if len(sub_lifo) > 0:
+                lifo_col = f'{curt_tech_key}_curtailment_pct'
+                if lifo_col in sub_lifo.columns and sub_lifo[lifo_col].sum() > 0:
                     st.markdown("---")
-                    st.markdown("#### Hybridisation analysis")
-                    st.caption("Curtailment for combined technologies on the same connection.")
+                    st.markdown(f"#### Queue position sensitivity — {active_tech}")
+                    st.caption("How curtailment changes depending on how many queued projects build.")
 
-                    coloc_display = sub_coloc[['scenario', 'total_mw', 'curtailment_pct', 'curtailed_mwh', 'binding_branch']].copy()
-                    coloc_display.columns = ['Scenario', 'Total MW', 'Curtailment %', 'Lost MWh', 'Binding Constraint']
-                    coloc_display['Binding Constraint'] = coloc_display['Binding Constraint'].replace('None', '—')
+                    lifo_display = pd.DataFrame()
+                    lifo_display['Position'] = sub_lifo['position_threshold'].apply(
+                        lambda x: f"≤{x}" if x < 9999 else "All"
+                    ).values
+                    lifo_display['Queue (MW)'] = sub_lifo['queue_mw'].values
+                    lifo_display[f'{active_tech} Curtailment'] = sub_lifo[lifo_col].apply(
+                        lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
+                    ).values
+                    st.dataframe(lifo_display, use_container_width=True, hide_index=True)
+
+            # --- CO-LOCATION (filtered to scenarios including this tech) ---
+            sub_coloc = match_substation(colocation_df, sub_name)
+            if len(sub_coloc) > 0 and sub_coloc['curtailment_pct'].sum() > 0:
+                # Filter to scenarios relevant to the selected technology
+                tech_to_col = {'PV': 'solar_mw', 'Wind': 'wind_mw', 'BESS': 'bess_mw'}
+                filter_col = tech_to_col.get(curt_tech_key)
+                if filter_col and filter_col in sub_coloc.columns:
+                    relevant = sub_coloc[sub_coloc[filter_col] > 0]
+                else:
+                    relevant = sub_coloc
+
+                if len(relevant) > 0:
+                    st.markdown("---")
+                    st.markdown(f"#### Hybridisation — scenarios including {active_tech}")
+                    st.caption("Compare single-technology vs hybrid on the same connection.")
+
+                    coloc_display = relevant[['scenario', 'total_mw', 'curtailment_pct', 'curtailed_mwh', 'binding_branch']].copy()
+                    coloc_display.columns = ['Scenario', 'Total MW', 'Curtailment %', 'Lost MWh', 'Binding']
+                    coloc_display['Binding'] = coloc_display['Binding'].replace('None', '—')
                     coloc_display['Curtailment %'] = coloc_display['Curtailment %'].apply(lambda x: f"{x:.1f}%")
                     coloc_display['Lost MWh'] = coloc_display['Lost MWh'].apply(lambda x: f"{x:,.0f}")
-
                     st.dataframe(coloc_display, use_container_width=True, hide_index=True)
 
         else:
-            st.markdown("---")
-            st.info("Curtailment data not available for this substation. It may be at a voltage level not covered by the curtailment dataset.")
+            st.info("Curtailment data not available for this substation. It may be at a voltage level not covered by the curtailment dataset (e.g. 66kV).")
 
     # Data notes
     st.markdown("---")
     st.caption(f"Flow data: {row.get('date_from', '?')} to {row.get('date_to', '?')} | {row.get('n_timestamps', '?')} timestamps")
     st.caption("Headroom = nominal transformer rating − (connected + accepted generation).")
-    st.caption("Curtailment uses NGED's published sensitivity factors, 2024 branch loading, seasonal PELs, and generic generator profiles. Queue projected using all accepted projects.")
+    st.caption("Curtailment uses NGED sensitivity factors, 2024 branch loading, seasonal PELs, and generic profiles. Full accepted queue projected.")
 
 
 # ============================================================
 # FOOTER
 # ============================================================
 st.markdown("---")
-st.caption("**Loom Light** — Grid Connection Intelligence")
-st.caption("Data: NGED LTDS Table 2a, BSP transformer flows, Generation Connection Register, Curtailment analysis data (Mar 2026)")
-st.caption("⚠️ Prototype — not for investment decisions. Does not account for abnormal running, ANM interactions, or demand growth.")
+st.caption("**Loom Light** — Grid Connection Intelligence · ⚠️ Prototype — not for investment decisions.")
