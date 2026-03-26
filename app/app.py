@@ -112,6 +112,37 @@ colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 
 tech_map = {"Solar": "PV", "Onshore Wind": "Wind", "Battery": "BESS", "Other": "Other"}
 
+# Build reverse lookup: display_name -> possible CIM codes in curtailment data
+# The curtailment CSVs use a mix of display names and CIM codes
+NAME_TO_CIM = {
+    'Ammanford': 'AMMA', 'Briton Ferry': 'BRIF', 'Carmarthen': 'CARM',
+    'Gowerton East': 'GOWE', 'Hirwaun': 'HIRW', 'Lampeter': 'LAMP',
+    'Llanarth': 'LLAN', 'Rhos': 'RHOS', 'Swansea North': 'SWAN',
+    'Swansea West': 'SWAW', 'Tir John': 'TIRJ', 'Trostre': 'TROS',
+    'Ystradgynlais': 'TRAV', 'Abergavenny': 'ABGA', 'Bridgend': 'BREN',
+    'Brynhill': 'BARR', 'Cardiff Central': 'CARC', 'Cardiff East': 'CARE',
+    'Cardiff North': 'CARN', 'Cardiff West': 'CARW', 'Crumlin': 'CRUM',
+    'Dowlais': 'DOWL', 'East Aberthaw': 'EAST', 'Ebbw Vale': 'EBBW',
+    'Golden Hill': 'GOLD', 'Grange': 'MAGA', 'Haverfordwest': 'HAVE',
+    'Llantarnam': 'LLTA', 'Milford Haven': 'MIFH', 'Mountain Ash': 'MOUA',
+    'Newport South': 'NEWS', 'Panteg': 'PANT', 'Pyle': 'PYLE',
+    'South Hook': 'SHHK', 'Sudbrook': 'SUDB', 'Upper Boat': 'UPPB',
+}
+
+def match_substation(dataframe, display_name):
+    """Find rows matching a display name, trying the name itself then CIM code."""
+    if dataframe is None:
+        return pd.DataFrame()
+    # Try direct match first
+    result = dataframe[dataframe['substation'] == display_name]
+    if len(result) > 0:
+        return result
+    # Try CIM code
+    cim = NAME_TO_CIM.get(display_name)
+    if cim:
+        result = dataframe[dataframe['substation'] == cim]
+    return result
+
 
 # ============================================================
 # SIDEBAR
@@ -184,8 +215,16 @@ if test_mw > 0 and curtailment_df is not None:
         (curtailment_df['technology'] == curt_tech) &
         (curtailment_df['capacity_mw'] == closest_mw)
     ][['substation', 'curtailment_pct', 'binding_branch']].copy()
-    curt_slice = curt_slice.rename(columns={'substation': 'display_name'})
-    map_df = map_df.merge(curt_slice, on='display_name', how='left')
+    
+    # Map CIM codes to display names so the merge works
+    CIM_TO_NAME_FULL = {v: k for k, v in NAME_TO_CIM.items()}
+    curt_slice['display_name'] = curt_slice['substation'].map(
+        lambda x: CIM_TO_NAME_FULL.get(x, x)
+    )
+    map_df = map_df.merge(
+        curt_slice[['display_name', 'curtailment_pct', 'binding_branch']],
+        on='display_name', how='left'
+    )
 
 try:
     import folium
@@ -342,7 +381,7 @@ else:
     # CURTAILMENT TABLE
     # ==================================================================
     if curtailment_df is not None:
-        sub_curt = curtailment_df[curtailment_df['substation'] == selected_sub]
+        sub_curt = match_substation(curtailment_df, selected_sub)
 
         if len(sub_curt) > 0 and sub_curt['curtailment_pct'].notna().any():
             st.markdown("---")
@@ -398,7 +437,7 @@ else:
             # SEASONAL HEATMAP
             # ==============================================================
             if seasonal_df is not None:
-                sub_seasonal = seasonal_df[seasonal_df['substation'] == selected_sub]
+                sub_seasonal = match_substation(seasonal_df, selected_sub)
                 if len(sub_seasonal) > 0 and sub_seasonal['curtailed_mwh'].sum() > 0:
                     st.markdown("---")
                     st.markdown("#### When does curtailment happen?")
@@ -447,7 +486,7 @@ else:
             # LIFO POSITION SENSITIVITY
             # ==============================================================
             if lifo_df is not None:
-                sub_lifo = lifo_df[lifo_df['substation'] == selected_sub]
+                sub_lifo = match_substation(lifo_df, selected_sub)
                 if len(sub_lifo) > 0:
                     has_lifo_data = False
                     for tech in ['PV', 'Wind', 'BESS']:
@@ -479,7 +518,7 @@ else:
             # CO-LOCATION / HYBRIDISATION
             # ==============================================================
             if colocation_df is not None:
-                sub_coloc = colocation_df[colocation_df['substation'] == selected_sub]
+                sub_coloc = match_substation(colocation_df, selected_sub)
                 if len(sub_coloc) > 0 and sub_coloc['curtailment_pct'].sum() > 0:
                     st.markdown("---")
                     st.markdown("#### Hybridisation analysis")
