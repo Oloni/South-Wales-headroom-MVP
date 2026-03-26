@@ -138,8 +138,6 @@ def match_substation(dataframe, display_name):
 # ============================================================
 # SESSION STATE
 # ============================================================
-if 'selected_sub' not in st.session_state:
-    st.session_state.selected_sub = None
 if 'test_run' not in st.session_state:
     st.session_state.test_run = False
 if 'test_mw' not in st.session_state:
@@ -179,19 +177,13 @@ with col2: st.metric("Overcommitted", (filtered['headroom_flag'] == 'Overcommitt
 with col3: st.metric("Tight", (filtered['headroom_flag'] == 'Tight').sum())
 with col4: st.metric("Available / Moderate", filtered['headroom_flag'].isin(['Moderate', 'Available']).sum())
 
+st.caption("**Headroom data** covers 35 BSP substations at 33kV, 66kV and 132kV across all of South Wales. **Curtailment estimates** cover 162 connection points at 33kV across all 7 GSP zones (Aberthaw & Cardiff East, Pembroke, Pyle, Rassau, Swansea North, Upper Boat, Uskmouth). Substations connecting at 66kV or above may not have curtailment data.")
+
 
 # ============================================================
 # MAP
 # ============================================================
 map_df = filtered.dropna(subset=['lat', 'lon']).copy()
-
-# Overview button
-mapcol1, mapcol2 = st.columns([6, 1])
-with mapcol2:
-    if st.button("⬜ Overview", use_container_width=True):
-        st.session_state.selected_sub = None
-        st.session_state.test_run = False
-        st.rerun()
 
 try:
     import folium
@@ -230,16 +222,7 @@ try:
             tooltip=row['display_name'],
         ).add_to(m)
 
-    map_result = st_folium(m, width=None, height=450, use_container_width=True, returned_objects=["last_object_clicked_tooltip"])
-
-    # Capture map click → select substation
-    # Only act if the tooltip is different from current selection
-    if map_result and map_result.get('last_object_clicked_tooltip'):
-        clicked_name = map_result['last_object_clicked_tooltip']
-        if clicked_name in filtered['display_name'].values and clicked_name != st.session_state.selected_sub:
-            st.session_state.selected_sub = clicked_name
-            st.session_state.test_run = False
-            st.rerun()
+    st_folium(m, width=None, height=450, use_container_width=True, returned_objects=[])
 
 except ImportError:
     st.warning("Install folium and streamlit-folium for the map.")
@@ -253,38 +236,30 @@ with leg4: st.markdown("🟢 **Available** (>50)")
 
 
 # ============================================================
-# SUBSTATION SELECTOR
+# SUBSTATION SELECTOR (sole control for substation selection)
 # ============================================================
 st.markdown("---")
 
 sub_options = ['(Overview table)'] + sorted(filtered['display_name'].tolist())
-current_idx = 0
-if st.session_state.selected_sub and st.session_state.selected_sub in sub_options:
-    current_idx = sub_options.index(st.session_state.selected_sub)
-
-def on_sub_change():
-    val = st.session_state.sub_selector
-    if val == '(Overview table)':
-        st.session_state.selected_sub = None
-        st.session_state.test_run = False
-    else:
-        if val != st.session_state.selected_sub:
-            st.session_state.test_run = False
-        st.session_state.selected_sub = val
 
 selected_sub = st.selectbox(
     "Select a substation",
     options=sub_options,
-    index=current_idx,
     key='sub_selector',
-    on_change=on_sub_change,
 )
+
+# Reset test when substation changes
+if 'prev_sub' not in st.session_state:
+    st.session_state.prev_sub = selected_sub
+if selected_sub != st.session_state.prev_sub:
+    st.session_state.test_run = False
+    st.session_state.prev_sub = selected_sub
 
 
 # ============================================================
 # OVERVIEW TABLE
 # ============================================================
-if st.session_state.selected_sub is None:
+if selected_sub == '(Overview table)':
     display_cols = [
         'display_name', 'voltage_kv', 'total_nominal_mva', 'peak_import_mw',
         'utilisation_pct', 'connected_mva', 'accepted_mva',
@@ -305,7 +280,7 @@ if st.session_state.selected_sub is None:
 # SUBSTATION DETAIL
 # ============================================================
 else:
-    sub_name = st.session_state.selected_sub
+    sub_name = selected_sub
     row = filtered[filtered['display_name'] == sub_name].iloc[0]
 
     st.markdown(f"### {row['display_name']} ({row['voltage_kv']}kV)")
