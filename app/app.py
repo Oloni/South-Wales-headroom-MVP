@@ -230,16 +230,16 @@ try:
             tooltip=row['display_name'],
         ).add_to(m)
 
-    map_result = st_folium(m, width=None, height=450, use_container_width=True)
+    map_result = st_folium(m, width=None, height=450, use_container_width=True, returned_objects=["last_object_clicked_tooltip"])
 
     # Capture map click → select substation
+    # Only act if the tooltip is different from current selection
     if map_result and map_result.get('last_object_clicked_tooltip'):
         clicked_name = map_result['last_object_clicked_tooltip']
-        if clicked_name in filtered['display_name'].values:
-            if st.session_state.selected_sub != clicked_name:
-                st.session_state.selected_sub = clicked_name
-                st.session_state.test_run = False
-                st.rerun()
+        if clicked_name in filtered['display_name'].values and clicked_name != st.session_state.selected_sub:
+            st.session_state.selected_sub = clicked_name
+            st.session_state.test_run = False
+            st.rerun()
 
 except ImportError:
     st.warning("Install folium and streamlit-folium for the map.")
@@ -262,19 +262,23 @@ current_idx = 0
 if st.session_state.selected_sub and st.session_state.selected_sub in sub_options:
     current_idx = sub_options.index(st.session_state.selected_sub)
 
+def on_sub_change():
+    val = st.session_state.sub_selector
+    if val == '(Overview table)':
+        st.session_state.selected_sub = None
+        st.session_state.test_run = False
+    else:
+        if val != st.session_state.selected_sub:
+            st.session_state.test_run = False
+        st.session_state.selected_sub = val
+
 selected_sub = st.selectbox(
     "Select a substation",
     options=sub_options,
     index=current_idx,
     key='sub_selector',
+    on_change=on_sub_change,
 )
-
-# Sync selectbox with session state
-if selected_sub == '(Overview table)':
-    st.session_state.selected_sub = None
-elif selected_sub != st.session_state.selected_sub:
-    st.session_state.selected_sub = selected_sub
-    st.session_state.test_run = False
 
 
 # ============================================================
@@ -375,6 +379,7 @@ else:
         st.session_state.test_run = True
         st.session_state.test_mw = test_mw
         st.session_state.test_tech = test_tech
+        st.rerun()
 
     if clear_clicked:
         st.session_state.test_run = False
@@ -427,7 +432,11 @@ else:
                         st.caption(f"Estimate shown for {closest_mw} MW (closest available).")
 
                     if pct == 0:
-                        st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out.")
+                        st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out. This substation may still appear overcommitted on a transformer-headroom basis, but the branch-level analysis shows the network can handle the flows.")
+                else:
+                    st.info(f"No curtailment estimate available for {active_tech} at this substation.")
+            else:
+                st.info(f"No curtailment estimate available for {active_tech} at this substation.")
 
             # --- CURTAILMENT BY SIZE (single technology) ---
             st.markdown("---")
@@ -474,6 +483,12 @@ else:
                         monthly[['Month', 'Generation (MWh)', 'Curtailed (MWh)', 'Curtailment %']],
                         use_container_width=True, hide_index=True,
                     )
+                else:
+                    st.markdown("---")
+                    st.caption(f"ℹ️ No seasonal breakdown shown — {active_tech} curtailment is 0% in all months at 20MW.")
+            else:
+                st.markdown("---")
+                st.caption(f"ℹ️ No seasonal data available for {sub_name}.")
 
             # --- LIFO POSITION (single technology) ---
             sub_lifo = match_substation(lifo_df, sub_name)
@@ -493,32 +508,47 @@ else:
                         lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
                     ).values
                     st.dataframe(lifo_display, use_container_width=True, hide_index=True)
+                else:
+                    st.markdown("---")
+                    st.caption(f"ℹ️ No queue position sensitivity shown — {active_tech} curtailment is 0% regardless of queue position at this substation.")
+            else:
+                st.markdown("---")
+                st.caption(f"ℹ️ No queue position data available for {sub_name}.")
 
             # --- CO-LOCATION (filtered to scenarios including this tech) ---
             sub_coloc = match_substation(colocation_df, sub_name)
-            if len(sub_coloc) > 0 and sub_coloc['curtailment_pct'].sum() > 0:
-                # Filter to scenarios relevant to the selected technology
-                tech_to_col = {'PV': 'solar_mw', 'Wind': 'wind_mw', 'BESS': 'bess_mw'}
-                filter_col = tech_to_col.get(curt_tech_key)
-                if filter_col and filter_col in sub_coloc.columns:
-                    relevant = sub_coloc[sub_coloc[filter_col] > 0]
+            if len(sub_coloc) > 0:
+                if sub_coloc['curtailment_pct'].sum() > 0:
+                    # Filter to scenarios relevant to the selected technology
+                    tech_to_col = {'PV': 'solar_mw', 'Wind': 'wind_mw', 'BESS': 'bess_mw'}
+                    filter_col = tech_to_col.get(curt_tech_key)
+                    if filter_col and filter_col in sub_coloc.columns:
+                        relevant = sub_coloc[sub_coloc[filter_col] > 0]
+                    else:
+                        relevant = sub_coloc
+
+                    if len(relevant) > 0:
+                        st.markdown("---")
+                        st.markdown(f"#### Hybridisation — scenarios including {active_tech}")
+                        st.caption("Compare single-technology vs hybrid on the same connection.")
+
+                        coloc_display = relevant[['scenario', 'total_mw', 'curtailment_pct', 'curtailed_mwh', 'binding_branch']].copy()
+                        coloc_display.columns = ['Scenario', 'Total MW', 'Curtailment %', 'Lost MWh', 'Binding']
+                        coloc_display['Binding'] = coloc_display['Binding'].replace('None', '—')
+                        coloc_display['Curtailment %'] = coloc_display['Curtailment %'].apply(lambda x: f"{x:.1f}%")
+                        coloc_display['Lost MWh'] = coloc_display['Lost MWh'].apply(lambda x: f"{x:,.0f}")
+                        st.dataframe(coloc_display, use_container_width=True, hide_index=True)
                 else:
-                    relevant = sub_coloc
-
-                if len(relevant) > 0:
                     st.markdown("---")
-                    st.markdown(f"#### Hybridisation — scenarios including {active_tech}")
-                    st.caption("Compare single-technology vs hybrid on the same connection.")
+                    st.caption(f"ℹ️ No hybridisation analysis shown — all technology combinations show 0% curtailment at this substation.")
+            else:
+                st.markdown("---")
+                st.caption(f"ℹ️ No hybridisation data available for {sub_name}.")
 
-                    coloc_display = relevant[['scenario', 'total_mw', 'curtailment_pct', 'curtailed_mwh', 'binding_branch']].copy()
-                    coloc_display.columns = ['Scenario', 'Total MW', 'Curtailment %', 'Lost MWh', 'Binding']
-                    coloc_display['Binding'] = coloc_display['Binding'].replace('None', '—')
-                    coloc_display['Curtailment %'] = coloc_display['Curtailment %'].apply(lambda x: f"{x:.1f}%")
-                    coloc_display['Lost MWh'] = coloc_display['Lost MWh'].apply(lambda x: f"{x:,.0f}")
-                    st.dataframe(coloc_display, use_container_width=True, hide_index=True)
-
+        elif len(sub_curt) == 0:
+            st.info(f"No curtailment data available for {sub_name}. This substation may be at a voltage level (e.g. 66kV) not covered by the curtailment dataset.")
         else:
-            st.info("Curtailment data not available for this substation. It may be at a voltage level not covered by the curtailment dataset (e.g. 66kV).")
+            st.info(f"Curtailment data for {sub_name} has no valid estimates. The substation may not have sensitivity factors in the NGED dataset.")
 
     # Data notes
     st.markdown("---")
