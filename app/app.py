@@ -103,7 +103,17 @@ df = load_data()
 curtailment_df = load_csv_or_none('south_wales_curtailment.csv')
 seasonal_df = load_csv_or_none('south_wales_curtailment_seasonal.csv')
 lifo_df = load_csv_or_none('south_wales_curtailment_lifo.csv')
+buildout_df = load_csv_or_none('south_wales_curtailment_buildout.csv')
 colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
+
+# Load methodology text
+methodology_text = ""
+for prefix in ['../data/', 'data/', '../', '']:
+    mpath = prefix + 'README_methodology.md'
+    if os.path.exists(mpath):
+        with open(mpath) as f:
+            methodology_text = f.read()
+        break
 
 tech_map = {"Solar": "PV", "Onshore Wind": "Wind", "Battery": "BESS", "Other (gas, biomass, CHP)": "Other"}
 
@@ -169,7 +179,21 @@ st.sidebar.caption("⚠️ Prototype — not for investment decisions.")
 # ============================================================
 # HEADER
 # ============================================================
-st.markdown("# South Wales Grid Connection Screener")
+hdr1, hdr2 = st.columns([5, 1])
+with hdr1:
+    st.markdown("# South Wales Grid Connection Screener")
+with hdr2:
+    st.markdown("<br/>", unsafe_allow_html=True)
+    if st.button("📄 Methodology", use_container_width=True):
+        st.session_state.show_methodology = not st.session_state.get('show_methodology', False)
+
+if st.session_state.get('show_methodology', False):
+    with st.expander("Methodology & Assumptions", expanded=True):
+        if methodology_text:
+            st.markdown(methodology_text)
+        else:
+            st.info("Methodology document not found. Please ensure README_methodology.md is in the data or app directory.")
+    st.stop()
 
 col1, col2, col3, col4 = st.columns(4)
 with col1: st.metric("Substations", len(filtered))
@@ -177,7 +201,7 @@ with col2: st.metric("Overcommitted", (filtered['headroom_flag'] == 'Overcommitt
 with col3: st.metric("Tight", (filtered['headroom_flag'] == 'Tight').sum())
 with col4: st.metric("Available / Moderate", filtered['headroom_flag'].isin(['Moderate', 'Available']).sum())
 
-st.caption("**Headroom data** covers 35 BSP substations at 33kV, 66kV and 132kV across all of South Wales. **Curtailment estimates** cover 162 connection points at 33kV across all 7 GSP zones (Aberthaw & Cardiff East, Pembroke, Pyle, Rassau, Swansea North, Upper Boat, Uskmouth). Substations connecting at 66kV or above may not have curtailment data.")
+st.caption("**Headroom data** covers 35 BSP substations at 33kV, 66kV and 132kV across all of South Wales. **Curtailment estimates** cover 162 connection points at 33kV across all 7 GSP zones. Substations connecting at 66kV or above may not have curtailment data.")
 
 
 # ============================================================
@@ -465,30 +489,57 @@ else:
                 st.markdown("---")
                 st.caption(f"ℹ️ No seasonal data available for {sub_name}.")
 
-            # --- LIFO POSITION (single technology) ---
+            # --- LIFO POSITION (proper — who gets curtailed first) ---
             sub_lifo = match_substation(lifo_df, sub_name)
-            if len(sub_lifo) > 0:
-                lifo_col = f'{curt_tech_key}_curtailment_pct'
-                if lifo_col in sub_lifo.columns and sub_lifo[lifo_col].sum() > 0:
+            if len(sub_lifo) > 0 and 'technology' in sub_lifo.columns:
+                tech_lifo = sub_lifo[sub_lifo['technology'] == curt_tech_key]
+                if len(tech_lifo) > 0 and tech_lifo['curtailment_pct'].notna().any() and tech_lifo['curtailment_pct'].max() > 0:
                     st.markdown("---")
-                    st.markdown(f"#### Queue position sensitivity — {active_tech}")
-                    st.caption("How curtailment changes depending on how many queued projects build.")
+                    st.markdown(f"#### LIFO queue position — {active_tech}")
+                    st.caption("Under LIFO, generators behind you (newer) get curtailed before you. Lower position = less curtailment.")
 
                     lifo_display = pd.DataFrame()
-                    lifo_display['Position'] = sub_lifo['position_threshold'].apply(
-                        lambda x: f"≤{x}" if x < 9999 else "All"
+                    lifo_display['Your Position'] = tech_lifo['my_position'].apply(
+                        lambda x: f"#{x}" if x < 9999 else "Last"
                     ).values
-                    lifo_display['Queue (MW)'] = sub_lifo['queue_mw'].values
-                    lifo_display[f'{active_tech} Curtailment'] = sub_lifo[lifo_col].apply(
+                    lifo_display['Curtailment'] = tech_lifo['curtailment_pct'].apply(
                         lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
+                    ).values
+                    lifo_display['Energy Lost (MWh)'] = tech_lifo['curtailed_mwh'].apply(
+                        lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
                     ).values
                     st.dataframe(lifo_display, use_container_width=True, hide_index=True)
                 else:
                     st.markdown("---")
-                    st.caption(f"ℹ️ No queue position sensitivity shown — {active_tech} curtailment is 0% regardless of queue position at this substation.")
+                    st.caption(f"ℹ️ No LIFO sensitivity shown — {active_tech} curtailment is 0% at all queue positions at this substation.")
             else:
                 st.markdown("---")
-                st.caption(f"ℹ️ No queue position data available for {sub_name}.")
+                st.caption(f"ℹ️ No LIFO data available for {sub_name}.")
+
+            # --- QUEUE BUILD-OUT (what if projects don't build?) ---
+            sub_buildout = match_substation(buildout_df, sub_name)
+            if len(sub_buildout) > 0:
+                bo_col = f'{curt_tech_key}_curtailment_pct'
+                if bo_col in sub_buildout.columns and sub_buildout[bo_col].max() > 0:
+                    st.markdown("---")
+                    st.markdown(f"#### Queue build-out sensitivity — {active_tech}")
+                    st.caption("What if not all accepted projects actually build? Shows curtailment under different build-out assumptions.")
+
+                    bo_display = pd.DataFrame()
+                    bo_display['Projects up to position'] = sub_buildout['position_threshold'].apply(
+                        lambda x: f"≤{x}" if x < 9999 else "All"
+                    ).values
+                    bo_display['Queue (MW)'] = sub_buildout['queue_mw'].values
+                    bo_display[f'{active_tech} Curtailment'] = sub_buildout[bo_col].apply(
+                        lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
+                    ).values
+                    st.dataframe(bo_display, use_container_width=True, hide_index=True)
+                else:
+                    st.markdown("---")
+                    st.caption(f"ℹ️ No queue build-out sensitivity shown — {active_tech} curtailment is 0% regardless of how many projects build.")
+            else:
+                st.markdown("---")
+                st.caption(f"ℹ️ No queue build-out data available for {sub_name}.")
 
             # --- CO-LOCATION (filtered to scenarios including this tech) ---
             sub_coloc = match_substation(colocation_df, sub_name)
