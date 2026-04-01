@@ -466,7 +466,7 @@ else:
                         with rv1:
                             st.metric("Annual Revenue Lost", f"£{annual_revenue_lost:,.0f}")
                         with rv2:
-                            st.metric("Annual Revenue (curtailed)", f"£{annual_revenue_curtailed:,.0f}")
+                            st.metric("Annual Revenue (after curtailment)", f"£{annual_revenue_curtailed:,.0f}")
                         with rv3:
                             st.metric(f"NPV of Lost Revenue ({life}yr)", f"£{npv_lost:,.0f}")
                         st.caption(f"At £{pp:.0f}/MWh, {dr*100:.0f}% discount rate, {life}-year project life. Change assumptions in 'Revenue assumptions' above.")
@@ -501,6 +501,8 @@ else:
 
                     if pct == 0:
                         st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out.")
+                        if flag == 'Overcommitted':
+                            st.caption("This substation appears overcommitted on a transformer-headroom basis (committed generation exceeds the nominal rating). However, the branch-level curtailment analysis shows no constraint is breached. This can happen because: (1) local demand absorbs generation before it reaches the transformer, (2) sensitivity factors route generation across multiple branches rather than all through the BSP transformer, or (3) the pre-event limit accounts for emergency ratings and demand offsets that the simple headroom metric ignores. The curtailment analysis is more accurate than the headline headroom number.")
                 else:
                     st.info(f"No curtailment estimate available for {active_tech} at this substation.")
             else:
