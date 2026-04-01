@@ -457,9 +457,9 @@ else:
                     with r1:
                         st.metric("Annual Curtailment", f"{pct:.1f}%")
                     with r2:
-                        st.metric("Energy Lost", f"{lost:,.0f} MWh/yr")
+                        st.metric("Energy Curtailed", f"{lost:,.0f} MWh/yr")
                     with r3:
-                        st.metric("Energy Delivered", f"{delivered:,.0f} MWh/yr")
+                        st.metric("Energy Exported", f"{delivered:,.0f} MWh/yr")
 
                     if pct > 0:
                         rv1, rv2, rv3 = st.columns(3)
@@ -498,6 +498,10 @@ else:
 
                     if closest_mw != active_mw:
                         st.caption(f"Estimate shown for {closest_mw} MW (closest available).")
+
+                    # BESS profile warning
+                    if curt_tech_key == 'BESS':
+                        st.warning("⚠️ **BESS profile caveat:** This estimate uses NGED's generic battery export profile, which assumes a fixed daily pattern. Our SCADA validation at Newport South found that actual BESS dispatch diverges significantly from this profile — real batteries operate market-driven strategies that vary by site and by day. Treat BESS curtailment estimates with more caution than solar or wind.")
 
                     if pct == 0:
                         st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out.")
