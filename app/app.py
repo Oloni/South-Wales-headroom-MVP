@@ -105,6 +105,7 @@ seasonal_df = load_csv_or_none('south_wales_curtailment_seasonal.csv')
 lifo_df = load_csv_or_none('south_wales_curtailment_lifo.csv')
 buildout_df = load_csv_or_none('south_wales_curtailment_buildout.csv')
 colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
+confidence_df = load_csv_or_none('south_wales_curtailment_confidence.csv')
 
 # Load methodology text
 methodology_text = ""
@@ -154,6 +155,12 @@ if 'test_mw' not in st.session_state:
     st.session_state.test_mw = 20
 if 'test_tech' not in st.session_state:
     st.session_state.test_tech = 'Solar'
+if 'power_price' not in st.session_state:
+    st.session_state.power_price = 50.0
+if 'discount_rate' not in st.session_state:
+    st.session_state.discount_rate = 8.0
+if 'project_life' not in st.session_state:
+    st.session_state.project_life = 25
 
 
 # ============================================================
@@ -374,10 +381,23 @@ else:
         st.markdown("<br/>", unsafe_allow_html=True)
         clear_clicked = st.button("✕ Clear", use_container_width=True)
 
+    # Revenue assumptions (collapsible)
+    with st.expander("Revenue assumptions", expanded=False):
+        rev1, rev2, rev3 = st.columns(3)
+        with rev1:
+            power_price = st.number_input("Power price (£/MWh)", min_value=0.0, max_value=500.0, value=50.0, step=5.0, key='power_price_input')
+        with rev2:
+            discount_rate = st.number_input("Discount rate (%)", min_value=0.0, max_value=30.0, value=8.0, step=0.5, key='discount_rate_input')
+        with rev3:
+            project_life = st.number_input("Project life (years)", min_value=1, max_value=40, value=25, step=1, key='project_life_input')
+
     if run_clicked:
         st.session_state.test_run = True
         st.session_state.test_mw = test_mw
         st.session_state.test_tech = test_tech
+        st.session_state.power_price = power_price
+        st.session_state.discount_rate = discount_rate
+        st.session_state.project_life = project_life
         st.rerun()
 
     if clear_clicked:
@@ -416,6 +436,23 @@ else:
                     total = e['total_mwh']
                     delivered = total - lost
 
+                    # Get revenue assumptions
+                    pp = st.session_state.get('power_price', 50.0)
+                    dr = st.session_state.get('discount_rate', 8.0) / 100
+                    life = st.session_state.get('project_life', 25)
+
+                    # Revenue calculations
+                    annual_revenue_uncurtailed = total * pp
+                    annual_revenue_curtailed = delivered * pp
+                    annual_revenue_lost = lost * pp
+
+                    # NPV of revenue lost over project life
+                    if dr > 0:
+                        npv_factor = (1 - (1 + dr) ** -life) / dr
+                    else:
+                        npv_factor = life
+                    npv_lost = annual_revenue_lost * npv_factor
+
                     r1, r2, r3 = st.columns(3)
                     with r1:
                         st.metric("Annual Curtailment", f"{pct:.1f}%")
@@ -424,14 +461,46 @@ else:
                     with r3:
                         st.metric("Energy Delivered", f"{delivered:,.0f} MWh/yr")
 
+                    if pct > 0:
+                        rv1, rv2, rv3 = st.columns(3)
+                        with rv1:
+                            st.metric("Annual Revenue Lost", f"£{annual_revenue_lost:,.0f}")
+                        with rv2:
+                            st.metric("Annual Revenue (curtailed)", f"£{annual_revenue_curtailed:,.0f}")
+                        with rv3:
+                            st.metric(f"NPV of Lost Revenue ({life}yr)", f"£{npv_lost:,.0f}")
+                        st.caption(f"At £{pp:.0f}/MWh, {dr*100:.0f}% discount rate, {life}-year project life. Change assumptions in 'Revenue assumptions' above.")
+
                     binding = e.get('binding_branch', '')
                     if binding and binding != 'None' and str(binding) != 'nan':
                         st.caption(f"Binding constraint: {binding}")
+
+                    # Model confidence from SCADA validation
+                    if confidence_df is not None:
+                        conf_match = match_substation(confidence_df, sub_name)
+                        if len(conf_match) > 0:
+                            conf_row = conf_match[
+                                (conf_match['technology'] == curt_tech_key) &
+                                (conf_match['capacity_mw'] == closest_mw)
+                            ]
+                            if len(conf_row) > 0:
+                                conf = conf_row.iloc[0]
+                                conf_level = conf.get('confidence', 'Unknown')
+                                conf_reason = conf.get('confidence_reason', '')
+                                if conf_level == 'High':
+                                    st.success(f"🟢 **Model confidence: High** — {conf_reason}")
+                                elif conf_level == 'Moderate':
+                                    st.info(f"🔵 **Model confidence: Moderate** — {conf_reason}")
+                                elif conf_level == 'Low':
+                                    st.warning(f"🟡 **Model confidence: Low** — {conf_reason}")
+                                elif conf_level == 'Very Low':
+                                    st.error(f"🔴 **Model confidence: Very Low** — {conf_reason}")
+
                     if closest_mw != active_mw:
                         st.caption(f"Estimate shown for {closest_mw} MW (closest available).")
 
                     if pct == 0:
-                        st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out. This substation may still appear overcommitted on a transformer-headroom basis, but the branch-level analysis shows the network can handle the flows.")
+                        st.success("No branch exceeds its pre-event limit at this size, even with the full queue built out.")
                 else:
                     st.info(f"No curtailment estimate available for {active_tech} at this substation.")
             else:
@@ -443,11 +512,14 @@ else:
 
             tech_curt = sub_curt[sub_curt['technology'] == curt_tech_key].sort_values('capacity_mw')
             if len(tech_curt) > 0:
+                pp = st.session_state.get('power_price', 50.0)
                 size_display = tech_curt[['capacity_mw', 'curtailment_pct', 'curtailed_mwh', 'total_mwh']].copy()
-                size_display.columns = ['Capacity (MW)', 'Curtailment %', 'Curtailed (MWh)', 'Total (MWh)']
+                size_display['revenue_lost'] = size_display['curtailed_mwh'] * pp
+                size_display.columns = ['Capacity (MW)', 'Curtailment %', 'Curtailed (MWh)', 'Total (MWh)', 'Revenue Lost (£/yr)']
                 size_display['Curtailment %'] = size_display['Curtailment %'].apply(lambda x: f"{x:.1f}%" if pd.notna(x) else "—")
                 size_display['Curtailed (MWh)'] = size_display['Curtailed (MWh)'].apply(lambda x: f"{x:,.0f}" if pd.notna(x) else "—")
                 size_display['Total (MWh)'] = size_display['Total (MWh)'].apply(lambda x: f"{x:,.0f}" if pd.notna(x) else "—")
+                size_display['Revenue Lost (£/yr)'] = size_display['Revenue Lost (£/yr)'].apply(lambda x: f"£{x:,.0f}" if pd.notna(x) else "—")
                 st.dataframe(size_display, use_container_width=True, hide_index=True)
 
             # --- SEASONAL HEATMAP (single technology) ---
@@ -588,3 +660,5 @@ else:
 # ============================================================
 st.markdown("---")
 st.caption("**Loom Light** — Grid Connection Intelligence · ⚠️ Prototype — not for investment decisions.")
+st.caption("Supported by NGED Open Data. Data: NGED LTDS, BSP transformer flows, Generation Connection Register, sensitivity factors, branch loading, pre-event limits (Mar 2026).")
+st.caption("Model confidence ratings derived from validation against 17,568 half-hours of SCADA measurements.")
