@@ -363,6 +363,16 @@ else:
     elif flag in ['Moderate', 'Available']:
         st.success(f"**{flag}**: {headroom:.0f} MVA of headroom available")
 
+    # ANM zone flags
+    has_tanm = row.get('has_tanm', False)
+    has_danm = row.get('has_danm', False)
+    if has_tanm and has_danm:
+        st.info("⚡ **Transmission & Distribution ANM zone** — curtailment at this substation is managed in real-time by both NESO (transmission) and NGED DERMS (distribution).")
+    elif has_tanm:
+        st.info("⚡ **Transmission ANM zone** — curtailment at this substation is managed in real-time by NESO. Our estimates replicate what the ANM system enforces; SCADA data reflects post-ANM conditions.")
+    elif has_danm:
+        st.info("⚡ **Distribution ANM zone** — curtailment at this substation is managed in real-time by NGED's DERMS system.")
+
     # ==============================================================
     # TEST A CONNECTION (below substation detail)
     # ==============================================================
@@ -495,6 +505,11 @@ else:
                                     st.warning(f"🟡 **Model confidence: Low** — {conf_reason}")
                                 elif conf_level == 'Very Low':
                                     st.error(f"🔴 **Model confidence: Very Low** — {conf_reason}")
+
+                                # ANM context on confidence
+                                if has_tanm or has_danm:
+                                    anm_type = "Transmission ANM (NESO)" if has_tanm and not has_danm else "Distribution ANM (NGED DERMS)" if has_danm and not has_tanm else "Transmission & Distribution ANM"
+                                    st.caption(f"This substation is in a {anm_type} zone. Any divergence between the model and SCADA may partly reflect ANM actively curtailing generators to keep flows within limits — meaning the real network is better managed than the planning model alone would suggest.")
 
                     if closest_mw != active_mw:
                         st.caption(f"Estimate shown for {closest_mw} MW (closest available).")
