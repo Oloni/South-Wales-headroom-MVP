@@ -59,6 +59,77 @@ BUILDOUT_THRESHOLDS = [0, 50, 100, 200, 500, 1000, 9999]
 LIFO_TEST_POSITIONS = [1, 10, 50, 100, 200, 500, 9999]
 
 
+def get_smart_thresholds(accepted, kind='buildout'):
+    """
+    Generate meaningful thresholds based on the actual queue.
+    For buildout: returns list of dicts with position_threshold, n_projects, queue_mw.
+    For lifo: returns list of dicts with my_position, position_label, n_projects_ahead.
+    """
+    if len(accepted) == 0:
+        return []
+
+    sorted_acc = accepted.sort_values('Position')
+    positions = sorted_acc['Position'].values
+    n_total = len(positions)
+    cumulative_mw = sorted_acc['Site Export Capacity (MW)'].cumsum().values
+
+    results = []
+
+    if kind == 'buildout':
+        target_counts = set()
+        target_counts.add(0)  # no accepted projects (recently connected only)
+        if n_total <= 8:
+            target_counts.update(range(1, n_total + 1))
+        else:
+            for frac in [0.2, 0.4, 0.6, 0.8]:
+                target_counts.add(max(1, int(n_total * frac)))
+            target_counts.add(n_total)
+
+        for count in sorted(target_counts):
+            if count == 0:
+                results.append({
+                    'position_threshold': 0,
+                    'n_projects': 0,
+                    'queue_mw': 0,
+                })
+            else:
+                idx = min(count - 1, n_total - 1)
+                results.append({
+                    'position_threshold': int(positions[idx]),
+                    'n_projects': count,
+                    'queue_mw': round(cumulative_mw[idx]),
+                })
+
+    elif kind == 'lifo':
+        target_counts = set()
+        target_counts.add(1)
+        if n_total <= 8:
+            target_counts.update(range(1, n_total + 1))
+        else:
+            for frac in [0.25, 0.5, 0.75]:
+                target_counts.add(max(1, int(n_total * frac)))
+        target_counts.add(n_total)
+        target_counts.add(n_total + 1)  # "last" = behind everyone
+
+        for count in sorted(target_counts):
+            if count > n_total:
+                results.append({
+                    'my_position': 9999,
+                    'position_label': 'Last',
+                    'n_projects_ahead': n_total,
+                })
+            else:
+                idx = min(count - 1, n_total - 1)
+                pos = int(positions[idx])
+                results.append({
+                    'my_position': pos,
+                    'position_label': f'#{pos}',
+                    'n_projects_ahead': count - 1,
+                })
+
+    return results
+
+
 # ============================================================
 # ZONE DETECTION
 # ============================================================
@@ -410,16 +481,19 @@ for prefix, zone_id in zones:
         # PROPER LIFO: What's my curtailment at different queue positions?
         # ==============================================================
         if has_queue and len(accepted) > 0:
+            lifo_thresholds = get_smart_thresholds(accepted, kind='lifo')
             for tech in ['PV', 'Wind', 'BESS']:
-                for my_pos in LIFO_TEST_POSITIONS:
+                for lt in lifo_thresholds:
                     r = compute_curtailment_lifo(
-                        data, bus_num, 20, tech, my_pos, bl_full, accepted
+                        data, bus_num, 20, tech, lt['my_position'], bl_full, accepted
                     )
                     all_lifo.append({
                         'substation': bsp_name, 'zone': prefix,
                         'technology': tech,
                         'capacity_mw': 20,
-                        'my_position': my_pos,
+                        'my_position': lt['my_position'],
+                        'position_label': lt['position_label'],
+                        'n_projects_ahead': lt['n_projects_ahead'],
                         'curtailment_pct': r['curtailment_pct'] if r else None,
                         'curtailed_mwh': r['curtailed_mwh'] if r else None,
                         'total_mwh': r['total_mwh'] if r else None,
@@ -429,17 +503,20 @@ for prefix, zone_id in zones:
         # QUEUE BUILD-OUT: What if only some projects build?
         # ==============================================================
         if has_queue and len(accepted) > 0:
-            for pos_threshold in BUILDOUT_THRESHOLDS:
+            buildout_thresholds = get_smart_thresholds(accepted, kind='buildout')
+            for bt in buildout_thresholds:
+                pos_threshold = bt['position_threshold']
                 queue_subset = pd.concat([
                     recently_connected,
                     accepted[accepted['Position'] <= pos_threshold]
-                ])
+                ]) if pos_threshold > 0 else recently_connected.copy()
                 queue_mw = queue_subset['Site Export Capacity (MW)'].sum()
                 bl_projected = project_queue(data, queue_subset)
 
                 row_result = {
                     'substation': bsp_name, 'zone': prefix,
                     'position_threshold': pos_threshold,
+                    'n_projects': bt['n_projects'],
                     'queue_mw': round(queue_mw),
                 }
                 for tech, prof_col in [('PV', 'PV'), ('Wind', 'Wind'), ('BESS', 'BESS Export pu')]:
@@ -508,12 +585,23 @@ print(f"\n\nSample LIFO results — 20MW Solar at Swansea West:")
 sw_lifo = df_lifo[(df_lifo['substation'] == 'Swansea West') & (df_lifo['technology'] == 'PV')]
 if len(sw_lifo) > 0:
     for _, r in sw_lifo.iterrows():
-        pos_label = f"pos {r['my_position']}" if r['my_position'] < 9999 else "last"
-        print(f"  {pos_label:>10}: {r['curtailment_pct']:.1f}%")
+        label = r.get('position_label', f"pos {r['my_position']}")
+        ahead = r.get('n_projects_ahead', '?')
+        print(f"  {label:>10} ({ahead} projects ahead): {r['curtailment_pct']:.1f}%")
 
 print(f"\nSample LIFO results — 20MW Wind at Swansea West:")
 sw_lifo_w = df_lifo[(df_lifo['substation'] == 'Swansea West') & (df_lifo['technology'] == 'Wind')]
 if len(sw_lifo_w) > 0:
     for _, r in sw_lifo_w.iterrows():
-        pos_label = f"pos {r['my_position']}" if r['my_position'] < 9999 else "last"
-        print(f"  {pos_label:>10}: {r['curtailment_pct']:.1f}%")
+        label = r.get('position_label', f"pos {r['my_position']}")
+        ahead = r.get('n_projects_ahead', '?')
+        print(f"  {label:>10} ({ahead} projects ahead): {r['curtailment_pct']:.1f}%")
+
+print(f"\nSample build-out results — 20MW Solar at Swansea West:")
+sw_bo = df_buildout[df_buildout['substation'] == 'Swansea West']
+if len(sw_bo) > 0:
+    for _, r in sw_bo.iterrows():
+        n_proj = r.get('n_projects', '?')
+        pos = r['position_threshold']
+        pos_label = f"≤{pos}" if pos < 9999 else "All"
+        print(f"  {n_proj} projects (pos {pos_label}): {r['queue_mw']} MW → Solar {r.get('PV_curtailment_pct', '?')}%")

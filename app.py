@@ -592,9 +592,14 @@ else:
                     st.caption("Under LIFO, generators behind you (newer) get curtailed before you. Lower position = less curtailment.")
 
                     lifo_display = pd.DataFrame()
-                    lifo_display['Your Position'] = tech_lifo['my_position'].apply(
-                        lambda x: f"#{x}" if x < 9999 else "Last"
-                    ).values
+                    if 'position_label' in tech_lifo.columns:
+                        lifo_display['Your Position'] = tech_lifo['position_label'].values
+                    else:
+                        lifo_display['Your Position'] = tech_lifo['my_position'].apply(
+                            lambda x: f"#{x}" if x < 9999 else "Last"
+                        ).values
+                    if 'n_projects_ahead' in tech_lifo.columns:
+                        lifo_display['Projects Ahead'] = tech_lifo['n_projects_ahead'].values
                     lifo_display['Curtailment'] = tech_lifo['curtailment_pct'].apply(
                         lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
                     ).values
@@ -619,7 +624,9 @@ else:
                     st.caption("What if not all accepted projects actually build? Shows curtailment under different build-out assumptions.")
 
                     bo_display = pd.DataFrame()
-                    bo_display['Projects up to position'] = sub_buildout['position_threshold'].apply(
+                    if 'n_projects' in sub_buildout.columns:
+                        bo_display['Projects Built'] = sub_buildout['n_projects'].values
+                    bo_display['Up to Position'] = sub_buildout['position_threshold'].apply(
                         lambda x: f"≤{x}" if x < 9999 else "All"
                     ).values
                     bo_display['Queue (MW)'] = sub_buildout['queue_mw'].values
