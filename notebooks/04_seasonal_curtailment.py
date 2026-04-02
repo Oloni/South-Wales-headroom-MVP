@@ -154,7 +154,7 @@ def compute_seasonal_curtailment(prefix, zone_id):
             for _, row in bus_sf.iterrows():
                 branch_col = f"{row['From Bus Number']}_{row['To Bus Number']}_{row['Tertiary Bus Number']}_{row['Circuit ID']}"
                 if branch_col in branch_load.columns:
-                    branch_load[branch_col] = branch_load[branch_col].values + bus_output * row['Sensitivity Factor MW']
+                    branch_load[branch_col] = branch_load[branch_col].values - bus_output * row['Sensitivity Factor MW']
 
     branch_col_set = set(branch_load.columns) - {'Half Hour'}
 
@@ -216,14 +216,15 @@ def compute_seasonal_curtailment(prefix, zone_id):
 
                 fwd_pel_hh = fwd_pels[halfhour_season_idx]
                 rev_pel_hh = rev_pels[halfhour_season_idx]
-                new_flow = existing_flow + gen_output * sf_val
+                new_flow = existing_flow - gen_output * sf_val
 
-                if sf_val > 0:
+                # SF is demand convention. Generator effect = -SF × output.
+                if sf_val < 0:
                     excess = np.maximum(new_flow - fwd_pel_hh, 0)
-                    curtail_mw = np.minimum(excess / sf_val, gen_output)
-                elif sf_val < 0:
-                    excess = np.maximum(rev_pel_hh - new_flow, 0)
                     curtail_mw = np.minimum(excess / abs(sf_val), gen_output)
+                elif sf_val > 0:
+                    excess = np.maximum(rev_pel_hh - new_flow, 0)
+                    curtail_mw = np.minimum(excess / sf_val, gen_output)
                 else:
                     continue
 

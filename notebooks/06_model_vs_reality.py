@@ -103,7 +103,8 @@ for zone_prefix, zone_id in zones_to_process:
             bus = row['Node Number']
             sf_val = row['Sensitivity Factor MW']
             if bus in gen_outputs:
-                contrib += gen_outputs[bus] * sf_val
+                # SF is demand convention; generator effect = -SF × output
+                contrib -= gen_outputs[bus] * sf_val
         model_contribution[branch_col] = contrib
 
     print(f"  Model contributions computed for {len(model_contribution)} branches")

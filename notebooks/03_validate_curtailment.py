@@ -274,7 +274,8 @@ if len(swaw_sf_rows) > 0 and swaw_bus in bus_outputs:
         original_peak = bl_original[branch_col].max()
         
         # Compute what the projected peak should be
-        addition = bus_outputs[swaw_bus] * top_branch['Sensitivity Factor MW']
+        # SF is demand convention; generator effect = -SF × output
+        addition = -bus_outputs[swaw_bus] * top_branch['Sensitivity Factor MW']
         projected = bl_original[branch_col].values + addition
         projected_peak = projected.max()
         

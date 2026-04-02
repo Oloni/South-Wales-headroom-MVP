@@ -167,7 +167,9 @@ def compute_curtailment_for_zone(prefix, zone_id):
             for _, row in bus_sf.iterrows():
                 branch_col = f"{row['From Bus Number']}_{row['To Bus Number']}_{row['Tertiary Bus Number']}_{row['Circuit ID']}"
                 if branch_col in branch_load.columns:
-                    branch_load[branch_col] = branch_load[branch_col].values + bus_output * row['Sensitivity Factor MW']
+                    # SF is in demand convention (ΔFlow/ΔDemand).
+                    # A generator is negative demand, so its effect = -SF × output.
+                    branch_load[branch_col] = branch_load[branch_col].values - bus_output * row['Sensitivity Factor MW']
                     n_added += 1
         print(f"  Queue projected onto {n_added} branch-columns")
     
@@ -232,14 +234,23 @@ def compute_curtailment_for_zone(prefix, zone_id):
             
             fwd_pel_hh = fwd_pels[halfhour_season_idx]
             rev_pel_hh = rev_pels[halfhour_season_idx]
-            new_flow = existing_flow + gen_output * sf_val
             
-            if sf_val > 0:
+            # SF is in demand convention (ΔFlow/ΔDemand).
+            # Generator effect on branch flow = -SF × gen_output.
+            # If SF < 0: generator pushes POSITIVE flow (From→To = forward).
+            #   Check against Forward PEL.
+            # If SF > 0: generator pushes NEGATIVE flow (To→From = reverse).
+            #   Check against Reverse PEL.
+            new_flow = existing_flow - gen_output * sf_val
+            
+            if sf_val < 0:
+                # Generator pushes forward (positive) flow
                 excess = np.maximum(new_flow - fwd_pel_hh, 0)
-                curtail_mw = np.minimum(excess / sf_val, gen_output)
-            elif sf_val < 0:
-                excess = np.maximum(rev_pel_hh - new_flow, 0)
                 curtail_mw = np.minimum(excess / abs(sf_val), gen_output)
+            elif sf_val > 0:
+                # Generator pushes reverse (negative) flow
+                excess = np.maximum(rev_pel_hh - new_flow, 0)
+                curtail_mw = np.minimum(excess / sf_val, gen_output)
             else:
                 continue
             

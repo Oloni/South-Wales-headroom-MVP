@@ -167,7 +167,7 @@ def project_queue(data, cq_subset):
         for _, row in bus_sf.iterrows():
             branch_col = f"{row['From Bus Number']}_{row['To Bus Number']}_{row['Tertiary Bus Number']}_{row['Circuit ID']}"
             if branch_col in bl.columns:
-                bl[branch_col] = bl[branch_col].values + bus_output * row['Sensitivity Factor MW']
+                bl[branch_col] = bl[branch_col].values - bus_output * row['Sensitivity Factor MW']
     return bl
 
 
@@ -217,14 +217,17 @@ def compute_curtailment_simple(data, bus_number, gen_output_array, branch_load):
             continue
         fwd_pel_hh = fwd_pels[hsi]
         rev_pel_hh = rev_pels[hsi]
-        new_flow = existing_flow + gen_output_array * sf_val
+        new_flow = existing_flow - gen_output_array * sf_val
 
-        if sf_val > 0:
+        # SF is in demand convention. Generator effect = -SF × output.
+        # sf_val < 0 → generator pushes positive (forward) flow
+        # sf_val > 0 → generator pushes negative (reverse) flow
+        if sf_val < 0:
             excess = np.maximum(new_flow - fwd_pel_hh, 0)
-            curtail_mw = np.minimum(excess / sf_val, gen_output_array)
-        elif sf_val < 0:
-            excess = np.maximum(rev_pel_hh - new_flow, 0)
             curtail_mw = np.minimum(excess / abs(sf_val), gen_output_array)
+        elif sf_val > 0:
+            excess = np.maximum(rev_pel_hh - new_flow, 0)
+            curtail_mw = np.minimum(excess / sf_val, gen_output_array)
         else:
             continue
         new_binding = curtail_mw > max_curtail
@@ -306,12 +309,15 @@ def compute_curtailment_lifo(data, bus_number, gen_mw, tech, my_position, branch
         rev_pel_hh = rev_pels[hsi]
 
         # Total flow with everything including me
-        total_flow = branch_load[branch_col].values + my_output * sf_val
+        # SF is demand convention; generator effect = -SF × output
+        total_flow = branch_load[branch_col].values - my_output * sf_val
 
         # Determine excess on this branch
-        if sf_val > 0:
+        if sf_val < 0:
+            # Generator pushes forward flow
             excess = np.maximum(total_flow - fwd_pel_hh, 0)
-        elif sf_val < 0:
+        elif sf_val > 0:
+            # Generator pushes reverse flow
             excess = np.maximum(rev_pel_hh - total_flow, 0)
         else:
             continue
