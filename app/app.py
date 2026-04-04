@@ -373,6 +373,30 @@ else:
     elif has_danm:
         st.info("⚡ **Distribution ANM zone** — curtailment at this substation is managed in real-time by NGED's DERMS system.")
 
+    # DNOA constraint info
+    dnoa_scheme = row.get('dnoa_scheme')
+    dnoa_decision = row.get('dnoa_decision')
+    if dnoa_scheme and str(dnoa_scheme) != 'nan' and str(dnoa_scheme) != 'None':
+        reinf_by = row.get('dnoa_reinforce_by', '?')
+        season = row.get('dnoa_constraint_season', '')
+        cmz = row.get('dnoa_cmz', '')
+        flex = row.get('dnoa_flex_period', '')
+
+        dnoa_text = f"🔧 **NGED has identified a constraint here** (DNOA Aug 2023): *{dnoa_scheme}*\n\n"
+        dnoa_text += f"Decision: **{dnoa_decision}**"
+        if str(reinf_by) != 'nan' and str(reinf_by) != '?':
+            dnoa_text += f" · Earliest reinforcement: **{reinf_by}**"
+        if season and str(season) != 'nan' and str(season) != '-':
+            dnoa_text += f" · Constraint season: {season}"
+        if cmz and str(cmz) != 'nan':
+            dnoa_text += f" · CMZ: {cmz}"
+        if flex and str(flex) != 'nan':
+            dnoa_text += f" · Flexibility: {flex}"
+
+        if 'Reinforce' in str(dnoa_decision):
+            dnoa_text += f"\n\nIf reinforcement scheduled for {reinf_by} has been completed, it may already be reflected in the 2024 branch loading data, and curtailment could be lower than expected."
+        st.warning(dnoa_text)
+
     # ==============================================================
     # TEST A CONNECTION (below substation detail)
     # ==============================================================

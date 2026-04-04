@@ -1,0 +1,611 @@
+CMZ_Code,Licence_area,Scenario,Scheme_name,Constraint_season,Flexibility_product,Earliest_possible_reinforcement_completion,DNOA_decision,Projected_flexibility_start,Projected_flexibility_end
+CMZ_T4A_EM_0016,East Midlands,Best View,Alfreton,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0016,East Midlands,Consumer Transformation,Alfreton,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0016,East Midlands,Leading the Way,Alfreton,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0016,East Midlands,Steady Progression,Alfreton,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0016,East Midlands,System Transformation,Alfreton,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0009,East Midlands,Best View,Apollo - Tamworth,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_T4A_EM_0009,East Midlands,Consumer Transformation,Apollo - Tamworth,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_T4A_EM_0009,East Midlands,Leading the Way,Apollo - Tamworth,Winter,Secure,2024,Flexibility,2023,2024
+CMZ_T4A_EM_0009,East Midlands,Steady Progression,Apollo - Tamworth,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_T4A_EM_0009,East Midlands,System Transformation,Apollo - Tamworth,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_SP5A_EM_0015,East Midlands,Best View,Ashby,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP5A_EM_0015,East Midlands,Consumer Transformation,Ashby,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP5A_EM_0015,East Midlands,Leading the Way,Ashby,Winter,Secure,2024,Signposting,2025,2026
+CMZ_SP5A_EM_0015,East Midlands,Steady Progression,Ashby,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP5A_EM_0015,East Midlands,System Transformation,Ashby,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T7A_EM_0034,East Midlands,Best View,Atherstone,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0034,East Midlands,Consumer Transformation,Atherstone,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0034,East Midlands,Leading the Way,Atherstone,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0034,East Midlands,Steady Progression,Atherstone,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0034,East Midlands,System Transformation,Atherstone,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T5A_EM_0023,East Midlands,Best View,Berkswell SGT,Summer,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_EM_0023,East Midlands,Consumer Transformation,Berkswell SGT,Summer,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_EM_0023,East Midlands,Leading the Way,Berkswell SGT,Summer,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_EM_0023,East Midlands,Steady Progression,Berkswell SGT,Summer,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_EM_0023,East Midlands,System Transformation,Berkswell SGT,Summer,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_SP5A_EM_0013,East Midlands,Best View,Bradwell Abbey - Newport,None,Secure,2023,Remove,-,-
+CMZ_SP5A_EM_0013,East Midlands,Consumer Transformation,Bradwell Abbey - Newport,None,Secure,2023,Remove,-,-
+CMZ_SP5A_EM_0013,East Midlands,Leading the Way,Bradwell Abbey - Newport,None,Secure,2023,Remove,-,-
+CMZ_SP5A_EM_0013,East Midlands,Steady Progression,Bradwell Abbey - Newport,None,Secure,2023,Remove,-,-
+CMZ_SP5A_EM_0013,East Midlands,System Transformation,Bradwell Abbey - Newport,None,Secure,2023,Remove,-,-
+CMZ_T4B_EM_0004,East Midlands,Best View,Chesterfield GSP,Summer,Dynamic,2027,Flexibility,2023,2026
+CMZ_T4B_EM_0004,East Midlands,Consumer Transformation,Chesterfield GSP,Summer,Dynamic,2027,Flexibility,2023,2026
+CMZ_T4B_EM_0004,East Midlands,Leading the Way,Chesterfield GSP,Summer,Dynamic,2027,Flexibility,2023,2025
+CMZ_T4B_EM_0004,East Midlands,Steady Progression,Chesterfield GSP,Summer,Dynamic,2027,Flexibility,2023,2027+
+CMZ_T4B_EM_0004,East Midlands,System Transformation,Chesterfield GSP,Summer,Dynamic,2027,Flexibility,2023,2027+
+CMZ_T4A_EM_0010,East Midlands,Best View,Chesterfield Main,Winter,Secure,2024,Flexibility,2023,2026
+CMZ_T4A_EM_0010,East Midlands,Consumer Transformation,Chesterfield Main,Winter,Secure,2024,Flexibility,2023,2026
+CMZ_T4A_EM_0010,East Midlands,Leading the Way,Chesterfield Main,Winter,Secure,2024,Flexibility,2023,2024
+CMZ_T4A_EM_0010,East Midlands,Steady Progression,Chesterfield Main,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T4A_EM_0010,East Midlands,System Transformation,Chesterfield Main,Winter,Secure,2024,Flexibility,2023,2027+
+-,East Midlands,Best View,Clipstone BSP,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,Clipstone BSP,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,Clipstone BSP,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,Clipstone BSP,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,Clipstone BSP,-,-,2024,Reinforce,-,-
+CMZ_T4A_EM_0011,East Midlands,Best View,Clowne,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0011,East Midlands,Consumer Transformation,Clowne,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0011,East Midlands,Leading the Way,Clowne,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0011,East Midlands,Steady Progression,Clowne,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0011,East Midlands,System Transformation,Clowne,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0012,East Midlands,Best View,Coalville,Winter/Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0012,East Midlands,Consumer Transformation,Coalville,Winter/Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0012,East Midlands,Leading the Way,Coalville,Winter/Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0012,East Midlands,Steady Progression,Coalville,Winter/Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0012,East Midlands,System Transformation,Coalville,Winter/Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_EM_0013,East Midlands,Best View,Grassmoor,Winter/Summer,Secure,2025,Flexibility,2023,-
+CMZ_T4A_EM_0013,East Midlands,Consumer Transformation,Grassmoor,Winter/Summer,Secure,2025,Flexibility,2023,-
+CMZ_T4A_EM_0013,East Midlands,Leading the Way,Grassmoor,Winter/Summer,Secure,2025,Flexibility,2023,-
+CMZ_T4A_EM_0013,East Midlands,Steady Progression,Grassmoor,Winter/Summer,Secure,2025,Flexibility,2023,-
+CMZ_T4A_EM_0013,East Midlands,System Transformation,Grassmoor,Winter/Summer,Secure,2025,Flexibility,2023,-
+CMZ_T6A_EM_0029,East Midlands,Best View,Grendon - Corby 132 kV,Summer,Secure,2027,Flexibility,2023,2026
+CMZ_T6A_EM_0029,East Midlands,Consumer Transformation,Grendon - Corby 132 kV,Summer,Secure,2027,Flexibility,2023,2026
+CMZ_T6A_EM_0029,East Midlands,Leading the Way,Grendon - Corby 132 kV,Summer,Secure,2027,Flexibility,2023,2025
+CMZ_T6A_EM_0029,East Midlands,Steady Progression,Grendon - Corby 132 kV,Summer,Secure,2027,Flexibility,2023,2027+
+CMZ_T6A_EM_0029,East Midlands,System Transformation,Grendon - Corby 132 kV,Summer,Secure,2027,Flexibility,2023,2027+
+CMZ_T4B_EM_0001,East Midlands,Best View,Hawton,None,Secure,2023,Remove,-,-
+CMZ_T4B_EM_0001,East Midlands,Consumer Transformation,Hawton,None,Secure,2023,Remove,-,-
+CMZ_T4B_EM_0001,East Midlands,Leading the Way,Hawton,None,Secure,2023,Remove,-,-
+CMZ_T4B_EM_0001,East Midlands,Steady Progression,Hawton,None,Secure,2023,Remove,-,-
+CMZ_T4B_EM_0001,East Midlands,System Transformation,Hawton,None,Secure,2023,Remove,-,-
+CMZ_SP7A_EM_0016,East Midlands,Best View,Hawton BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0016,East Midlands,Consumer Transformation,Hawton BSP,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_EM_0016,East Midlands,Leading the Way,Hawton BSP,Winter,Secure,2024,Signposting,2026,2026
+CMZ_SP7A_EM_0016,East Midlands,Steady Progression,Hawton BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0016,East Midlands,System Transformation,Hawton BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T4A_EM_0015,East Midlands,Best View,Hinckley,Summer,Secure,2024,Flexibility,2023,2025
+CMZ_T4A_EM_0015,East Midlands,Consumer Transformation,Hinckley,Summer,Secure,2024,Flexibility,2023,2025
+CMZ_T4A_EM_0015,East Midlands,Leading the Way,Hinckley,Summer,Secure,2024,Flexibility,2023,2024
+CMZ_T4A_EM_0015,East Midlands,Steady Progression,Hinckley,Summer,Secure,2024,Flexibility,2023,2027+
+CMZ_T4A_EM_0015,East Midlands,System Transformation,Hinckley,Summer,Secure,2024,Flexibility,2023,2027+
+-,East Midlands,Best View,Hockley Farm Road,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,Hockley Farm Road,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,Hockley Farm Road,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,Hockley Farm Road,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,Hockley Farm Road,-,-,2024,Reinforce,-,-
+CMZ_T5B_EM_0028,East Midlands,Best View,Ilkeston,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5B_EM_0028,East Midlands,Consumer Transformation,Ilkeston,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5B_EM_0028,East Midlands,Leading the Way,Ilkeston,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5B_EM_0028,East Midlands,Steady Progression,Ilkeston,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5B_EM_0028,East Midlands,System Transformation,Ilkeston,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4B_EM_0002,East Midlands,Best View,Lincoln - Anderson Lane,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4B_EM_0002,East Midlands,Consumer Transformation,Lincoln - Anderson Lane,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4B_EM_0002,East Midlands,Leading the Way,Lincoln - Anderson Lane,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4B_EM_0002,East Midlands,Steady Progression,Lincoln - Anderson Lane,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4B_EM_0002,East Midlands,System Transformation,Lincoln - Anderson Lane,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0024,East Midlands,Best View,Loughborough,Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5A_EM_0024,East Midlands,Consumer Transformation,Loughborough,Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5A_EM_0024,East Midlands,Leading the Way,Loughborough,Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5A_EM_0024,East Midlands,Steady Progression,Loughborough,Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5A_EM_0024,East Midlands,System Transformation,Loughborough,Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5A_EM_0025,East Midlands,Best View,Mackworth,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0025,East Midlands,Consumer Transformation,Mackworth,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0025,East Midlands,Leading the Way,Mackworth,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0025,East Midlands,Steady Progression,Mackworth,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0025,East Midlands,System Transformation,Mackworth,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0026,East Midlands,Best View,Manton,Winter/Summer,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0026,East Midlands,Consumer Transformation,Manton,Winter/Summer,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0026,East Midlands,Leading the Way,Manton,Winter/Summer,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0026,East Midlands,Steady Progression,Manton,Winter/Summer,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0026,East Midlands,System Transformation,Manton,Winter/Summer,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP5A_EM_0014,East Midlands,Best View,Milton Keynes East,None,Secure,2027,Remove,-,-
+CMZ_SP5A_EM_0014,East Midlands,Consumer Transformation,Milton Keynes East,None,Secure,2027,Remove,-,-
+CMZ_SP5A_EM_0014,East Midlands,Leading the Way,Milton Keynes East,None,Secure,2027,Remove,-,-
+CMZ_SP5A_EM_0014,East Midlands,Steady Progression,Milton Keynes East,None,Secure,2027,Remove,-,-
+CMZ_SP5A_EM_0014,East Midlands,System Transformation,Milton Keynes East,None,Secure,2027,Remove,-,-
+CMZ_SP7A_EM_0018,East Midlands,Best View,Moira,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_EM_0018,East Midlands,Consumer Transformation,Moira,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_EM_0018,East Midlands,Leading the Way,Moira,Winter,Secure,2024,Signposting,2026,2027+
+CMZ_SP7A_EM_0018,East Midlands,Steady Progression,Moira,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0018,East Midlands,System Transformation,Moira,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T4A_EM_0017,East Midlands,Best View,Nailstone,None,Dynamic,2024,Remove,-,-
+CMZ_T4A_EM_0017,East Midlands,Consumer Transformation,Nailstone,None,Dynamic,2024,Remove,-,-
+CMZ_T4A_EM_0017,East Midlands,Leading the Way,Nailstone,None,Dynamic,2024,Remove,-,-
+CMZ_T4A_EM_0017,East Midlands,Steady Progression,Nailstone,None,Dynamic,2024,Remove,-,-
+CMZ_T4A_EM_0017,East Midlands,System Transformation,Nailstone,None,Dynamic,2024,Remove,-,-
+CMZ_T5A_EM_0027,East Midlands,Best View,New Dove Valley,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0027,East Midlands,Consumer Transformation,New Dove Valley,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0027,East Midlands,Leading the Way,New Dove Valley,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0027,East Midlands,Steady Progression,New Dove Valley,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_EM_0027,East Midlands,System Transformation,New Dove Valley,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP7A_EM_0019,East Midlands,Best View,Northampton East BSP,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_EM_0019,East Midlands,Consumer Transformation,Northampton East BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0019,East Midlands,Leading the Way,Northampton East BSP,Winter,Secure,2024,Signposting,2026,2027+
+CMZ_SP7A_EM_0019,East Midlands,Steady Progression,Northampton East BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0019,East Midlands,System Transformation,Northampton East BSP,Winter,Secure,2024,Signposting,2027+,2027+
+-,East Midlands,Best View,Northampton group,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,Northampton group,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,Northampton group,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,Northampton group,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,Northampton group,-,-,2024,Reinforce,-,-
+CMZ_SP7A_EM_0017,East Midlands,Best View,Northampton West BSP,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_EM_0017,East Midlands,Consumer Transformation,Northampton West BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0017,East Midlands,Leading the Way,Northampton West BSP,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_EM_0017,East Midlands,Steady Progression,Northampton West BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_EM_0017,East Midlands,System Transformation,Northampton West BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T6B_EM_0030,East Midlands,Best View,Sharnbrook,Winter,Dynamic,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_EM_0030,East Midlands,Consumer Transformation,Sharnbrook,Winter,Dynamic,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_EM_0030,East Midlands,Leading the Way,Sharnbrook,Winter,Dynamic,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_EM_0030,East Midlands,Steady Progression,Sharnbrook,Winter,Dynamic,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_EM_0030,East Midlands,System Transformation,Sharnbrook,Winter,Dynamic,2025,Reinforce with Flexibility,2023,2025
+-,East Midlands,Best View,South Holland - Long Sutton - Holbeach,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,South Holland - Long Sutton - Holbeach,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,South Holland - Long Sutton - Holbeach,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,South Holland - Long Sutton - Holbeach,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,South Holland - Long Sutton - Holbeach,-,-,2024,Reinforce,-,-
+-,East Midlands,Best View,Staythorpe C,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,Staythorpe C,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,Staythorpe C,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,Staythorpe C,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,Staythorpe C,-,-,2024,Reinforce,-,-
+CMZ_T7A_EM_0033,East Midlands,Best View,Staythorpe GSP,Winter,Secure,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_EM_0033,East Midlands,Consumer Transformation,Staythorpe GSP,Winter,Secure,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_EM_0033,East Midlands,Leading the Way,Staythorpe GSP,Winter,Secure,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_EM_0033,East Midlands,Steady Progression,Staythorpe GSP,Winter,Secure,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_EM_0033,East Midlands,System Transformation,Staythorpe GSP,Winter,Secure,2027,Reinforce with Flexibility,2023,2027
+CMZ_T4A_EM_0018,East Midlands,Best View,Tamworth Main,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0018,East Midlands,Consumer Transformation,Tamworth Main,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0018,East Midlands,Leading the Way,Tamworth Main,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0018,East Midlands,Steady Progression,Tamworth Main,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0018,East Midlands,System Transformation,Tamworth Main,None,Secure,2024,Remove,-,-
+CMZ_T7A_EM_0031,East Midlands,Best View,Toton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0031,East Midlands,Consumer Transformation,Toton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0031,East Midlands,Leading the Way,Toton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0031,East Midlands,Steady Progression,Toton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0031,East Midlands,System Transformation,Toton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0032,East Midlands,Best View,Tuxford,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0032,East Midlands,Consumer Transformation,Tuxford,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0032,East Midlands,Leading the Way,Tuxford,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0032,East Midlands,Steady Progression,Tuxford,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_EM_0032,East Midlands,System Transformation,Tuxford,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T4A_EM_0019,East Midlands,Best View,Union Street - Rugby,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T4A_EM_0019,East Midlands,Consumer Transformation,Union Street - Rugby,Winter,Secure,2024,Flexibility,2023,2026
+CMZ_T4A_EM_0019,East Midlands,Leading the Way,Union Street - Rugby,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_T4A_EM_0019,East Midlands,Steady Progression,Union Street - Rugby,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T4A_EM_0019,East Midlands,System Transformation,Union Street - Rugby,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T4A_EM_0021,East Midlands,Best View,Weedon,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0021,East Midlands,Consumer Transformation,Weedon,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0021,East Midlands,Leading the Way,Weedon,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0021,East Midlands,Steady Progression,Weedon,None,Secure,2024,Remove,-,-
+CMZ_T4A_EM_0021,East Midlands,System Transformation,Weedon,None,Secure,2024,Remove,-,-
+CMZ_SP4A_EM_0012,East Midlands,Best View,Wigston,None,Dynamic,2026,Remove,-,-
+CMZ_SP4A_EM_0012,East Midlands,Consumer Transformation,Wigston,None,Dynamic,2026,Remove,-,-
+CMZ_SP4A_EM_0012,East Midlands,Leading the Way,Wigston,None,Dynamic,2026,Remove,-,-
+CMZ_SP4A_EM_0012,East Midlands,Steady Progression,Wigston,None,Dynamic,2026,Remove,-,-
+CMZ_SP4A_EM_0012,East Midlands,System Transformation,Wigston,None,Dynamic,2026,Remove,-,-
+-,East Midlands,Best View,Willington - Derby South - Spondon,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,Willington - Derby South - Spondon,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,Willington - Derby South - Spondon,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,Willington - Derby South - Spondon,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,Willington - Derby South - Spondon,-,-,2024,Reinforce,-,-
+-,East Midlands,Best View,Winster,-,-,2024,Reinforce,-,-
+-,East Midlands,Consumer Transformation,Winster,-,-,2024,Reinforce,-,-
+-,East Midlands,Leading the Way,Winster,-,-,2024,Reinforce,-,-
+-,East Midlands,Steady Progression,Winster,-,-,2024,Reinforce,-,-
+-,East Midlands,System Transformation,Winster,-,-,2024,Reinforce,-,-
+CMZ_T4A_EM_0020,East Midlands,Best View,Woodbeck,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_EM_0020,East Midlands,Consumer Transformation,Woodbeck,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_EM_0020,East Midlands,Leading the Way,Woodbeck,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_EM_0020,East Midlands,Steady Progression,Woodbeck,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_EM_0020,East Midlands,System Transformation,Woodbeck,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5B_SWA_0008,South Wales,Best View,Aberaeron,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0008,South Wales,Consumer Transformation,Aberaeron,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0008,South Wales,Leading the Way,Aberaeron,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0008,South Wales,Steady Progression,Aberaeron,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0008,South Wales,System Transformation,Aberaeron,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_SP5A_SWA_0001,South Wales,Best View,Abergavenny - Crickhowell,Winter/Summer,Secure,2026,Signposting,2027,2027+
+CMZ_SP5A_SWA_0001,South Wales,Consumer Transformation,Abergavenny - Crickhowell,Winter/Summer,Secure,2026,Signposting,2027+,2027+
+CMZ_SP5A_SWA_0001,South Wales,Leading the Way,Abergavenny - Crickhowell,Winter/Summer,Secure,2026,Signposting,2027,2027+
+CMZ_SP5A_SWA_0001,South Wales,Steady Progression,Abergavenny - Crickhowell,Winter/Summer,Secure,2026,Signposting,2027+,2027+
+CMZ_SP5A_SWA_0001,South Wales,System Transformation,Abergavenny - Crickhowell,Winter/Summer,Secure,2026,Signposting,2027+,2027+
+-,South Wales,Best View,Abergavenny BSP,-,-,2025,Reinforce,-,-
+-,South Wales,Consumer Transformation,Abergavenny BSP,-,-,2025,Reinforce,-,-
+-,South Wales,Leading the Way,Abergavenny BSP,-,-,2025,Reinforce,-,-
+-,South Wales,Steady Progression,Abergavenny BSP,-,-,2025,Reinforce,-,-
+-,South Wales,System Transformation,Abergavenny BSP,-,-,2025,Reinforce,-,-
+CMZ_T7B_SWA_0012,South Wales,Best View,Ashgrove,Winter/Summer,Secure,2025,Flexibility,2023,2027+
+CMZ_T7B_SWA_0012,South Wales,Consumer Transformation,Ashgrove,Winter/Summer,Secure,2025,Flexibility,2023,2027+
+CMZ_T7B_SWA_0012,South Wales,Leading the Way,Ashgrove,Winter/Summer,Secure,2025,Flexibility,2023,2027+
+CMZ_T7B_SWA_0012,South Wales,Steady Progression,Ashgrove,Winter/Summer,Secure,2025,Flexibility,2023,2027+
+CMZ_T7B_SWA_0012,South Wales,System Transformation,Ashgrove,Winter/Summer,Secure,2025,Flexibility,2023,2027+
+-,South Wales,Best View,Cardiff North,Summer,Dynamic,2024,Remove,-,-
+-,South Wales,Consumer Transformation,Cardiff North,Summer,Dynamic,2024,Remove,-,-
+-,South Wales,Leading the Way,Cardiff North,Summer,Dynamic,2024,Remove,-,-
+-,South Wales,Steady Progression,Cardiff North,Summer,Dynamic,2024,Remove,-,-
+-,South Wales,System Transformation,Cardiff North,Summer,Dynamic,2024,Remove,-,-
+CMZ_T5A_SWA_0006,South Wales,Best View,East Aberthaw,Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0006,South Wales,Consumer Transformation,East Aberthaw,Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0006,South Wales,Leading the Way,East Aberthaw,Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0006,South Wales,Steady Progression,East Aberthaw,Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0006,South Wales,System Transformation,East Aberthaw,Summer,Dynamic,2023,Reinforce with Flexibility,2023,2023
+-,South Wales,Best View,Haverfordwest - Brawdy,Winter,Secure,2026,Reinforce,-,-
+-,South Wales,Consumer Transformation,Haverfordwest - Brawdy,Winter,Secure,2026,Reinforce,-,-
+-,South Wales,Leading the Way,Haverfordwest - Brawdy,Winter,Secure,2026,Reinforce,-,-
+-,South Wales,Steady Progression,Haverfordwest - Brawdy,Winter,Secure,2026,Reinforce,-,-
+-,South Wales,System Transformation,Haverfordwest - Brawdy,Winter,Secure,2026,Reinforce,-,-
+CMZ_T4A_SWA_0001,South Wales,Best View,Llandrindod - Rhayader,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_SWA_0001,South Wales,Consumer Transformation,Llandrindod - Rhayader,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_SWA_0001,South Wales,Leading the Way,Llandrindod - Rhayader,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_SWA_0001,South Wales,Steady Progression,Llandrindod - Rhayader,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T4A_SWA_0001,South Wales,System Transformation,Llandrindod - Rhayader,Winter/Summer,Dynamic,2025,Flexibility,2023,-
+CMZ_T5B_SWA_0009,South Wales,Best View,Llanfyrnach,Winter,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0009,South Wales,Consumer Transformation,Llanfyrnach,Winter,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0009,South Wales,Leading the Way,Llanfyrnach,Winter,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0009,South Wales,Steady Progression,Llanfyrnach,Winter,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5B_SWA_0009,South Wales,System Transformation,Llanfyrnach,Winter,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWA_0011,South Wales,Best View,Milford Haven BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWA_0011,South Wales,Consumer Transformation,Milford Haven BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWA_0011,South Wales,Leading the Way,Milford Haven BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWA_0011,South Wales,Steady Progression,Milford Haven BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWA_0011,South Wales,System Transformation,Milford Haven BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T5A_SWA_0007,South Wales,Best View,Mountain Ash,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0007,South Wales,Consumer Transformation,Mountain Ash,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0007,South Wales,Leading the Way,Mountain Ash,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0007,South Wales,Steady Progression,Mountain Ash,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_SWA_0007,South Wales,System Transformation,Mountain Ash,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP7A_SWA_0002,South Wales,Best View,Newport West,Winter,Secure,2025,Signposting,2027+,2027+
+CMZ_SP7A_SWA_0002,South Wales,Consumer Transformation,Newport West,Winter,Secure,2025,Signposting,2027,2027+
+CMZ_SP7A_SWA_0002,South Wales,Leading the Way,Newport West,Winter,Secure,2025,Signposting,2026,2027+
+CMZ_SP7A_SWA_0002,South Wales,Steady Progression,Newport West,Winter,Secure,2025,Signposting,2027+,2027+
+CMZ_SP7A_SWA_0002,South Wales,System Transformation,Newport West,Winter,Secure,2025,Signposting,2027+,2027+
+-,South Wales,Best View,Pantyffynnon,-,-,2024,Reinforce,-,-
+-,South Wales,Consumer Transformation,Pantyffynnon,-,-,2024,Reinforce,-,-
+-,South Wales,Leading the Way,Pantyffynnon,-,-,2024,Reinforce,-,-
+-,South Wales,Steady Progression,Pantyffynnon,-,-,2024,Reinforce,-,-
+-,South Wales,System Transformation,Pantyffynnon,-,-,2024,Reinforce,-,-
+-,South Wales,Best View,Pembroke,-,-,2024,Reinforce,-,-
+-,South Wales,Consumer Transformation,Pembroke,-,-,2024,Reinforce,-,-
+-,South Wales,Leading the Way,Pembroke,-,-,2024,Reinforce,-,-
+-,South Wales,Steady Progression,Pembroke,-,-,2024,Reinforce,-,-
+-,South Wales,System Transformation,Pembroke,-,-,2024,Reinforce,-,-
+CMZ_T7A_SWA_0010,South Wales,Best View,Ravenhill,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_SWA_0010,South Wales,Consumer Transformation,Ravenhill,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_SWA_0010,South Wales,Leading the Way,Ravenhill,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_SWA_0010,South Wales,Steady Progression,Ravenhill,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_SWA_0010,South Wales,System Transformation,Ravenhill,Winter,Secure,2025,Flexibility,2023,-
+-,South Wales,Best View,Rhos - Newcastle Emlyn,-,-,2024,Reinforce,-,-
+-,South Wales,Consumer Transformation,Rhos - Newcastle Emlyn,-,-,2024,Reinforce,-,-
+-,South Wales,Leading the Way,Rhos - Newcastle Emlyn,-,-,2024,Reinforce,-,-
+-,South Wales,Steady Progression,Rhos - Newcastle Emlyn,-,-,2024,Reinforce,-,-
+-,South Wales,System Transformation,Rhos - Newcastle Emlyn,-,-,2024,Reinforce,-,-
+-,South Wales,Best View,Rhos BSP,-,-,2024,Reinforce,-,-
+-,South Wales,Consumer Transformation,Rhos BSP,-,-,2024,Reinforce,-,-
+-,South Wales,Leading the Way,Rhos BSP,-,-,2024,Reinforce,-,-
+-,South Wales,Steady Progression,Rhos BSP,-,-,2024,Reinforce,-,-
+-,South Wales,System Transformation,Rhos BSP,-,-,2024,Reinforce,-,-
+-,South Wales,Best View,Sully Tee,-,-,2024,Reinforce,-,-
+-,South Wales,Consumer Transformation,Sully Tee,-,-,2024,Reinforce,-,-
+-,South Wales,Leading the Way,Sully Tee,-,-,2024,Reinforce,-,-
+-,South Wales,Steady Progression,Sully Tee,-,-,2024,Reinforce,-,-
+-,South Wales,System Transformation,Sully Tee,-,-,2024,Reinforce,-,-
+CMZ_T4A_SWA_0004,South Wales,Best View,Trevaughan,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWA_0004,South Wales,Consumer Transformation,Trevaughan,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWA_0004,South Wales,Leading the Way,Trevaughan,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWA_0004,South Wales,Steady Progression,Trevaughan,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWA_0004,South Wales,System Transformation,Trevaughan,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP7A_SWE_0016,South West,Best View,Barnstaple - South Molton,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0016,South West,Consumer Transformation,Barnstaple - South Molton,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0016,South West,Leading the Way,Barnstaple - South Molton,Winter,Secure,2024,Signposting,2026,2026
+CMZ_SP7A_SWE_0016,South West,Steady Progression,Barnstaple - South Molton,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0016,South West,System Transformation,Barnstaple - South Molton,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0019,South West,Best View,Blagdon,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0019,South West,Consumer Transformation,Blagdon,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0019,South West,Leading the Way,Blagdon,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0019,South West,Steady Progression,Blagdon,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0019,South West,System Transformation,Blagdon,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T3A_SWE_0005,South West,Best View,Bridgewater/Street,None,Dynamic,-,Remove,-,-
+CMZ_T3A_SWE_0005,South West,Consumer Transformation,Bridgewater/Street,None,Dynamic,-,Remove,-,-
+CMZ_T3A_SWE_0005,South West,Leading the Way,Bridgewater/Street,None,Dynamic,-,Remove,-,-
+CMZ_T3A_SWE_0005,South West,Steady Progression,Bridgewater/Street,None,Dynamic,-,Remove,-,-
+CMZ_T3A_SWE_0005,South West,System Transformation,Bridgewater/Street,None,Dynamic,-,Remove,-,-
+CMZ_SP7A_SWE_0017,South West,Best View,Bridgwater - Bath Road,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0017,South West,Consumer Transformation,Bridgwater - Bath Road,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0017,South West,Leading the Way,Bridgwater - Bath Road,Winter,Secure,2024,Signposting,2025,2027+
+CMZ_SP7A_SWE_0017,South West,Steady Progression,Bridgwater - Bath Road,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0017,South West,System Transformation,Bridgwater - Bath Road,Winter,Secure,2024,Signposting,2027+,2027+
+-,South West,Best View,Bristol Airport,-,-,2024,Reinforce,-,-
+-,South West,Consumer Transformation,Bristol Airport,-,-,2024,Reinforce,-,-
+-,South West,Leading the Way,Bristol Airport,-,-,2024,Reinforce,-,-
+-,South West,Steady Progression,Bristol Airport,-,-,2024,Reinforce,-,-
+-,South West,System Transformation,Bristol Airport,-,-,2024,Reinforce,-,-
+CMZ_T7A_SWE_0029,South West,Best View,Camborne Treswithian,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T7A_SWE_0029,South West,Consumer Transformation,Camborne Treswithian,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T7A_SWE_0029,South West,Leading the Way,Camborne Treswithian,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T7A_SWE_0029,South West,Steady Progression,Camborne Treswithian,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T7A_SWE_0029,South West,System Transformation,Camborne Treswithian,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_SWE_0026,South West,Best View,Chewton Mendip,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0026,South West,Consumer Transformation,Chewton Mendip,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0026,South West,Leading the Way,Chewton Mendip,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0026,South West,Steady Progression,Chewton Mendip,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0026,South West,System Transformation,Chewton Mendip,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0023,South West,Best View,Countess Wear,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0023,South West,Consumer Transformation,Countess Wear,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0023,South West,Leading the Way,Countess Wear,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_T6B_SWE_0023,South West,Steady Progression,Countess Wear,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6B_SWE_0023,South West,System Transformation,Countess Wear,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T5B_SWE_0017,South West,Best View,East Yelland,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0017,South West,Consumer Transformation,East Yelland,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0017,South West,Leading the Way,East Yelland,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0017,South West,Steady Progression,East Yelland,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0017,South West,System Transformation,East Yelland,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T2A_SWE_0002,South West,Best View,Exeter City,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T2A_SWE_0002,South West,Consumer Transformation,Exeter City,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T2A_SWE_0002,South West,Leading the Way,Exeter City,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T2A_SWE_0002,South West,Steady Progression,Exeter City,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T2A_SWE_0002,South West,System Transformation,Exeter City,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T7A_SWE_0030,South West,Best View,Feeder Road BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWE_0030,South West,Consumer Transformation,Feeder Road BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWE_0030,South West,Leading the Way,Feeder Road BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWE_0030,South West,Steady Progression,Feeder Road BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWE_0030,South West,System Transformation,Feeder Road BSP,Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T7A_SWE_0031,South West,Best View,Filton Airport and Cribbs Causeway Ring,Summer,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0031,South West,Consumer Transformation,Filton Airport and Cribbs Causeway Ring,Summer,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0031,South West,Leading the Way,Filton Airport and Cribbs Causeway Ring,Summer,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0031,South West,Steady Progression,Filton Airport and Cribbs Causeway Ring,Summer,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0031,South West,System Transformation,Filton Airport and Cribbs Causeway Ring,Summer,Secure,2024,Flexibility,2023,-
+-,South West,Best View,Fraddon - Newquay Trevamper,-,-,2024,Reinforce,-,-
+-,South West,Consumer Transformation,Fraddon - Newquay Trevamper,-,-,2024,Reinforce,-,-
+-,South West,Leading the Way,Fraddon - Newquay Trevamper,-,-,2024,Reinforce,-,-
+-,South West,Steady Progression,Fraddon - Newquay Trevamper,-,-,2024,Reinforce,-,-
+-,South West,System Transformation,Fraddon - Newquay Trevamper,-,-,2024,Reinforce,-,-
+CMZ_T6B_SWE_0022,South West,Best View,Gunnislake,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T6B_SWE_0022,South West,Consumer Transformation,Gunnislake,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T6B_SWE_0022,South West,Leading the Way,Gunnislake,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T6B_SWE_0022,South West,Steady Progression,Gunnislake,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T6B_SWE_0022,South West,System Transformation,Gunnislake,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T3B_SWE_0007,South West,Best View,Hayle - Camborne,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T3B_SWE_0007,South West,Consumer Transformation,Hayle - Camborne,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T3B_SWE_0007,South West,Leading the Way,Hayle - Camborne,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T3B_SWE_0007,South West,Steady Progression,Hayle - Camborne,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_T3B_SWE_0007,South West,System Transformation,Hayle - Camborne,Winter/Summer,Dynamic,2026,Reinforce with Flexibility,2023,2026
+CMZ_SP7A_SWE_0020,South West,Best View,Hayle BSP,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0020,South West,Consumer Transformation,Hayle BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0020,South West,Leading the Way,Hayle BSP,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0020,South West,Steady Progression,Hayle BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0020,South West,System Transformation,Hayle BSP,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T5B_SWE_0018,South West,Best View,Hemyock,Winter/Summer,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0018,South West,Consumer Transformation,Hemyock,Winter/Summer,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0018,South West,Leading the Way,Hemyock,Winter/Summer,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0018,South West,Steady Progression,Hemyock,Winter/Summer,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0018,South West,System Transformation,Hemyock,Winter/Summer,Dynamic,2024,Flexibility,2023,-
+CMZ_SP7A_SWE_0018,South West,Best View,Honiton Heathfield and Offwell Ring,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0018,South West,Consumer Transformation,Honiton Heathfield and Offwell Ring,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0018,South West,Leading the Way,Honiton Heathfield and Offwell Ring,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0018,South West,Steady Progression,Honiton Heathfield and Offwell Ring,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0018,South West,System Transformation,Honiton Heathfield and Offwell Ring,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T3B_SWE_0008,South West,Best View,Isles of Scilly,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T3B_SWE_0008,South West,Consumer Transformation,Isles of Scilly,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T3B_SWE_0008,South West,Leading the Way,Isles of Scilly,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T3B_SWE_0008,South West,Steady Progression,Isles of Scilly,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T3B_SWE_0008,South West,System Transformation,Isles of Scilly,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6A_SWE_0021,South West,Best View,Laneast,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T6A_SWE_0021,South West,Consumer Transformation,Laneast,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T6A_SWE_0021,South West,Leading the Way,Laneast,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T6A_SWE_0021,South West,Steady Progression,Laneast,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T6A_SWE_0021,South West,System Transformation,Laneast,Winter,Secure,2024,Flexibility,2023,-
+-,South West,Best View,Lapford and Tinkers Cross,-,-,2025,Reinforce,-,-
+-,South West,Consumer Transformation,Lapford and Tinkers Cross,-,-,2025,Reinforce,-,-
+-,South West,Leading the Way,Lapford and Tinkers Cross,-,-,2025,Reinforce,-,-
+-,South West,Steady Progression,Lapford and Tinkers Cross,-,-,2025,Reinforce,-,-
+-,South West,System Transformation,Lapford and Tinkers Cross,-,-,2025,Reinforce,-,-
+CMZ_T4A_SWE_0009,South West,Best View,Moretonhampstead,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWE_0009,South West,Consumer Transformation,Moretonhampstead,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWE_0009,South West,Leading the Way,Moretonhampstead,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWE_0009,South West,Steady Progression,Moretonhampstead,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_SWE_0009,South West,System Transformation,Moretonhampstead,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T6B_SWE_0025,South West,Best View,Morwenstow,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T6B_SWE_0025,South West,Consumer Transformation,Morwenstow,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T6B_SWE_0025,South West,Leading the Way,Morwenstow,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T6B_SWE_0025,South West,Steady Progression,Morwenstow,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T6B_SWE_0025,South West,System Transformation,Morwenstow,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T5B_SWE_0019,South West,Best View,Mullion,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T5B_SWE_0019,South West,Consumer Transformation,Mullion,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T5B_SWE_0019,South West,Leading the Way,Mullion,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T5B_SWE_0019,South West,Steady Progression,Mullion,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T5B_SWE_0019,South West,System Transformation,Mullion,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+-,South West,Best View,Newton Abbot - Chudleigh,-,-,2024,Reinforce,-,-
+-,South West,Consumer Transformation,Newton Abbot - Chudleigh,-,-,2024,Reinforce,-,-
+-,South West,Leading the Way,Newton Abbot - Chudleigh,-,-,2024,Reinforce,-,-
+-,South West,Steady Progression,Newton Abbot - Chudleigh,-,-,2024,Reinforce,-,-
+-,South West,System Transformation,Newton Abbot - Chudleigh,-,-,2024,Reinforce,-,-
+CMZ_T7A_SWE_0028,South West,Best View,Newton Abbot - Newton Abbot Main,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0028,South West,Consumer Transformation,Newton Abbot - Newton Abbot Main,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0028,South West,Leading the Way,Newton Abbot - Newton Abbot Main,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0028,South West,Steady Progression,Newton Abbot - Newton Abbot Main,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T7A_SWE_0028,South West,System Transformation,Newton Abbot - Newton Abbot Main,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T2A_SWE_0001,South West,Best View,Plymouth/South Hams,Winter/Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T2A_SWE_0001,South West,Consumer Transformation,Plymouth/South Hams,Winter/Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T2A_SWE_0001,South West,Leading the Way,Plymouth/South Hams,Winter/Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T2A_SWE_0001,South West,Steady Progression,Plymouth/South Hams,Winter/Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T2A_SWE_0001,South West,System Transformation,Plymouth/South Hams,Winter/Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_SWE_0027,South West,Best View,Plympton BSP,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T7A_SWE_0027,South West,Consumer Transformation,Plympton BSP,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T7A_SWE_0027,South West,Leading the Way,Plympton BSP,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T7A_SWE_0027,South West,Steady Progression,Plympton BSP,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+CMZ_T7A_SWE_0027,South West,System Transformation,Plympton BSP,Winter,Secure,2024,Reinforce with Flexibility,2023,2024
+-,South West,Best View,Portishead BSP,-,-,2024,Reinforce,-,-
+-,South West,Consumer Transformation,Portishead BSP,-,-,2024,Reinforce,-,-
+-,South West,Leading the Way,Portishead BSP,-,-,2024,Reinforce,-,-
+-,South West,Steady Progression,Portishead BSP,-,-,2024,Reinforce,-,-
+-,South West,System Transformation,Portishead BSP,-,-,2024,Reinforce,-,-
+CMZ_T6B_SWE_0024,South West,Best View,Probus,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_SWE_0024,South West,Consumer Transformation,Probus,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_SWE_0024,South West,Leading the Way,Probus,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_SWE_0024,South West,Steady Progression,Probus,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T6B_SWE_0024,South West,System Transformation,Probus,Winter,Secure,2025,Reinforce with Flexibility,2023,2025
+CMZ_T5A_SWE_0015,South West,Best View,Roundswell,None,Secure,-,Remove,-,-
+CMZ_T5A_SWE_0015,South West,Consumer Transformation,Roundswell,None,Secure,-,Remove,-,-
+CMZ_T5A_SWE_0015,South West,Leading the Way,Roundswell,None,Secure,-,Remove,-,-
+CMZ_T5A_SWE_0015,South West,Steady Progression,Roundswell,None,Secure,-,Remove,-,-
+CMZ_T5A_SWE_0015,South West,System Transformation,Roundswell,None,Secure,-,Remove,-,-
+CMZ_SP7A_SWE_0021,South West,Best View,St Mawgan,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0021,South West,Consumer Transformation,St Mawgan,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0021,South West,Leading the Way,St Mawgan,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0021,South West,Steady Progression,St Mawgan,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0021,South West,System Transformation,St Mawgan,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T6A_SWE_0020,South West,Best View,Stokenham,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6A_SWE_0020,South West,Consumer Transformation,Stokenham,Winter,Secure,2024,Flexibility,2023,2026
+CMZ_T6A_SWE_0020,South West,Leading the Way,Stokenham,Winter,Secure,2024,Flexibility,2023,2025
+CMZ_T6A_SWE_0020,South West,Steady Progression,Stokenham,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T6A_SWE_0020,South West,System Transformation,Stokenham,Winter,Secure,2024,Flexibility,2023,2027+
+CMZ_T4A_SWE_0012,South West,Best View,Taunton GSP,None,Dynamic,-,Remove,-,-
+CMZ_T4A_SWE_0012,South West,Consumer Transformation,Taunton GSP,None,Dynamic,-,Remove,-,-
+CMZ_T4A_SWE_0012,South West,Leading the Way,Taunton GSP,None,Dynamic,-,Remove,-,-
+CMZ_T4A_SWE_0012,South West,Steady Progression,Taunton GSP,None,Dynamic,-,Remove,-,-
+CMZ_T4A_SWE_0012,South West,System Transformation,Taunton GSP,None,Dynamic,-,Remove,-,-
+CMZ_T4A_SWE_0010,South West,Best View,Tiverton,Winter,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T4A_SWE_0010,South West,Consumer Transformation,Tiverton,Winter,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T4A_SWE_0010,South West,Leading the Way,Tiverton,Winter,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T4A_SWE_0010,South West,Steady Progression,Tiverton,Winter,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T4A_SWE_0010,South West,System Transformation,Tiverton,Winter,Dynamic,2024,Reinforce with Flexibility,2023,2024
+-,South West,Best View,Tiverton - Dunkeswell,-,-,2025,Reinforce,-,-
+-,South West,Consumer Transformation,Tiverton - Dunkeswell,-,-,2025,Reinforce,-,-
+-,South West,Leading the Way,Tiverton - Dunkeswell,-,-,2025,Reinforce,-,-
+-,South West,Steady Progression,Tiverton - Dunkeswell,-,-,2025,Reinforce,-,-
+-,South West,System Transformation,Tiverton - Dunkeswell,-,-,2025,Reinforce,-,-
+CMZ_T5A_SWE_0016,South West,Best View,Truro - Truro Treyew,Summer,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_SWE_0016,South West,Consumer Transformation,Truro - Truro Treyew,Summer,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_SWE_0016,South West,Leading the Way,Truro - Truro Treyew,Summer,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_SWE_0016,South West,Steady Progression,Truro - Truro Treyew,Summer,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_T5A_SWE_0016,South West,System Transformation,Truro - Truro Treyew,Summer,Dynamic,2024,Reinforce with Flexibility,2023,2024
+CMZ_SP5A_SWE_0014,South West,Best View,Western Approach,None,Secure,2023,Remove,-,-
+CMZ_SP5A_SWE_0014,South West,Consumer Transformation,Western Approach,None,Secure,2023,Remove,-,-
+CMZ_SP5A_SWE_0014,South West,Leading the Way,Western Approach,None,Secure,2023,Remove,-,-
+CMZ_SP5A_SWE_0014,South West,Steady Progression,Western Approach,None,Secure,2023,Remove,-,-
+CMZ_SP5A_SWE_0014,South West,System Transformation,Western Approach,None,Secure,2023,Remove,-,-
+CMZ_T4A_SWE_0013,South West,Best View,Weston Super Mare,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0013,South West,Consumer Transformation,Weston Super Mare,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0013,South West,Leading the Way,Weston Super Mare,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0013,South West,Steady Progression,Weston Super Mare,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0013,South West,System Transformation,Weston Super Mare,Winter,Dynamic,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0014,South West,Best View,Witheridge,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0014,South West,Consumer Transformation,Witheridge,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0014,South West,Leading the Way,Witheridge,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0014,South West,Steady Progression,Witheridge,Winter,Secure,2024,Flexibility,2023,-
+CMZ_T4A_SWE_0014,South West,System Transformation,Witheridge,Winter,Secure,2024,Flexibility,2023,-
+-,South West,Best View,Woodcote - Chard,-,-,2025,Remove,-,-
+-,South West,Consumer Transformation,Woodcote - Chard,-,-,2025,Remove,-,-
+-,South West,Leading the Way,Woodcote - Chard,-,-,2025,Remove,-,-
+-,South West,Steady Progression,Woodcote - Chard,-,-,2025,Remove,-,-
+-,South West,System Transformation,Woodcote - Chard,-,-,2025,Remove,-,-
+CMZ_SP7A_SWE_0015,South West,Best View,Yeovil - Coker Tee,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0015,South West,Consumer Transformation,Yeovil - Coker Tee,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0015,South West,Leading the Way,Yeovil - Coker Tee,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_SWE_0015,South West,Steady Progression,Yeovil - Coker Tee,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_SWE_0015,South West,System Transformation,Yeovil - Coker Tee,Winter,Secure,2024,Signposting,2027+,2027+
+-,West Midlands,Best View,Barlaston / Meaford BSP,-,-,2025,Reinforce,-,-
+-,West Midlands,Consumer Transformation,Barlaston / Meaford BSP,-,-,2025,Reinforce,-,-
+-,West Midlands,Leading the Way,Barlaston / Meaford BSP,-,-,2025,Reinforce,-,-
+-,West Midlands,Steady Progression,Barlaston / Meaford BSP,-,-,2025,Reinforce,-,-
+-,West Midlands,System Transformation,Barlaston / Meaford BSP,-,-,2025,Reinforce,-,-
+CMZ_T4A_WM_0006,West Midlands,Best View,Brimscombe,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_WM_0006,West Midlands,Consumer Transformation,Brimscombe,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_WM_0006,West Midlands,Leading the Way,Brimscombe,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_WM_0006,West Midlands,Steady Progression,Brimscombe,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T4A_WM_0006,West Midlands,System Transformation,Brimscombe,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP3A_WM_0006,West Midlands,Best View,Bushbury,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0006,West Midlands,Consumer Transformation,Bushbury,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0006,West Midlands,Leading the Way,Bushbury,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0006,West Midlands,Steady Progression,Bushbury,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0006,West Midlands,System Transformation,Bushbury,None,Secure,2024,Remove,-,-
+-,West Midlands,Best View,Chipping Sodbury,-,-,2025,Reinforce,-,-
+-,West Midlands,Consumer Transformation,Chipping Sodbury,-,-,2025,Reinforce,-,-
+-,West Midlands,Leading the Way,Chipping Sodbury,-,-,2025,Reinforce,-,-
+-,West Midlands,Steady Progression,Chipping Sodbury,-,-,2025,Reinforce,-,-
+-,West Midlands,System Transformation,Chipping Sodbury,-,-,2025,Reinforce,-,-
+CMZ_SP7A_WM_0016,West Midlands,Best View,Cowhorn,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0016,West Midlands,Consumer Transformation,Cowhorn,Winter,Secure,2024,Signposting,2025,2027+
+CMZ_SP7A_WM_0016,West Midlands,Leading the Way,Cowhorn,Winter,Secure,2024,Signposting,2024,2026
+CMZ_SP7A_WM_0016,West Midlands,Steady Progression,Cowhorn,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_WM_0016,West Midlands,System Transformation,Cowhorn,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0017,West Midlands,Best View,Eccleshall,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_WM_0017,West Midlands,Consumer Transformation,Eccleshall,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0017,West Midlands,Leading the Way,Eccleshall,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0017,West Midlands,Steady Progression,Eccleshall,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_WM_0017,West Midlands,System Transformation,Eccleshall,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_T5A_WM_0008,West Midlands,Best View,Feckenham South,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0008,West Midlands,Consumer Transformation,Feckenham South,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0008,West Midlands,Leading the Way,Feckenham South,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0008,West Midlands,Steady Progression,Feckenham South,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0008,West Midlands,System Transformation,Feckenham South,Winter,Dynamic,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP7A_WM_0013,West Midlands,Best View,Forsbrook - Simplex,Winter,Secure,2024,Signposting,2026,2027+
+CMZ_SP7A_WM_0013,West Midlands,Consumer Transformation,Forsbrook - Simplex,Winter,Secure,2024,Signposting,2025,2026
+CMZ_SP7A_WM_0013,West Midlands,Leading the Way,Forsbrook - Simplex,Winter,Secure,2024,Signposting,2024,2025
+CMZ_SP7A_WM_0013,West Midlands,Steady Progression,Forsbrook - Simplex,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0013,West Midlands,System Transformation,Forsbrook - Simplex,Winter,Secure,2024,Signposting,2026,2027+
+CMZ_T4B_WM_0001,West Midlands,Best View,Hereford - Ledbury Ring,Winter,Secure,2024,Reinforce with Flexibility,2023,-
+CMZ_T4B_WM_0001,West Midlands,Consumer Transformation,Hereford - Ledbury Ring,Winter,Secure,2024,Reinforce with Flexibility,2023,-
+CMZ_T4B_WM_0001,West Midlands,Leading the Way,Hereford - Ledbury Ring,Winter,Secure,2024,Reinforce with Flexibility,2023,-
+CMZ_T4B_WM_0001,West Midlands,Steady Progression,Hereford - Ledbury Ring,Winter,Secure,2024,Reinforce with Flexibility,2023,-
+CMZ_T4B_WM_0001,West Midlands,System Transformation,Hereford - Ledbury Ring,Winter,Secure,2024,Reinforce with Flexibility,2023,-
+CMZ_T5A_WM_0009,West Midlands,Best View,Hereford BSP,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0009,West Midlands,Consumer Transformation,Hereford BSP,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0009,West Midlands,Leading the Way,Hereford BSP,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0009,West Midlands,Steady Progression,Hereford BSP,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_T5A_WM_0009,West Midlands,System Transformation,Hereford BSP,Winter,Secure,2023,Reinforce with Flexibility,2023,2023
+CMZ_SP7A_WM_0015,West Midlands,Best View,Hill Chorlton,Winter,Secure,2024,Signposting,2026,2027+
+CMZ_SP7A_WM_0015,West Midlands,Consumer Transformation,Hill Chorlton,Winter,Secure,2024,Signposting,2024,2027+
+CMZ_SP7A_WM_0015,West Midlands,Leading the Way,Hill Chorlton,Winter,Secure,2024,Signposting,2024,2027+
+CMZ_SP7A_WM_0015,West Midlands,Steady Progression,Hill Chorlton,Winter,Secure,2024,Signposting,2026,2027+
+CMZ_SP7A_WM_0015,West Midlands,System Transformation,Hill Chorlton,Winter,Secure,2024,Signposting,2025,2027+
+-,West Midlands,Best View,Hinksford - Wribbenhall 33 kV,-,-,2025,Reinforce,-,-
+-,West Midlands,Consumer Transformation,Hinksford - Wribbenhall 33 kV,-,-,2025,Reinforce,-,-
+-,West Midlands,Leading the Way,Hinksford - Wribbenhall 33 kV,-,-,2025,Reinforce,-,-
+-,West Midlands,Steady Progression,Hinksford - Wribbenhall 33 kV,-,-,2025,Reinforce,-,-
+-,West Midlands,System Transformation,Hinksford - Wribbenhall 33 kV,-,-,2025,Reinforce,-,-
+-,West Midlands,Best View,Ironbridge - Star Aluminium,-,-,2024,Reinforce,-,-
+-,West Midlands,Consumer Transformation,Ironbridge - Star Aluminium,-,-,2024,Reinforce,-,-
+-,West Midlands,Leading the Way,Ironbridge - Star Aluminium,-,-,2024,Reinforce,-,-
+-,West Midlands,Steady Progression,Ironbridge - Star Aluminium,-,-,2024,Reinforce,-,-
+-,West Midlands,System Transformation,Ironbridge - Star Aluminium,-,-,2024,Reinforce,-,-
+CMZ_T7A_WM_0010,West Midlands,Best View,Knighton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_WM_0010,West Midlands,Consumer Transformation,Knighton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_WM_0010,West Midlands,Leading the Way,Knighton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_WM_0010,West Midlands,Steady Progression,Knighton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_T7A_WM_0010,West Midlands,System Transformation,Knighton,Winter,Secure,2025,Flexibility,2023,-
+CMZ_SP3A_WM_0008,West Midlands,Best View,Madeley,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0008,West Midlands,Consumer Transformation,Madeley,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0008,West Midlands,Leading the Way,Madeley,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0008,West Midlands,Steady Progression,Madeley,None,Secure,2024,Remove,-,-
+CMZ_SP3A_WM_0008,West Midlands,System Transformation,Madeley,None,Secure,2024,Remove,-,-
+-,West Midlands,Best View,Shelton,-,-,2026,Reinforce,-,-
+-,West Midlands,Consumer Transformation,Shelton,-,-,2026,Reinforce,-,-
+-,West Midlands,Leading the Way,Shelton,-,-,2026,Reinforce,-,-
+-,West Midlands,Steady Progression,Shelton,-,-,2026,Reinforce,-,-
+-,West Midlands,System Transformation,Shelton,-,-,2026,Reinforce,-,-
+CMZ_T7A_WM_0011,West Midlands,Best View,Shrewsbury GSP,Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_WM_0011,West Midlands,Consumer Transformation,Shrewsbury GSP,Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_WM_0011,West Midlands,Leading the Way,Shrewsbury GSP,Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_WM_0011,West Midlands,Steady Progression,Shrewsbury GSP,Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_T7A_WM_0011,West Midlands,System Transformation,Shrewsbury GSP,Summer,Dynamic,2027,Reinforce with Flexibility,2023,2027
+CMZ_SP5A_WM_0012,West Midlands,Best View,Smethwick,None,Secure,2024,Remove,-,-
+CMZ_SP5A_WM_0012,West Midlands,Consumer Transformation,Smethwick,None,Secure,2024,Remove,-,-
+CMZ_SP5A_WM_0012,West Midlands,Leading the Way,Smethwick,None,Secure,2024,Remove,-,-
+CMZ_SP5A_WM_0012,West Midlands,Steady Progression,Smethwick,None,Secure,2024,Remove,-,-
+CMZ_SP5A_WM_0012,West Midlands,System Transformation,Smethwick,None,Secure,2024,Remove,-,-
+CMZ_SP7A_WM_0014,West Midlands,Best View,Stockton,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_WM_0014,West Midlands,Consumer Transformation,Stockton,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0014,West Midlands,Leading the Way,Stockton,Winter,Secure,2024,Signposting,2027,2027+
+CMZ_SP7A_WM_0014,West Midlands,Steady Progression,Stockton,Winter,Secure,2024,Signposting,2027+,2027+
+CMZ_SP7A_WM_0014,West Midlands,System Transformation,Stockton,Winter,Secure,2024,Signposting,2027+,2027+
