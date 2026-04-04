@@ -382,7 +382,7 @@ else:
         cmz = row.get('dnoa_cmz', '')
         flex = row.get('dnoa_flex_period', '')
 
-        dnoa_text = f"🔧 **NGED has identified a constraint here** (DNOA Aug 2023): *{dnoa_scheme}*\n\n"
+        dnoa_text = f"🔧 **NGED has identified a constraint here** — DNOA August 2023, scheme: *{dnoa_scheme}*\n\n"
         dnoa_text += f"Decision: **{dnoa_decision}**"
         if str(reinf_by) != 'nan' and str(reinf_by) != '?':
             dnoa_text += f" · Earliest reinforcement: **{reinf_by}**"
@@ -396,6 +396,8 @@ else:
         if 'Reinforce' in str(dnoa_decision):
             dnoa_text += f"\n\nIf reinforcement scheduled for {reinf_by} has been completed, it may already be reflected in the 2024 branch loading data, and curtailment could be lower than expected."
         st.warning(dnoa_text)
+    else:
+        st.caption("No constraint identified at this substation in NGED's Distribution Network Options Assessment (DNOA, August 2023).")
 
     # ==============================================================
     # TEST A CONNECTION (below substation detail)
