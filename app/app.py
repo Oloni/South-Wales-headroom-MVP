@@ -108,6 +108,14 @@ colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 confidence_df = load_csv_or_none('south_wales_curtailment_confidence.csv')
 policy_df = load_csv_or_none('policy_scenarios.csv')
 
+scenario_options = ['Baseline (current rules)']
+scenario_descriptions = {}
+if policy_df is not None and 'scenario_description' in policy_df.columns:
+    for _, r in policy_df[['scenario', 'scenario_description']].drop_duplicates().iterrows():
+        scenario_descriptions[r['scenario']] = r['scenario_description']
+        if r['scenario'] not in scenario_options:
+            scenario_options.append(r['scenario'])
+
 # Load methodology text
 methodology_text = ""
 for prefix in ['../data/', 'data/', '../', '']:
@@ -418,15 +426,28 @@ else:
         st.markdown("<br/>", unsafe_allow_html=True)
         clear_clicked = st.button("✕ Clear", use_container_width=True)
 
-    # Revenue assumptions (collapsible)
-    with st.expander("Revenue assumptions", expanded=False):
-        rev1, rev2, rev3 = st.columns(3)
-        with rev1:
-            power_price = st.number_input("Power price (£/MWh)", min_value=0.0, max_value=500.0, value=50.0, step=5.0, key='power_price_input')
-        with rev2:
-            discount_rate = st.number_input("Discount rate (%)", min_value=0.0, max_value=30.0, value=8.0, step=0.5, key='discount_rate_input')
-        with rev3:
-            project_life = st.number_input("Project life (years)", min_value=1, max_value=40, value=25, step=1, key='project_life_input')
+    # Revenue assumptions (always visible)
+    st.markdown("##### Revenue assumptions")
+    rev1, rev2, rev3 = st.columns(3)
+    with rev1:
+        power_price = st.number_input("Power price (£/MWh)", min_value=0.0, max_value=500.0, value=50.0, step=5.0, key='power_price_input')
+    with rev2:
+        discount_rate = st.number_input("Discount rate (%)", min_value=0.0, max_value=30.0, value=8.0, step=0.5, key='discount_rate_input')
+    with rev3:
+        project_life = st.number_input("Project life (years)", min_value=1, max_value=40, value=25, step=1, key='project_life_input')
+
+    # Regulatory scenario dropdown
+    st.markdown("##### Regulatory scenario")
+    sub_has_policy = policy_df is not None and len(match_substation(policy_df, sub_name)) > 0
+    if sub_has_policy:
+        selected_scenario = st.selectbox("Select scenario", options=scenario_options, key='scenario_selector')
+        desc = scenario_descriptions.get(selected_scenario, '')
+        if desc:
+            st.caption(desc)
+    else:
+        selected_scenario = 'Baseline (current rules)'
+        st.selectbox("Select scenario", options=['Baseline (current rules)'], key='scenario_selector_disabled', disabled=True)
+        st.caption("Regulatory scenarios not yet available for this substation.")
 
     if run_clicked:
         st.session_state.test_run = True
@@ -452,8 +473,24 @@ else:
 
         st.markdown("---")
         st.markdown(f"### Results: {active_mw} MW {active_tech} at {sub_name}")
+        if selected_scenario != 'Baseline (current rules)':
+            st.caption(f"Scenario: **{selected_scenario}**")
 
-        sub_curt = match_substation(curtailment_df, sub_name)
+        # Decide data source: policy CSV for non-baseline scenarios, or baseline curtailment CSV
+        use_policy = False
+        sub_policy_all = match_substation(policy_df, sub_name) if policy_df is not None else pd.DataFrame()
+        if sub_has_policy and len(sub_policy_all) > 0:
+            policy_match = sub_policy_all[
+                (sub_policy_all['scenario'] == selected_scenario) &
+                (sub_policy_all['technology'] == curt_tech_key)
+            ]
+            if len(policy_match) > 0:
+                use_policy = True
+                sub_curt = policy_match  # use policy data as the curtailment source
+            else:
+                sub_curt = match_substation(curtailment_df, sub_name)
+        else:
+            sub_curt = match_substation(curtailment_df, sub_name)
 
         if len(sub_curt) > 0 and sub_curt['curtailment_pct'].notna().any():
 
@@ -553,6 +590,50 @@ else:
                     st.info(f"No curtailment estimate available for {active_tech} at this substation.")
             else:
                 st.info(f"No curtailment estimate available for {active_tech} at this substation.")
+
+            # --- ALL SCENARIOS COMPARISON (if policy data available) ---
+            if use_policy and len(sub_policy_all) > 0:
+                all_sc = sub_policy_all[
+                    (sub_policy_all['technology'] == curt_tech_key) &
+                    (sub_policy_all['capacity_mw'] == closest_mw)
+                ] if 'closest_mw' in dir() else pd.DataFrame()
+
+                if len(all_sc) > 0 and all_sc['curtailment_pct'].notna().any():
+                    st.markdown("---")
+                    st.markdown(f"#### All regulatory scenarios — {active_tech} at {closest_mw} MW")
+
+                    pp = st.session_state.get('power_price', 50.0)
+                    sc_display = pd.DataFrame()
+                    sc_display['Scenario'] = all_sc['scenario'].values
+                    sc_display['Curtailment'] = all_sc['curtailment_pct'].apply(
+                        lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
+                    ).values
+                    sc_display['Energy Lost (MWh/yr)'] = all_sc['curtailed_mwh'].apply(
+                        lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
+                    ).values
+                    sc_display['Revenue Lost (£/yr)'] = all_sc['curtailed_mwh'].apply(
+                        lambda x: f"£{x * pp:,.0f}" if pd.notna(x) else "—"
+                    ).values
+                    if 'curtailed_hours' in all_sc.columns:
+                        sc_display['Hours'] = all_sc['curtailed_hours'].apply(
+                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
+                        ).values
+                    if 'exceeds_2000h' in all_sc.columns:
+                        sc_display['Exceeds 2000h'] = all_sc['exceeds_2000h'].apply(
+                            lambda x: "⚠️" if x else "" if pd.notna(x) else ""
+                        ).values
+
+                    st.dataframe(sc_display, use_container_width=True, hide_index=True)
+
+                    pct_vals = all_sc['curtailment_pct'].dropna()
+                    if len(pct_vals) > 1 and pct_vals.max() > 0:
+                        best_idx = pct_vals.idxmin()
+                        worst_idx = pct_vals.idxmax()
+                        st.caption(
+                            f"Range: **{pct_vals.min():.1f}%** ({all_sc.at[best_idx, 'scenario']}) to "
+                            f"**{pct_vals.max():.1f}%** ({all_sc.at[worst_idx, 'scenario']}) — "
+                            f"policy choice swings curtailment by {pct_vals.max() - pct_vals.min():.1f} percentage points."
+                        )
 
             # --- CURTAILMENT BY SIZE (single technology) ---
             st.markdown("---")
@@ -697,58 +778,6 @@ else:
             else:
                 st.markdown("---")
                 st.caption(f"ℹ️ No hybridisation data available for {sub_name}.")
-
-            # --- POLICY SCENARIOS (regulatory futures) ---
-            sub_policy = match_substation(policy_df, sub_name)
-            if len(sub_policy) > 0 and 'technology' in sub_policy.columns:
-                tech_policy = sub_policy[sub_policy['technology'] == curt_tech_key]
-                if len(tech_policy) > 0 and tech_policy['curtailment_pct'].notna().any():
-                    has_variation = tech_policy['curtailment_pct'].max() != tech_policy['curtailment_pct'].min()
-                    if tech_policy['curtailment_pct'].max() > 0 or has_variation:
-                        st.markdown("---")
-                        st.markdown(f"#### Regulatory scenarios — {active_tech}")
-                        st.caption("How would curtailment change under different regulatory futures? These are real policy levers being discussed by NGED, NESO, and Ofgem.")
-
-                        pol_display = pd.DataFrame()
-                        pol_display['Scenario'] = tech_policy['scenario'].values
-                        pol_display['Curtailment'] = tech_policy['curtailment_pct'].apply(
-                            lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
-                        ).values
-                        pol_display['Energy Lost (MWh)'] = tech_policy['curtailed_mwh'].apply(
-                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
-                        ).values
-                        pol_display['Hours Curtailed'] = tech_policy['curtailed_hours'].apply(
-                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
-                        ).values
-                        if 'exceeds_2000h' in tech_policy.columns:
-                            pol_display['Exceeds 2000h limit'] = tech_policy['exceeds_2000h'].apply(
-                                lambda x: "⚠️ Yes" if x else "No" if pd.notna(x) else "—"
-                            ).values
-                        if 'binding_branch' in tech_policy.columns:
-                            pol_display['Binding Constraint'] = tech_policy['binding_branch'].replace('None', '—').values
-
-                        st.dataframe(pol_display, use_container_width=True, hide_index=True)
-
-                        # Highlight the range
-                        pct_vals = tech_policy['curtailment_pct'].dropna()
-                        if len(pct_vals) > 1:
-                            best_pct = pct_vals.min()
-                            worst_pct = pct_vals.max()
-                            best_scenario = tech_policy.loc[pct_vals.idxmin(), 'scenario']
-                            worst_scenario = tech_policy.loc[pct_vals.idxmax(), 'scenario']
-                            if worst_pct > 0:
-                                st.caption(
-                                    f"Range: **{best_pct:.1f}%** ({best_scenario}) to "
-                                    f"**{worst_pct:.1f}%** ({worst_scenario})"
-                                )
-                                if worst_pct - best_pct > 5:
-                                    st.caption("⚡ Policy choice swings curtailment by more than 5 percentage points at this substation.")
-                    else:
-                        st.markdown("---")
-                        st.caption(f"ℹ️ No policy scenario sensitivity shown — {active_tech} curtailment is 0% under all regulatory scenarios at this substation.")
-            else:
-                st.markdown("---")
-                st.caption(f"ℹ️ No policy scenario data available for {sub_name}. Policy scenarios currently cover the Swansea North ANM zone only.")
 
         elif len(sub_curt) == 0:
             st.info(f"No curtailment data available for {sub_name}. This substation may be at a voltage level (e.g. 66kV) not covered by the curtailment dataset.")
