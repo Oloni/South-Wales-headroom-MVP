@@ -9,10 +9,12 @@ For every major substation in the South Wales 33kV/66kV/132kV network, this tool
 3. **Model confidence** — SCADA-validated rating of how reliable the estimate is
 4. **Revenue impact** — annual revenue lost and NPV of curtailment over the project life
 5. **ANM zone status** — whether the substation is in a Transmission or Distribution Active Network Management zone
-6. **Seasonal breakdown** — when during the year curtailment occurs (by hour and month)
-7. **LIFO queue position** — how curtailment changes depending on your position in the connection queue
-8. **Queue build-out scenarios** — how curtailment changes if projects in the queue don't build
-9. **Hybridisation analysis** — curtailment for combined technologies on the same connection
+6. **DNOA constraint status** — whether NGED has identified a constraint at this substation and what decision has been taken (reinforce, flexibility, or signpost)
+7. **Seasonal breakdown** — when during the year curtailment occurs (by hour and month)
+8. **LIFO queue position** — how curtailment changes depending on your position in the connection queue
+9. **Queue build-out scenarios** — how curtailment changes if projects in the queue don't build
+10. **Hybridisation analysis** — curtailment for combined technologies on the same connection
+11. **Regulatory scenario comparison** — how curtailment changes under different regulatory futures (queue attrition post-Gate 2, reinforcement, NESO technical limit changes, dynamic sensitivity factors, Schedule 2D exceedance)
 
 ---
 
@@ -22,9 +24,11 @@ For every major substation in the South Wales 33kV/66kV/132kV network, this tool
 2. The **map** shows substations coloured by headroom status (red = overcommitted, yellow = tight, blue = moderate, green = available). Click any dot for a popup summary.
 3. Use the **dropdown** below the map to select a substation for detail view
 4. In the detail view, enter a proposed **capacity (MW)** and **technology**, then click **Run test**
-5. Results appear below: headline curtailment with model confidence, revenue impact, seasonal heatmap, LIFO position, queue build-out, and hybridisation analysis
-6. Adjust **revenue assumptions** (power price, discount rate, project life) in the collapsible panel below the test inputs
-7. Click **Clear** to reset the test
+5. Adjust **revenue assumptions** (power price, discount rate, project life) — these are always visible below the test inputs
+6. Results appear below: headline curtailment under regulatory baseline with model confidence and revenue impact
+7. The **Regulatory scenario comparison** section lets you select and run an alternative regulatory future to see how curtailment changes under different policy assumptions
+8. Below the scenario comparison, the **Baseline scenario deep dive** shows curtailment by size, seasonal heatmap, LIFO position, queue build-out, and hybridisation analysis under current rules
+9. Click **Clear** to reset the test
 
 ---
 
@@ -135,6 +139,22 @@ Any divergence between the planning model and SCADA in an ANM zone may partly re
 
 In ANM zones, curtailment is managed autonomously at no cost to the DNO. The Access SCR introduces curtailment limits and compensation requirements, but implementation is ongoing.
 
+### DNOA constraint status
+
+NGED's Distribution Network Options Assessment (DNOA) identifies network constraints and decides how to address them. For each constraint, NGED publishes a decision:
+
+- **Reinforce** — the DNO plans to upgrade the network (new transformer, uprated circuit, etc.) with a target completion date
+- **Reinforce with Flexibility** — reinforcement planned, but flexibility services will be used in the interim
+- **Flexibility** — no reinforcement; the constraint will be managed through flexibility procurement (Constraint Management Zones)
+- **Signposting** — the constraint is flagged but no action is taken yet
+- **Remove** — a previously identified constraint has been resolved
+
+The tool maps DNOA scheme names to substations and shows the decision, earliest reinforcement date, constraint season (winter/summer), and Constraint Management Zone code where applicable.
+
+**Why it matters for curtailment:** If reinforcement is scheduled, curtailment at that substation may decrease once the upgrade is complete — but may be higher than expected in the interim period. If the decision is "Flexibility", the constraint is likely to persist and curtailment is the mechanism used to manage it. The DNOA data is from August 2023; more recent reinforcement decisions may already be reflected in the 2024 branch loading data.
+
+Source: NGED DNOA August 2023 publication.
+
 ### Revenue impact
 
 Curtailment percentages are useful for engineering screening, but investment decisions need revenue numbers. The tool translates curtailment into financial impact using three user-adjustable assumptions:
@@ -218,6 +238,58 @@ Curtailment for combined technology scenarios on the same connection:
 This answers the question: **"I have a 50MW connection but my wind farm only uses it 30% of the time — can I fill the remaining 70% with solar or battery?"**
 
 The combined output at each half-hour is the sum of individual technology profiles. Because wind and solar generate at different times, hybrid projects typically face lower curtailment than single-technology projects of the same total capacity.
+
+### Regulatory scenario comparison
+
+The baseline curtailment estimate assumes the current regulatory framework: full accepted queue, static sensitivity factors, current pre-event limits, and current NESO technical limits. But several of these assumptions are subject to change. The regulatory scenario comparison quantifies how curtailment would change under different plausible regulatory futures.
+
+**The five policy levers tested:**
+
+1. **Queue attrition post-Gate 2** — Not all accepted projects will build. Connections reform (Gate 2, G2TWQ) is removing projects from the queue, and technology-specific dropout rates are high (particularly for BESS post-Gate 2). Three attrition levels are modelled: full queue (current), moderate (BESS 50%, solar 80%, wind 90%), and high (BESS 30%, solar 60%, wind 80%).
+
+2. **Reinforcement timing** — If the DNO upgrades a constrained transformer or circuit, the pre-event limit increases and curtailment drops. Modelled as a 30% PEL uplift, representing a typical SGT uprating or partial circuit reinforcement. The DNOA section above identifies which substations have reinforcement planned.
+
+3. **NESO technical limit changes** — NESO periodically updates the GSP technical limit that governs Transmission ANM. A tighter limit means more TANM curtailment; a relaxation means less. Modelled as ±10% of the current technical limit.
+
+4. **Static to dynamic sensitivity factors** — NGED currently uses static SFs computed at a single operating point. UKPN has moved to dynamic SFs recomputed at each operating point (CIRED 2021). Our empirical analysis of the Swansea North network (script 16) found that SFs on meshed 132kV circuits reduce by a median of 9.4% at high generation levels, with up to 64% variation on the most variable pairs. Under dynamic SFs, curtailment on meshed circuits would decrease.
+
+5. **Schedule 2D curtailment limit** — Under Access SCR (April 2023), DNOs must compensate curtailable connection customers if curtailment exceeds a contractual limit (measured in hours per year). The scenario output flags whether each scenario produces curtailment exceeding 2,000 or 1,000 hours — indicating potential financial exposure for the DNO.
+
+**Pre-defined scenario bundles:**
+
+| Scenario | Queue | PEL | TANM | SFs |
+|----------|-------|-----|------|-----|
+| Baseline (current rules) | Full | Current | Current | Static |
+| Post-Gate 2 (moderate attrition) | Moderate | Current | Current | Static |
+| Post-Gate 2 (high attrition) | High | Current | Current | Static |
+| SGT partial upgrade (+30% PEL) | Full | +30% | Current | Static |
+| NESO tightens GSP limit (−10%) | Full | Current | −10% | Static |
+| NESO relaxes GSP limit (+10%) | Full | Current | +10% | Static |
+| Dynamic SFs (UKPN-style) | Full | Current | Current | Dynamic |
+| Best case | High | +30% | +10% | Dynamic |
+| Worst case | Full | Current | −10% | Static |
+
+**How to use:** In the substation detail view, after running a baseline test, the "Regulatory scenario comparison" section lets you select a scenario and click "Run scenario" to see the headline curtailment, revenue impact, and Schedule 2D status under that regulatory future. Click "Show all scenarios" for the full comparison table.
+
+**Interpretation:** The range across scenarios tells you how much policy uncertainty affects your investment. A site with 2% curtailment under all scenarios is a robust investment. A site with 1% under best case and 40% under worst case is a bet on a specific reform happening.
+
+**Coverage:** Regulatory scenarios are pre-computed for all 162 connection points across all 7 GSP zones, at 5 capacity levels (5, 10, 20, 30, 50 MW) and 3 technologies (solar, wind, battery). The computation runs the same curtailment engine as the baseline, with policy parameters applied to the inputs before the curtailment calculation.
+
+**Key finding across South Wales (20MW Solar):**
+
+| Scenario | Aggregate curtailment |
+|----------|----------------------|
+| Baseline | 8.8% |
+| Moderate attrition | 7.3% |
+| High attrition | 6.5% |
+| SGT upgrade (+30% PEL) | 3.2% |
+| NESO tightens (−10%) | 12.3% |
+| NESO relaxes (+10%) | 6.2% |
+| Dynamic SFs | 8.3% |
+| Best case | 1.4% |
+| Worst case | 12.3% |
+
+The biggest swing is reinforcement (8.8% → 3.2%), not attrition (8.8% → 6.5%). NESO tightening the GSP limit has a larger downside impact than the full queue building out. Dynamic SFs make a modest difference at aggregate level (8.8% → 8.3%) but can be significant at specific meshed substations.
 
 ---
 
@@ -304,6 +376,8 @@ Curtailment % = Total curtailed energy / Total potential energy × 100
 | Pre-event Limits | Seasonal thermal limits per branch | Mar 2026 |
 | Generic Generator Profiles | Normalised half-hourly output for solar, wind, battery | Mar 2026 |
 | Connection Queue (per zone) | Accepted projects with bus numbers, LIFO position, ANM flags | Mar 2026 |
+| DNOA (Distribution Network Options Assessment) | Constraint decisions, reinforcement timelines, CMZ codes | Aug 2023 |
+| TD Boundary Limits | NESO technical limits and SGT forward/reverse power flow limits per GSP | Mar 2026 |
 
 All data is publicly available from NGED's Connected Data portal under the NGED Open Data Licence (based on OGL v3.0). No proprietary data or models are used.
 
@@ -323,7 +397,7 @@ All data is publicly available from NGED's Connected Data portal under the NGED 
 
 6. **5% sensitivity threshold**: Branches with sensitivity factor below 5% are ignored, consistent with NGED's published methodology.
 
-7. **No queue attrition probabilities**: The queue build-out scenarios show what happens if projects drop out, but do not assign probabilities to dropout (e.g. "40% of BESS projects don't build"). This is a judgment call for the user.
+7. **Queue attrition modelled but not probabilistic**: The regulatory scenario engine models three attrition levels (none, moderate, high) with technology-specific dropout rates. These rates are based on industry observations of Gate 2 outcomes and connections reform, but are not derived from a formal probability model. Users should treat the range of scenarios as plausible bounds rather than point predictions.
 
 8. **LIFO per-constraint stacks**: Our LIFO implementation builds a per-constraint stack and curtails in reverse position order per branch, consistent with the UKPN methodology. We do not currently enforce the voltage-level ordering (resolve lower voltage constraints first, then higher voltage) described in the NGED methodology document.
 
@@ -337,6 +411,10 @@ All data is publicly available from NGED's Connected Data portal under the NGED 
 
 13. **Not a substitute for a formal connection study**: These estimates are for screening purposes. A G99 application and DNO study is required before any connection decision.
 
+14. **Regulatory scenario engine limitations**: The PEL scaling and TANM scaling are currently applied uniformly across all branches. In practice, a reinforcement would increase PELs on specific branches only, and TANM limits only affect GSP-level branches (SGTs and technical limits), not distribution-level branches. The dynamic SF model applies a single empirical reduction factor (9.4%) derived from the Swansea North 132kV network; the effect may differ on other networks. The scenario bundles are illustrative combinations, not exhaustive — the real regulatory future may fall between or outside the modelled scenarios.
+
+15. **DNOA data vintage**: The DNOA constraint mapping uses the August 2023 publication. Reinforcement decisions may have been updated, completed, or revised since then. Reinforcements completed before the 2024 branch loading data period are already reflected in the baseline curtailment estimate.
+
 ---
 
 ## Feedback we would value
@@ -345,5 +423,8 @@ All data is publicly available from NGED's Connected Data portal under the NGED 
 - Is the model confidence rating useful? Does it change how you'd use the curtailment number?
 - Are there specific sites where you have an NGED curtailment report we could cross-check against?
 - What queue attrition assumptions would you apply by technology?
+- Which regulatory scenarios are most relevant to your investment decisions? Are there scenarios we should add?
+- Does the scenario range (best case to worst case) change how you assess a site?
 - Would you pay more for a higher-confidence estimate? What would "higher confidence" need to look like?
 - Does the ANM zone flag change how you think about curtailment risk at a substation?
+- Is the Schedule 2D exceedance warning useful for identifying DNO compensation risk?
