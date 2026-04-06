@@ -186,6 +186,8 @@ if 'scenario_run' not in st.session_state:
     st.session_state.scenario_run = False
 if 'scenario_name' not in st.session_state:
     st.session_state.scenario_name = ''
+if 'show_all' not in st.session_state:
+    st.session_state.show_all = False
 
 
 # ============================================================
@@ -310,6 +312,7 @@ if 'prev_sub' not in st.session_state:
 if selected_sub != st.session_state.prev_sub:
     st.session_state.test_run = False
     st.session_state.scenario_run = False
+    st.session_state.show_all = False
     st.session_state.prev_sub = selected_sub
 
 
@@ -465,6 +468,7 @@ else:
     if clear_clicked:
         st.session_state.test_run = False
         st.session_state.scenario_run = False
+        st.session_state.show_all = False
         st.rerun()
 
     # ==============================================================
@@ -589,10 +593,19 @@ else:
 
             st.markdown("---")
             st.markdown(
-                '<div style="background-color: #e8f4f8; padding: 20px; border-radius: 10px; margin: 10px 0;">',
+                """<style>
+                div[data-testid="stVerticalBlock"] > div:has(> div.scenario-box) {
+                    background-color: #e8f4f8;
+                    padding: 1.5rem;
+                    border-radius: 10px;
+                    border: 1px solid #c5dfe8;
+                }
+                </style>""",
                 unsafe_allow_html=True
             )
-            st.markdown("#### Regulatory scenario comparison")
+            with st.container():
+                st.markdown('<div class="scenario-box"></div>', unsafe_allow_html=True)
+                st.markdown("#### Regulatory scenario comparison")
 
             if sub_has_policy and len(sub_policy_all) > 0:
                 sc_col1, sc_col2 = st.columns([3, 1])
@@ -692,6 +705,44 @@ else:
 
                                 if closest_mw_sc != active_mw:
                                     st.caption(f"Estimate shown for {closest_mw_sc} MW (closest available).")
+
+                                # Show all scenarios button
+                                if st.button("📊 Show all scenarios", key='show_all_scenarios'):
+                                    st.session_state.show_all = not st.session_state.get('show_all', False)
+
+                                if st.session_state.get('show_all', False):
+                                    all_sc = sub_policy_all[
+                                        (sub_policy_all['technology'] == curt_tech_key) &
+                                        (sub_policy_all['capacity_mw'] == closest_mw_sc)
+                                    ]
+                                    if len(all_sc) > 0:
+                                        sc_table = pd.DataFrame()
+                                        sc_table['Scenario'] = all_sc['scenario'].values
+                                        sc_table['Curtailment'] = all_sc['curtailment_pct'].apply(
+                                            lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
+                                        ).values
+                                        sc_table['Energy Lost (MWh/yr)'] = all_sc['curtailed_mwh'].apply(
+                                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
+                                        ).values
+                                        sc_table['Revenue Lost (£/yr)'] = all_sc['curtailed_mwh'].apply(
+                                            lambda x: f"£{x * pp:,.0f}" if pd.notna(x) else "—"
+                                        ).values
+                                        if 'curtailed_hours' in all_sc.columns:
+                                            sc_table['Hours'] = all_sc['curtailed_hours'].apply(
+                                                lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
+                                            ).values
+                                        if 'exceeds_2000h' in all_sc.columns:
+                                            sc_table['> 2000h'] = all_sc['exceeds_2000h'].apply(
+                                                lambda x: "⚠️" if x else "" if pd.notna(x) else ""
+                                            ).values
+                                        st.dataframe(sc_table, use_container_width=True, hide_index=True)
+
+                                        pct_vals = all_sc['curtailment_pct'].dropna()
+                                        if len(pct_vals) > 1 and pct_vals.max() > 0:
+                                            st.caption(
+                                                f"Range: **{pct_vals.min():.1f}%** to **{pct_vals.max():.1f}%** — "
+                                                f"policy swings curtailment by {pct_vals.max() - pct_vals.min():.1f} pp."
+                                            )
                             else:
                                 st.info(f"No estimate available for {active_tech} under this scenario.")
                     else:
@@ -700,8 +751,6 @@ else:
                     st.caption("Select a scenario and click **Run scenario** to see how curtailment changes under a different regulatory future.")
             else:
                 st.caption("Regulatory scenario comparison not yet available for this substation.")
-
-            st.markdown('</div>', unsafe_allow_html=True)
 
             # --- CURTAILMENT BY SIZE (single technology) ---
             st.markdown("---")
