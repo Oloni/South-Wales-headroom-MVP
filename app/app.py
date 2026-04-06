@@ -592,24 +592,6 @@ else:
             sub_policy_all = match_substation(policy_df, sub_name) if policy_df is not None else pd.DataFrame()
 
             st.markdown("---")
-            st.markdown(
-                """<style>
-                [data-testid="stExpander"] details[open] > div.scenario-container,
-                div.scenario-bg {
-                    background-color: #e8f4f8 !important;
-                }
-                .scenario-wrapper {
-                    background-color: #e8f4f8;
-                    padding: 1.5rem;
-                    border-radius: 10px;
-                    border: 1px solid #c5dfe8;
-                    margin-bottom: 1rem;
-                }
-                </style>""",
-                unsafe_allow_html=True
-            )
-
-            st.markdown('<div class="scenario-wrapper">', unsafe_allow_html=True)
             st.markdown("#### Regulatory scenario comparison")
 
             if sub_has_policy and len(sub_policy_all) > 0:
@@ -756,8 +738,6 @@ else:
                     st.caption("Select a scenario and click **Run scenario** to see how curtailment changes under a different regulatory future.")
             else:
                 st.caption("Regulatory scenario comparison not yet available for this substation.")
-
-            st.markdown('</div>', unsafe_allow_html=True)
 
             # --- BASELINE SCENARIO DEEP DIVE ---
             st.markdown("---")
