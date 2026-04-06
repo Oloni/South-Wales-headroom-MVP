@@ -219,14 +219,17 @@ with hdr1:
 with hdr2:
     st.markdown("<br/>", unsafe_allow_html=True)
     if st.button("📄 Methodology", use_container_width=True):
-        st.session_state.show_methodology = not st.session_state.get('show_methodology', False)
+        st.session_state.show_methodology = True
 
 if st.session_state.get('show_methodology', False):
-    with st.expander("Methodology & Assumptions", expanded=True):
-        if methodology_text:
-            st.markdown(methodology_text)
-        else:
-            st.info("Methodology document not found. Please ensure README_methodology.md is in the data or app directory.")
+    if st.button("← Back to screener"):
+        st.session_state.show_methodology = False
+        st.rerun()
+    st.markdown("## Methodology & Assumptions")
+    if methodology_text:
+        st.markdown(methodology_text)
+    else:
+        st.info("Methodology document not found. Please ensure README_methodology.md is in the data or app directory.")
     st.stop()
 
 col1, col2, col3, col4 = st.columns(4)
@@ -542,6 +545,14 @@ else:
                     binding = e.get('binding_branch', '')
                     if binding and binding != 'None' and str(binding) != 'nan':
                         st.caption(f"Binding constraint: {binding}")
+
+                    # Schedule 2D curtailment limit check (applies under all scenarios including baseline)
+                    if 'curtailed_hours' in e.index and pd.notna(e.get('curtailed_hours')):
+                        baseline_hours = e['curtailed_hours']
+                        if baseline_hours > 2000:
+                            st.error(f"⚠️ **Schedule 2D: {baseline_hours:,.0f} curtailed hours exceeds the 2,000-hour contractual limit.** Under DCUSA Schedule 2D (in force since April 2023), the DNO would be required to compensate the connected customer for curtailment above this limit.")
+                        elif baseline_hours > 1000:
+                            st.warning(f"⚠️ **{baseline_hours:,.0f} curtailed hours** — approaches typical contractual limits. A 1,000-hour curtailment limit would be breached.")
 
                     # Model confidence from SCADA validation
                     if confidence_df is not None:
