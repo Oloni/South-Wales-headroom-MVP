@@ -1,9 +1,0 @@
-Licence Area,GSP,TANM,DANM,Status,Bus Number,Bus Name,Site ID,Application ID,Site Export Capacity (MW),Site Import Capacity (MW),Machine Export Capacity (MW),Machine Import Capacity (MW),Fuel type,Machine ID,Position
-South Wales,Pembroke Power Station,False,False,Accepted not yet Connected,515301,GOLD3_MAIN2,116,1,9.9,0.1,9.9,,Solar,PA,10
-South Wales,Pembroke Power Station,False,True,Accepted not yet Connected,520600,GOLD1_MAIN1,71,1,30.0,0.2,30.6,,Solar,PA,158
-South Wales,Pembroke Power Station,False,False,Accepted not yet Connected,520701,RHCR1_105,335,1,49.9,49.9,49.9,,BESS,BA,170
-South Wales,Pembroke Power Station,False,True,Accepted not yet Connected,515300,GOLD3_MAIN1,490,1,5.6,0.25,5.73,,Solar,PA,406
-South Wales,Pembroke Power Station,False,True,Accepted not yet Connected,3060,PEBL5,449,1,1.0,0.05,1.0,,Wind,WA,509
-South Wales,Pembroke Power Station,False,True,Accepted not yet Connected,520001,HAVE1_110,643,1,30.0,12.0,30.0,,Solar,PA,718
-South Wales,Pembroke Power Station,False,True,Accepted not yet Connected,520816,MIFH1_703,266,1,65.0,32.5,65.0,,Solar,PA,1806
-South Wales,Pembroke Power Station,False,True,Accepted not yet Connected,587403,82FF18E,102,1,49.9,0.1,50.0,,Solar,PA,1818
