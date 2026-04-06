@@ -106,6 +106,7 @@ lifo_df = load_csv_or_none('south_wales_curtailment_lifo.csv')
 buildout_df = load_csv_or_none('south_wales_curtailment_buildout.csv')
 colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 confidence_df = load_csv_or_none('south_wales_curtailment_confidence.csv')
+policy_df = load_csv_or_none('policy_scenarios.csv')
 
 # Load methodology text
 methodology_text = ""
@@ -696,6 +697,58 @@ else:
             else:
                 st.markdown("---")
                 st.caption(f"ℹ️ No hybridisation data available for {sub_name}.")
+
+            # --- POLICY SCENARIOS (regulatory futures) ---
+            sub_policy = match_substation(policy_df, sub_name)
+            if len(sub_policy) > 0 and 'technology' in sub_policy.columns:
+                tech_policy = sub_policy[sub_policy['technology'] == curt_tech_key]
+                if len(tech_policy) > 0 and tech_policy['curtailment_pct'].notna().any():
+                    has_variation = tech_policy['curtailment_pct'].max() != tech_policy['curtailment_pct'].min()
+                    if tech_policy['curtailment_pct'].max() > 0 or has_variation:
+                        st.markdown("---")
+                        st.markdown(f"#### Regulatory scenarios — {active_tech}")
+                        st.caption("How would curtailment change under different regulatory futures? These are real policy levers being discussed by NGED, NESO, and Ofgem.")
+
+                        pol_display = pd.DataFrame()
+                        pol_display['Scenario'] = tech_policy['scenario'].values
+                        pol_display['Curtailment'] = tech_policy['curtailment_pct'].apply(
+                            lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
+                        ).values
+                        pol_display['Energy Lost (MWh)'] = tech_policy['curtailed_mwh'].apply(
+                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
+                        ).values
+                        pol_display['Hours Curtailed'] = tech_policy['curtailed_hours'].apply(
+                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
+                        ).values
+                        if 'exceeds_2000h' in tech_policy.columns:
+                            pol_display['Exceeds 2000h limit'] = tech_policy['exceeds_2000h'].apply(
+                                lambda x: "⚠️ Yes" if x else "No" if pd.notna(x) else "—"
+                            ).values
+                        if 'binding_branch' in tech_policy.columns:
+                            pol_display['Binding Constraint'] = tech_policy['binding_branch'].replace('None', '—').values
+
+                        st.dataframe(pol_display, use_container_width=True, hide_index=True)
+
+                        # Highlight the range
+                        pct_vals = tech_policy['curtailment_pct'].dropna()
+                        if len(pct_vals) > 1:
+                            best_pct = pct_vals.min()
+                            worst_pct = pct_vals.max()
+                            best_scenario = tech_policy.loc[pct_vals.idxmin(), 'scenario']
+                            worst_scenario = tech_policy.loc[pct_vals.idxmax(), 'scenario']
+                            if worst_pct > 0:
+                                st.caption(
+                                    f"Range: **{best_pct:.1f}%** ({best_scenario}) to "
+                                    f"**{worst_pct:.1f}%** ({worst_scenario})"
+                                )
+                                if worst_pct - best_pct > 5:
+                                    st.caption("⚡ Policy choice swings curtailment by more than 5 percentage points at this substation.")
+                    else:
+                        st.markdown("---")
+                        st.caption(f"ℹ️ No policy scenario sensitivity shown — {active_tech} curtailment is 0% under all regulatory scenarios at this substation.")
+            else:
+                st.markdown("---")
+                st.caption(f"ℹ️ No policy scenario data available for {sub_name}. Policy scenarios currently cover the Swansea North ANM zone only.")
 
         elif len(sub_curt) == 0:
             st.info(f"No curtailment data available for {sub_name}. This substation may be at a voltage level (e.g. 66kV) not covered by the curtailment dataset.")
