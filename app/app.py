@@ -594,18 +594,23 @@ else:
             st.markdown("---")
             st.markdown(
                 """<style>
-                div[data-testid="stVerticalBlock"] > div:has(> div.scenario-box) {
+                [data-testid="stExpander"] details[open] > div.scenario-container,
+                div.scenario-bg {
+                    background-color: #e8f4f8 !important;
+                }
+                .scenario-wrapper {
                     background-color: #e8f4f8;
                     padding: 1.5rem;
                     border-radius: 10px;
                     border: 1px solid #c5dfe8;
+                    margin-bottom: 1rem;
                 }
                 </style>""",
                 unsafe_allow_html=True
             )
-            with st.container():
-                st.markdown('<div class="scenario-box"></div>', unsafe_allow_html=True)
-                st.markdown("#### Regulatory scenario comparison")
+
+            st.markdown('<div class="scenario-wrapper">', unsafe_allow_html=True)
+            st.markdown("#### Regulatory scenario comparison")
 
             if sub_has_policy and len(sub_policy_all) > 0:
                 sc_col1, sc_col2 = st.columns([3, 1])
@@ -751,6 +756,12 @@ else:
                     st.caption("Select a scenario and click **Run scenario** to see how curtailment changes under a different regulatory future.")
             else:
                 st.caption("Regulatory scenario comparison not yet available for this substation.")
+
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            # --- BASELINE SCENARIO DEEP DIVE ---
+            st.markdown("---")
+            st.markdown("### Baseline scenario deep dive")
 
             # --- CURTAILMENT BY SIZE (single technology) ---
             st.markdown("---")
