@@ -108,13 +108,25 @@ colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 confidence_df = load_csv_or_none('south_wales_curtailment_confidence.csv')
 policy_df = load_csv_or_none('policy_scenarios.csv')
 
-scenario_options = ['Baseline (current rules)']
+scenario_options_no_baseline = []
 scenario_descriptions = {}
 if policy_df is not None and 'scenario_description' in policy_df.columns:
     for _, r in policy_df[['scenario', 'scenario_description']].drop_duplicates().iterrows():
         scenario_descriptions[r['scenario']] = r['scenario_description']
-        if r['scenario'] not in scenario_options:
-            scenario_options.append(r['scenario'])
+        if r['scenario'] != 'Baseline (current rules)' and r['scenario'] not in scenario_options_no_baseline:
+            scenario_options_no_baseline.append(r['scenario'])
+
+policy_substations = set()
+if policy_df is not None:
+    policy_substations = set(policy_df['substation'].unique())
+
+def has_policy_data(display_name):
+    if display_name in policy_substations:
+        return True
+    cim = NAME_TO_CIM.get(display_name)
+    if cim and cim in policy_substations:
+        return True
+    return False
 
 # Load methodology text
 methodology_text = ""
@@ -170,6 +182,10 @@ if 'discount_rate' not in st.session_state:
     st.session_state.discount_rate = 8.0
 if 'project_life' not in st.session_state:
     st.session_state.project_life = 25
+if 'scenario_run' not in st.session_state:
+    st.session_state.scenario_run = False
+if 'scenario_name' not in st.session_state:
+    st.session_state.scenario_name = ''
 
 
 # ============================================================
@@ -293,6 +309,7 @@ if 'prev_sub' not in st.session_state:
     st.session_state.prev_sub = selected_sub
 if selected_sub != st.session_state.prev_sub:
     st.session_state.test_run = False
+    st.session_state.scenario_run = False
     st.session_state.prev_sub = selected_sub
 
 
@@ -436,19 +453,6 @@ else:
     with rev3:
         project_life = st.number_input("Project life (years)", min_value=1, max_value=40, value=25, step=1, key='project_life_input')
 
-    # Regulatory scenario dropdown
-    st.markdown("##### Regulatory scenario")
-    sub_has_policy = policy_df is not None and len(match_substation(policy_df, sub_name)) > 0
-    if sub_has_policy:
-        selected_scenario = st.selectbox("Select scenario", options=scenario_options, key='scenario_selector')
-        desc = scenario_descriptions.get(selected_scenario, '')
-        if desc:
-            st.caption(desc)
-    else:
-        selected_scenario = 'Baseline (current rules)'
-        st.selectbox("Select scenario", options=['Baseline (current rules)'], key='scenario_selector_disabled', disabled=True)
-        st.caption("Regulatory scenarios not yet available for this substation.")
-
     if run_clicked:
         st.session_state.test_run = True
         st.session_state.test_mw = test_mw
@@ -460,6 +464,7 @@ else:
 
     if clear_clicked:
         st.session_state.test_run = False
+        st.session_state.scenario_run = False
         st.rerun()
 
     # ==============================================================
@@ -473,24 +478,9 @@ else:
 
         st.markdown("---")
         st.markdown(f"### Results: {active_mw} MW {active_tech} at {sub_name}")
-        if selected_scenario != 'Baseline (current rules)':
-            st.caption(f"Scenario: **{selected_scenario}**")
+        st.markdown("##### Regulatory baseline")
 
-        # Decide data source: policy CSV for non-baseline scenarios, or baseline curtailment CSV
-        use_policy = False
-        sub_policy_all = match_substation(policy_df, sub_name) if policy_df is not None else pd.DataFrame()
-        if sub_has_policy and len(sub_policy_all) > 0:
-            policy_match = sub_policy_all[
-                (sub_policy_all['scenario'] == selected_scenario) &
-                (sub_policy_all['technology'] == curt_tech_key)
-            ]
-            if len(policy_match) > 0:
-                use_policy = True
-                sub_curt = policy_match  # use policy data as the curtailment source
-            else:
-                sub_curt = match_substation(curtailment_df, sub_name)
-        else:
-            sub_curt = match_substation(curtailment_df, sub_name)
+        sub_curt = match_substation(curtailment_df, sub_name)
 
         if len(sub_curt) > 0 and sub_curt['curtailment_pct'].notna().any():
 
@@ -591,49 +581,127 @@ else:
             else:
                 st.info(f"No curtailment estimate available for {active_tech} at this substation.")
 
-            # --- ALL SCENARIOS COMPARISON (if policy data available) ---
-            if use_policy and len(sub_policy_all) > 0:
-                all_sc = sub_policy_all[
-                    (sub_policy_all['technology'] == curt_tech_key) &
-                    (sub_policy_all['capacity_mw'] == closest_mw)
-                ] if 'closest_mw' in dir() else pd.DataFrame()
+            # ==============================================================
+            # REGULATORY SCENARIO COMPARISON (separate box, light blue bg)
+            # ==============================================================
+            sub_has_policy = has_policy_data(sub_name)
+            sub_policy_all = match_substation(policy_df, sub_name) if policy_df is not None else pd.DataFrame()
 
-                if len(all_sc) > 0 and all_sc['curtailment_pct'].notna().any():
-                    st.markdown("---")
-                    st.markdown(f"#### All regulatory scenarios — {active_tech} at {closest_mw} MW")
+            st.markdown("---")
+            st.markdown(
+                '<div style="background-color: #e8f4f8; padding: 20px; border-radius: 10px; margin: 10px 0;">',
+                unsafe_allow_html=True
+            )
+            st.markdown("#### Regulatory scenario comparison")
 
-                    pp = st.session_state.get('power_price', 50.0)
-                    sc_display = pd.DataFrame()
-                    sc_display['Scenario'] = all_sc['scenario'].values
-                    sc_display['Curtailment'] = all_sc['curtailment_pct'].apply(
-                        lambda x: f"{x:.1f}%" if pd.notna(x) else "—"
-                    ).values
-                    sc_display['Energy Lost (MWh/yr)'] = all_sc['curtailed_mwh'].apply(
-                        lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
-                    ).values
-                    sc_display['Revenue Lost (£/yr)'] = all_sc['curtailed_mwh'].apply(
-                        lambda x: f"£{x * pp:,.0f}" if pd.notna(x) else "—"
-                    ).values
-                    if 'curtailed_hours' in all_sc.columns:
-                        sc_display['Hours'] = all_sc['curtailed_hours'].apply(
-                            lambda x: f"{x:,.0f}" if pd.notna(x) else "—"
-                        ).values
-                    if 'exceeds_2000h' in all_sc.columns:
-                        sc_display['Exceeds 2000h'] = all_sc['exceeds_2000h'].apply(
-                            lambda x: "⚠️" if x else "" if pd.notna(x) else ""
-                        ).values
+            if sub_has_policy and len(sub_policy_all) > 0:
+                sc_col1, sc_col2 = st.columns([3, 1])
+                with sc_col1:
+                    selected_scenario = st.selectbox(
+                        "Select a regulatory scenario to compare",
+                        options=scenario_options_no_baseline,
+                        key='scenario_selector',
+                    )
+                with sc_col2:
+                    st.markdown("<br/>", unsafe_allow_html=True)
+                    run_scenario = st.button("🔍 Run scenario", use_container_width=True, type="secondary")
 
-                    st.dataframe(sc_display, use_container_width=True, hide_index=True)
+                desc = scenario_descriptions.get(selected_scenario, '')
+                if desc:
+                    st.caption(desc)
 
-                    pct_vals = all_sc['curtailment_pct'].dropna()
-                    if len(pct_vals) > 1 and pct_vals.max() > 0:
-                        best_idx = pct_vals.idxmin()
-                        worst_idx = pct_vals.idxmax()
-                        st.caption(
-                            f"Range: **{pct_vals.min():.1f}%** ({all_sc.at[best_idx, 'scenario']}) to "
-                            f"**{pct_vals.max():.1f}%** ({all_sc.at[worst_idx, 'scenario']}) — "
-                            f"policy choice swings curtailment by {pct_vals.max() - pct_vals.min():.1f} percentage points."
-                        )
+                if run_scenario or st.session_state.get('scenario_run', False):
+                    if run_scenario:
+                        st.session_state.scenario_run = True
+                        st.session_state.scenario_name = selected_scenario
+
+                    active_scenario = st.session_state.get('scenario_name', selected_scenario)
+                    scenario_match = sub_policy_all[
+                        (sub_policy_all['scenario'] == active_scenario) &
+                        (sub_policy_all['technology'] == curt_tech_key)
+                    ]
+
+                    if len(scenario_match) > 0:
+                        available_mws_sc = sorted(scenario_match['capacity_mw'].unique())
+                        closest_mw_sc = min(available_mws_sc, key=lambda x: abs(x - active_mw))
+                        sc_estimate = scenario_match[scenario_match['capacity_mw'] == closest_mw_sc]
+
+                        if len(sc_estimate) > 0:
+                            sc_e = sc_estimate.iloc[0]
+                            if pd.notna(sc_e['curtailment_pct']):
+                                sc_pct = sc_e['curtailment_pct']
+                                sc_lost = sc_e['curtailed_mwh']
+                                sc_total = sc_e['total_mwh']
+                                sc_delivered = sc_total - sc_lost
+
+                                pp = st.session_state.get('power_price', 50.0)
+                                dr = st.session_state.get('discount_rate', 8.0) / 100
+                                life = st.session_state.get('project_life', 25)
+                                sc_revenue_lost = sc_lost * pp
+                                sc_revenue_curtailed = sc_delivered * pp
+                                if dr > 0:
+                                    npv_factor_sc = (1 - (1 + dr) ** -life) / dr
+                                else:
+                                    npv_factor_sc = life
+                                sc_npv_lost = sc_revenue_lost * npv_factor_sc
+
+                                st.markdown(f"**{active_scenario}** — {closest_mw_sc} MW {active_tech}")
+
+                                sc_r1, sc_r2, sc_r3 = st.columns(3)
+                                with sc_r1:
+                                    st.metric("Annual Curtailment", f"{sc_pct:.1f}%")
+                                with sc_r2:
+                                    st.metric("Energy Curtailed", f"{sc_lost:,.0f} MWh/yr")
+                                with sc_r3:
+                                    st.metric("Energy Exported", f"{sc_delivered:,.0f} MWh/yr")
+
+                                if sc_pct > 0:
+                                    sc_rv1, sc_rv2, sc_rv3 = st.columns(3)
+                                    with sc_rv1:
+                                        st.metric("Annual Revenue Lost", f"£{sc_revenue_lost:,.0f}")
+                                    with sc_rv2:
+                                        st.metric("Annual Revenue (after curtailment)", f"£{sc_revenue_curtailed:,.0f}")
+                                    with sc_rv3:
+                                        st.metric(f"NPV of Lost Revenue ({life}yr)", f"£{sc_npv_lost:,.0f}")
+
+                                # Schedule 2D warning
+                                if 'curtailed_hours' in sc_e.index and pd.notna(sc_e.get('curtailed_hours')):
+                                    sc_hours = sc_e['curtailed_hours']
+                                    if sc_hours > 2000:
+                                        st.error(f"⚠️ **Schedule 2D: {sc_hours:,.0f} curtailed hours exceeds the 2,000-hour limit.** Under this scenario the DNO would owe compensation.")
+                                    elif sc_hours > 1000:
+                                        st.warning(f"⚠️ **{sc_hours:,.0f} curtailed hours** — a 1,000-hour contractual limit would be breached.")
+
+                                # Compare to baseline
+                                baseline_match = sub_policy_all[
+                                    (sub_policy_all['scenario'] == 'Baseline (current rules)') &
+                                    (sub_policy_all['technology'] == curt_tech_key) &
+                                    (sub_policy_all['capacity_mw'] == closest_mw_sc)
+                                ]
+                                if len(baseline_match) > 0:
+                                    bl_pct = baseline_match.iloc[0]['curtailment_pct']
+                                    if pd.notna(bl_pct):
+                                        delta = sc_pct - bl_pct
+                                        if abs(delta) > 0.1:
+                                            direction = "higher" if delta > 0 else "lower"
+                                            st.caption(f"Compared to baseline ({bl_pct:.1f}%): **{abs(delta):.1f} percentage points {direction}**.")
+
+                                sc_binding = sc_e.get('binding_branch', '')
+                                if sc_binding and sc_binding != 'None' and str(sc_binding) != 'nan':
+                                    st.caption(f"Binding constraint: {sc_binding}")
+
+                                if closest_mw_sc != active_mw:
+                                    st.caption(f"Estimate shown for {closest_mw_sc} MW (closest available).")
+                            else:
+                                st.info(f"No estimate available for {active_tech} under this scenario.")
+                    else:
+                        st.info(f"No data for {active_tech} under {active_scenario}.")
+                else:
+                    st.caption("Select a scenario and click **Run scenario** to see how curtailment changes under a different regulatory future.")
+            else:
+                st.caption("Regulatory scenario comparison not yet available for this substation.")
+
+            st.markdown('</div>', unsafe_allow_html=True)
 
             # --- CURTAILMENT BY SIZE (single technology) ---
             st.markdown("---")
