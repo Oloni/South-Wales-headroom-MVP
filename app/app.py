@@ -616,7 +616,6 @@ else:
                             total_mwh=('total_mwh', 'sum'),
                             queue_mw=('queue_mw_remaining', 'first'),
                             n_projects=('n_projects_remaining', 'first'),
-                            reinforcement=('reinforcement_applied', 'first'),
                         ).reset_index()
                         annual['curtailment_pct'] = (100 * annual['curtailed_mwh'] / annual['total_mwh']).round(1)
                         annual['curtailment_pct'] = annual['curtailment_pct'].fillna(0)
