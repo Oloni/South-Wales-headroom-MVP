@@ -107,6 +107,7 @@ buildout_df = load_csv_or_none('south_wales_curtailment_buildout.csv')
 colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 confidence_df = load_csv_or_none('south_wales_curtailment_confidence.csv')
 policy_df = load_csv_or_none('policy_scenarios.csv')
+trajectory_df = load_csv_or_none('curtailment_trajectory.csv')
 
 scenario_options_no_baseline = []
 scenario_descriptions = {}
@@ -595,6 +596,58 @@ else:
                     st.info(f"No curtailment estimate available for {active_tech} at this substation.")
             else:
                 st.info(f"No curtailment estimate available for {active_tech} at this substation.")
+
+            # ==============================================================
+            # CURTAILMENT TRAJECTORY (how does curtailment change over time?)
+            # ==============================================================
+            sub_traj = match_substation(trajectory_df, sub_name) if trajectory_df is not None else pd.DataFrame()
+            if len(sub_traj) > 0:
+                traj_match = sub_traj[sub_traj['technology'] == curt_tech_key]
+                if len(traj_match) > 0:
+                    # Find closest MW
+                    traj_mws = sorted(traj_match['capacity_mw'].unique())
+                    closest_mw_traj = min(traj_mws, key=lambda x: abs(x - active_mw))
+                    traj_data = traj_match[traj_match['capacity_mw'] == closest_mw_traj]
+
+                    if len(traj_data) > 0 and traj_data['curtailment_pct'].notna().any():
+                        # Aggregate to annual
+                        annual = traj_data.groupby('year').agg(
+                            curtailed_mwh=('curtailed_mwh', 'sum'),
+                            total_mwh=('total_mwh', 'sum'),
+                            queue_mw=('queue_mw_remaining', 'first'),
+                            n_projects=('n_projects_remaining', 'first'),
+                            reinforcement=('reinforcement_applied', 'first'),
+                        ).reset_index()
+                        annual['curtailment_pct'] = (100 * annual['curtailed_mwh'] / annual['total_mwh']).round(1)
+                        annual['curtailment_pct'] = annual['curtailment_pct'].fillna(0)
+
+                        if annual['curtailment_pct'].max() > 0 or annual['curtailment_pct'].iloc[0] > 0:
+                            st.markdown("---")
+                            st.markdown(f"#### Curtailment trajectory — {active_tech} at {closest_mw_traj} MW")
+                            st.caption("How curtailment is projected to decline as the connection queue thins out over time. Assumes projects connect or drop out gradually based on technology-specific attrition rates.")
+
+                            # Line chart
+                            chart_data = annual[['year', 'curtailment_pct']].set_index('year')
+                            chart_data.columns = ['Curtailment %']
+                            st.line_chart(chart_data, height=300)
+
+                            # Summary table
+                            traj_display = annual[['year', 'curtailment_pct', 'queue_mw', 'n_projects']].copy()
+                            traj_display.columns = ['Year', 'Curtailment %', 'Queue (MW)', 'Projects remaining']
+                            traj_display['Curtailment %'] = traj_display['Curtailment %'].apply(lambda x: f"{x:.1f}%")
+                            traj_display['Queue (MW)'] = traj_display['Queue (MW)'].apply(lambda x: f"{x:,.0f}")
+                            st.dataframe(traj_display, use_container_width=True, hide_index=True)
+
+                            # Find when curtailment reaches near-zero
+                            near_zero = annual[annual['curtailment_pct'] <= 0.5]
+                            if len(near_zero) > 0:
+                                zero_year = near_zero['year'].iloc[0]
+                                st.caption(f"Curtailment drops below 0.5% by **{zero_year}** under these assumptions.")
+                            else:
+                                st.caption(f"Curtailment remains above 0.5% through {annual['year'].max()} under these assumptions.")
+
+                            if closest_mw_traj != active_mw:
+                                st.caption(f"Trajectory shown for {closest_mw_traj} MW (closest available).")
 
             # ==============================================================
             # REGULATORY SCENARIO COMPARISON (separate box, light blue bg)

@@ -183,6 +183,10 @@ By contrast, a 20MW wind farm at NANG faces 17.1% curtailment — roughly £432k
 
 The revenue calculation is intentionally simple. It does not model wholesale price shape (curtailment during high-price hours costs more than during low-price hours), capacity payments, balancing mechanism revenues, or ancillary service income. The calculation gives a first-order estimate suitable for screening — not for final investment decisions.
 
+**Important caveat for battery storage (BESS):** The curtailment model treats BESS the same as wind or solar — applying a fixed half-hourly export profile and checking whether that export exceeds thermal limits. But batteries do not operate like this. A wind farm that is curtailed loses energy permanently (the wind blows and it cannot be captured). A battery that is told not to export at 6pm simply shifts that energy to 10pm when the constraint is not binding. There is no lost energy, only shifted revenue timing.
+
+The BESS "curtailment" number should therefore be interpreted as **hours of export restriction**, not energy loss. A 13% BESS curtailment means "13% of your planned export windows are constrained by the network" — it is a measure of network congestion at that site, not a measure of lost revenue. The revenue loss figures shown for BESS are overstated because they assume the curtailed energy is lost rather than time-shifted. Our SCADA validation at Newport South confirmed that the 24MW BESS there operates completely differently from the generic export profile.
+
 ### Seasonal breakdown (hour × month heatmap)
 
 The same half-hourly curtailment, disaggregated by hour-of-day and month. This shows **when** curtailment concentrates:
@@ -243,31 +247,30 @@ The combined output at each half-hour is the sum of individual technology profil
 
 The baseline curtailment estimate assumes the current regulatory framework: full accepted queue, static sensitivity factors, current pre-event limits, and current NESO technical limits. But several of these assumptions are subject to change. The regulatory scenario comparison quantifies how curtailment would change under different plausible regulatory futures.
 
-**The five policy levers tested:**
+**The three policy levers tested:**
 
 1. **Queue attrition post-Gate 2** — Not all accepted projects will build. Connections reform (Gate 2, G2TWQ) is removing projects from the queue, and technology-specific dropout rates are high (particularly for BESS post-Gate 2). Three attrition levels are modelled: full queue (current), moderate (BESS 50%, solar 80%, wind 90%), and high (BESS 30%, solar 60%, wind 80%).
 
-2. **Reinforcement timing** — If the DNO upgrades a constrained transformer or circuit, the pre-event limit increases and curtailment drops. Modelled as a 30% PEL uplift, representing a typical SGT uprating or partial circuit reinforcement. The DNOA section above identifies which substations have reinforcement planned.
+2. **Reinforcement (+30% PEL)** — If the DNO upgrades a constrained asset, the pre-event limit increases and curtailment drops. Modelled as a 30% PEL uplift. **Caveat:** This scaling is currently applied uniformly to all branches. A real reinforcement would increase PELs only on the specific upgraded asset (e.g. a particular SGT or circuit). The benefit is overstated for sites constrained by distribution-level branches that would not be affected by the reinforcement. A future version will implement per-branch PEL scaling using DNOA reinforcement scheme data.
 
-3. **NESO technical limit changes** — NESO periodically updates the GSP technical limit that governs Transmission ANM. A tighter limit means more TANM curtailment; a relaxation means less. Modelled as ±10% of the current technical limit.
+3. **Static to dynamic sensitivity factors** — NGED currently uses static SFs computed at a single operating point. UKPN has moved to dynamic SFs recomputed at each operating point (CIRED 2021). Under dynamic SFs, curtailment on meshed circuits decreases because the effective SF reduces at high generation levels. **Caveat:** The 9.4% median reduction used in this model is an empirical finding from Loom Light's analysis of the Swansea North 132kV network (script 16). The magnitude may differ in other zones depending on network topology and R/X ratios. A future version will run the SF stability analysis on each zone individually.
 
-4. **Static to dynamic sensitivity factors** — NGED currently uses static SFs computed at a single operating point. UKPN has moved to dynamic SFs recomputed at each operating point (CIRED 2021). Our empirical analysis of the Swansea North network (script 16) found that SFs on meshed 132kV circuits reduce by a median of 9.4% at high generation levels, with up to 64% variation on the most variable pairs. Under dynamic SFs, curtailment on meshed circuits would decrease.
+**Not yet modelled:** NESO GSP technical limit changes (TANM). NESO periodically updates the technical limits that govern Transmission ANM at each GSP. Modelling this correctly requires implementing the TD boundary limits as a separate constraint from the distribution-level PELs, which is planned for a future version.
 
-5. **Schedule 2D curtailment limit** — Under Access SCR (April 2023), DNOs must compensate curtailable connection customers if curtailment exceeds a contractual limit (measured in hours per year). The scenario output flags whether each scenario produces curtailment exceeding 2,000 or 1,000 hours — indicating potential financial exposure for the DNO.
+**Schedule 2D curtailment limit check:** For every scenario, we check whether the modelled curtailment would exceed the contractual curtailment limit under DCUSA Schedule 2D. This is not a scenario — it is a contractual obligation that has been in force since April 2023. When DNOs provide a curtailable connection, they must compensate the connected customer if curtailment exceeds the prescribed limit (measured in hours per year). The scenario output flags whether curtailment exceeds 2,000 or 1,000 hours, indicating potential financial exposure for the DNO under each regulatory future.
 
 **Pre-defined scenario bundles:**
 
-| Scenario | Queue | PEL | TANM | SFs |
-|----------|-------|-----|------|-----|
-| Baseline (current rules) | Full | Current | Current | Static |
-| Post-Gate 2 (moderate attrition) | Moderate | Current | Current | Static |
-| Post-Gate 2 (high attrition) | High | Current | Current | Static |
-| SGT partial upgrade (+30% PEL) | Full | +30% | Current | Static |
-| NESO tightens GSP limit (−10%) | Full | Current | −10% | Static |
-| NESO relaxes GSP limit (+10%) | Full | Current | +10% | Static |
-| Dynamic SFs (UKPN-style) | Full | Current | Current | Dynamic |
-| Best case | High | +30% | +10% | Dynamic |
-| Worst case | Full | Current | −10% | Static |
+| Scenario | Queue | PEL | SFs |
+|----------|-------|-----|-----|
+| Baseline (current rules) | Full | Current | Static |
+| Post-Gate 2 (moderate attrition) | Moderate | Current | Static |
+| Post-Gate 2 (high attrition) | High | Current | Static |
+| Reinforcement (+30% PEL) | Full | +30%* | Static |
+| Dynamic SFs (UKPN-style) | Full | Current | Dynamic* |
+| Best case (attrition + reinforcement + dynamic) | High | +30%* | Dynamic* |
+
+\* See caveats above: PEL scaling is uniform (not branch-specific), dynamic SF magnitude extrapolated from Swansea North.
 
 **How to use:** In the substation detail view, after running a baseline test, the "Regulatory scenario comparison" section lets you select a scenario and click "Run scenario" to see the headline curtailment, revenue impact, and Schedule 2D status under that regulatory future. Click "Show all scenarios" for the full comparison table.
 
@@ -282,18 +285,19 @@ The baseline curtailment estimate assumes the current regulatory framework: full
 | Baseline | 8.8% |
 | Moderate attrition | 7.3% |
 | High attrition | 6.5% |
-| SGT upgrade (+30% PEL) | 3.2% |
-| NESO tightens (−10%) | 12.3% |
-| NESO relaxes (+10%) | 6.2% |
-| Dynamic SFs | 8.3% |
-| Best case | 1.4% |
-| Worst case | 12.3% |
+| Reinforcement (+30% PEL) | 3.2%* |
+| Dynamic SFs | 8.3%* |
+| Best case | — (recompute after rerun) |
 
-The biggest swing is reinforcement (8.8% → 3.2%), not attrition (8.8% → 6.5%). NESO tightening the GSP limit has a larger downside impact than the full queue building out. Dynamic SFs make a modest difference at aggregate level (8.8% → 8.3%) but can be significant at specific meshed substations.
+\* See caveats above.
+
+The biggest swing is reinforcement (8.8% → 3.2%), though this is overstated due to uniform PEL scaling. Queue attrition has a meaningful but smaller effect (8.8% → 6.5%). Dynamic SFs make a modest difference at aggregate level (8.8% → 8.3%) but can be significant at specific meshed substations.
 
 ---
 
-## Methodology detail
+## Curtailment calculation details
+
+The curtailment calculation follows the methodology published by NGED in their [Curtailment Analysis Data Usage Guidance](https://dso.nationalgrid.co.uk/planning-our-future-network/curtailment-analysis) (November 2025). The key steps are summarised below.
 
 ### Step 1: Load baseline branch flows
 
@@ -411,7 +415,7 @@ All data is publicly available from NGED's Connected Data portal under the NGED 
 
 13. **Not a substitute for a formal connection study**: These estimates are for screening purposes. A G99 application and DNO study is required before any connection decision.
 
-14. **Regulatory scenario engine limitations**: The PEL scaling and TANM scaling are currently applied uniformly across all branches. In practice, a reinforcement would increase PELs on specific branches only, and TANM limits only affect GSP-level branches (SGTs and technical limits), not distribution-level branches. The dynamic SF model applies a single empirical reduction factor (9.4%) derived from the Swansea North 132kV network; the effect may differ on other networks. The scenario bundles are illustrative combinations, not exhaustive — the real regulatory future may fall between or outside the modelled scenarios.
+14. **Regulatory scenario engine limitations**: (a) The PEL scaling for the reinforcement scenario is applied uniformly across all branches — a real reinforcement would only increase PELs on the specific upgraded asset. This overstates the benefit for sites constrained by distribution branches. (b) The dynamic SF model applies a 9.4% reduction factor derived empirically from the Swansea North 132kV network; the magnitude may differ on other networks. (c) NESO GSP technical limits (TANM) are not yet modelled as a separate constraint — this requires implementing the TD boundary limits file, which is planned for a future version. (d) The scenario bundles are illustrative combinations, not exhaustive.
 
 15. **DNOA data vintage**: The DNOA constraint mapping uses the August 2023 publication. Reinforcement decisions may have been updated, completed, or revised since then. Reinforcements completed before the 2024 branch loading data period are already reflected in the baseline curtailment estimate.
 
