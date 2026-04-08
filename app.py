@@ -107,7 +107,6 @@ buildout_df = load_csv_or_none('south_wales_curtailment_buildout.csv')
 colocation_df = load_csv_or_none('south_wales_curtailment_colocation.csv')
 confidence_df = load_csv_or_none('south_wales_curtailment_confidence.csv')
 policy_df = load_csv_or_none('policy_scenarios.csv')
-trajectory_df = load_csv_or_none('curtailment_trajectory.csv')
 
 scenario_options_no_baseline = []
 scenario_descriptions = {}
@@ -596,79 +595,6 @@ else:
                     st.info(f"No curtailment estimate available for {active_tech} at this substation.")
             else:
                 st.info(f"No curtailment estimate available for {active_tech} at this substation.")
-
-            # ==============================================================
-            # CURTAILMENT TRAJECTORY (how does curtailment change over time?)
-            # ==============================================================
-            sub_traj = match_substation(trajectory_df, sub_name) if trajectory_df is not None else pd.DataFrame()
-            if len(sub_traj) > 0:
-                traj_match = sub_traj[sub_traj['technology'] == curt_tech_key]
-                if len(traj_match) > 0:
-                    # Find closest MW
-                    traj_mws = sorted(traj_match['capacity_mw'].unique())
-                    closest_mw_traj = min(traj_mws, key=lambda x: abs(x - active_mw))
-                    traj_data = traj_match[traj_match['capacity_mw'] == closest_mw_traj].copy()
-
-                    if len(traj_data) > 0 and traj_data['curtailment_pct'].notna().any():
-                        # Check if monthly data (has 'month' column) or annual only
-                        has_monthly = 'month' in traj_data.columns and traj_data['month'].nunique() > 1
-
-                        if has_monthly:
-                            # Create a proper date index for the chart
-                            traj_data['date'] = pd.to_datetime(
-                                traj_data['year'].astype(str) + '-' + traj_data['month'].astype(str).str.zfill(2) + '-01'
-                            )
-                            traj_data = traj_data.sort_values('date')
-                            chart_source = traj_data
-                        else:
-                            traj_data['date'] = pd.to_datetime(traj_data['year'].astype(str) + '-01-01')
-                            chart_source = traj_data
-
-                        if chart_source['curtailment_pct'].max() > 0 or chart_source['curtailment_pct'].iloc[0] > 0:
-                            st.markdown("---")
-                            st.markdown(f"#### Curtailment trajectory — {active_tech} at {closest_mw_traj} MW")
-                            st.caption("Conservative projection: assumes you are always last in the LIFO queue. Only improvement comes from other projects failing to build. Actual curtailment likely lower if projects connect behind you.")
-
-                            # Line chart — monthly
-                            chart_data = chart_source[['date', 'curtailment_pct']].set_index('date')
-                            chart_data.columns = ['Curtailment %']
-                            st.line_chart(chart_data, height=300)
-
-                            # Summary table — show annually for readability
-                            if has_monthly:
-                                annual = traj_data.groupby('year').agg(
-                                    curtailment_pct=('curtailment_pct', 'mean'),
-                                    queue_mw=('queue_mw_remaining', 'last'),
-                                    n_projects=('n_projects_remaining', 'last'),
-                                ).reset_index()
-                                annual['curtailment_pct'] = annual['curtailment_pct'].round(1)
-                            else:
-                                annual = traj_data[['year', 'curtailment_pct', 'queue_mw_remaining', 'n_projects_remaining']].copy()
-                                annual.columns = ['year', 'curtailment_pct', 'queue_mw', 'n_projects']
-
-                            traj_display = annual[['year', 'curtailment_pct', 'queue_mw', 'n_projects']].copy()
-                            traj_display.columns = ['Year', 'Curtailment % (avg)', 'Queue (MW)', 'Projects remaining']
-                            traj_display['Curtailment % (avg)'] = traj_display['Curtailment % (avg)'].apply(lambda x: f"{x:.1f}%")
-                            traj_display['Queue (MW)'] = traj_display['Queue (MW)'].apply(lambda x: f"{x:,.0f}")
-                            st.dataframe(traj_display, use_container_width=True, hide_index=True)
-
-                            # Find when curtailment reaches near-zero
-                            if has_monthly:
-                                near_zero = traj_data[traj_data['curtailment_pct'] <= 0.5].sort_values('date')
-                            else:
-                                near_zero = annual[annual['curtailment_pct'] <= 0.5]
-                            if len(near_zero) > 0:
-                                if has_monthly:
-                                    zr = near_zero.iloc[0]
-                                    st.caption(f"Curtailment drops below 0.5% by **{zr['date'].strftime('%B %Y')}** under these assumptions.")
-                                else:
-                                    st.caption(f"Curtailment drops below 0.5% by **{near_zero['year'].iloc[0]}** under these assumptions.")
-                            else:
-                                last_year = annual['year'].max()
-                                st.caption(f"Curtailment remains above 0.5% through {last_year} under these assumptions.")
-
-                            if closest_mw_traj != active_mw:
-                                st.caption(f"Trajectory shown for {closest_mw_traj} MW (closest available).")
 
             # ==============================================================
             # REGULATORY SCENARIO COMPARISON (separate box, light blue bg)

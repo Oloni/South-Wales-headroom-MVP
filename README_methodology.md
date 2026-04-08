@@ -14,7 +14,7 @@ For every major substation in the South Wales 33kV/66kV/132kV network, this tool
 8. **LIFO queue position** — how curtailment changes depending on your position in the connection queue
 9. **Queue build-out scenarios** — how curtailment changes if projects in the queue don't build
 10. **Hybridisation analysis** — curtailment for combined technologies on the same connection
-11. **Regulatory scenario comparison** — how curtailment changes under different regulatory futures (queue attrition post-Gate 2, reinforcement, NESO technical limit changes, dynamic sensitivity factors, Schedule 2D exceedance)
+11. **Regulatory scenario comparison** — how curtailment changes under different regulatory futures (queue attrition post-Gate 2, reinforcement, dynamic sensitivity factors, Schedule 2D exceedance)
 
 ---
 
@@ -401,7 +401,7 @@ All data is publicly available from NGED's Connected Data portal under the NGED 
 
 6. **5% sensitivity threshold**: Branches with sensitivity factor below 5% are ignored, consistent with NGED's published methodology.
 
-7. **Queue attrition modelled but not probabilistic**: The regulatory scenario engine models three attrition levels (none, moderate, high) with technology-specific dropout rates. These rates are based on industry observations of Gate 2 outcomes and connections reform, but are not derived from a formal probability model. Users should treat the range of scenarios as plausible bounds rather than point predictions.
+7. **Attrition rates are assumptions, not empirical**: The technology-specific dropout rates used in the regulatory scenario engine (BESS 50%/30%, solar 80%/60%, wind 90%/80% for moderate/high attrition) are plausible assumptions reflecting general industry observations about post-Gate 2 dropout patterns. They are not derived from a specific dataset, published study, or historical queue comparison. A future version will derive empirical rates from NGED's quarterly queue publications. Users should treat the attrition-dependent outputs as illustrative ranges, not point predictions.
 
 8. **LIFO per-constraint stacks**: Our LIFO implementation builds a per-constraint stack and curtails in reverse position order per branch, consistent with the UKPN methodology. We do not currently enforce the voltage-level ordering (resolve lower voltage constraints first, then higher voltage) described in the NGED methodology document.
 
